@@ -1,9 +1,10 @@
-import {css, Global} from '@emotion/react';
+import {css, Global, ThemeProvider} from '@emotion/react';
 import Layout from './layout/Layout/Layout.tsx';
+import {theme} from 'src/styles/theme.ts';
 
 function App() {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Global
         styles={css`
           /* CSS Reset */
@@ -38,7 +39,7 @@ function App() {
         `}
       />
       <Layout />
-    </div>
+    </ThemeProvider>
   );
 }
 

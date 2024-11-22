@@ -1,62 +1,55 @@
 import React from 'react';
 import {css} from '@emotion/react';
 import logo from 'src/assets/logo.png';
-import {bigBody, h5} from '../../style.ts';
 import DistanceSvg from 'src/assets/icons/distance.svg';
 import PaceSvg from 'src/assets/icons/pace.svg';
 import PhoneSvg from 'src/assets/icons/phone.svg';
+import Text from 'src/components/Text.tsx';
+import {theme} from 'src/styles/theme.ts';
 
 const Footer = () => {
   return (
     <div css={container}>
-      <img css={logoStyles} src={logo} alt="logo" />
+      <img css={logoStyles} src={String(logo)} alt="logo" />
       <div>
-        <p
-          css={css`
-            ${h5};
-            color: #ffffff;
-          `}>
+        <Text type={'h5'} color={'#FFFFFF'}>
           Контактна інформація:
-        </p>
+        </Text>
         <div css={textNSvgWrapper}>
-          <DistanceSvg />
-          <p
-            css={css`
-              ${bigBody};
-              color: #ffffff;
-            `}>
+          <DistanceSvg color={theme.colors.accent} />
+          <Text type={'bigBody'} color={'#FFFFFF'}>
             ЖК Артвилль, вул. Спрейса 1, Одеса
-          </p>
+          </Text>
         </div>
         <div css={textNSvgWrapper}>
-          <PaceSvg />
-          <p
+          <PaceSvg color={theme.colors.accent} />
+          <Text
+            type={'bigBody'}
             css={css`
-              ${bigBody};
               color: #ffffff;
             `}>
             10:00-22:00
-          </p>
+          </Text>
         </div>
         <div css={textNSvgWrapper}>
-          <PhoneSvg />
-          <p
+          <PhoneSvg color={theme.colors.accent} />
+          <Text
+            type={'bigBody'}
             css={css`
-              ${bigBody};
               color: #ffffff;
             `}>
             066-98-98-095
-          </p>
+          </Text>
         </div>
         <div css={textNSvgWrapper}>
-          <PhoneSvg />
-          <p
+          <PhoneSvg color={theme.colors.accent} />
+          <Text
+            type={'bigBody'}
             css={css`
-              ${bigBody};
               color: #ffffff;
             `}>
             098 98 98 095
-          </p>
+          </Text>
         </div>
       </div>
     </div>

@@ -1,51 +1,52 @@
 import React from 'react';
 import {css} from '@emotion/react';
-import {colors, bigBody, subscribe} from '../../style.ts';
 import logo from 'src/assets/logo.png';
 import DistanceSvg from 'src/assets/icons/distance.svg';
 import PaceSvg from 'src/assets/icons/pace.svg';
 import PhoneSvg from 'src/assets/icons/phone.svg';
 import FavouriteSvg from 'src/assets/icons/favorite.svg';
+import Text from 'src/components/Text.tsx';
+import {theme} from 'src/styles/theme.ts';
 
 const Header = () => {
   return (
     <div css={headerContainer}>
       <div css={wrapper}>
-        <img css={logoStyles} src={logo} alt={'logo'} />
+        <img css={logoStyles} src={String(logo)} alt={'logo'} />
         <div css={contentWrapper}>
           <div css={textNSvgWrapper}>
-            <DistanceSvg color={colors.accent} />
-            <p css={bigBody}>ЖК Артвилль, вул. Спрейса 1, Одеса</p>
+            <DistanceSvg color={theme.colors.accent} />
+            <Text type={'bigBody'}>ЖК Артвилль, вул. Спрейса 1, Одеса</Text>
           </div>
           <div css={verticalBar} />
           <div css={textNSvgWrapper}>
-            <PaceSvg color={colors.accent} />
-            <p css={bigBody}>10:00-22:00</p>
+            <PaceSvg color={theme.colors.accent} />
+            <Text type={'bigBody'}>10:00-22:00</Text>
           </div>
           <div css={verticalBar} />
           <div css={textNSvgWrapper}>
-            <PhoneSvg color={colors.accent} />
-            <p css={bigBody}>066-98-98-095</p>
+            <PhoneSvg color={theme.colors.accent} />
+            <Text type={'bigBody'}>066-98-98-095</Text>
           </div>
           <div css={verticalBar} />
           <div css={textNSvgWrapper}>
-            <PhoneSvg color={colors.accent} />
-            <p css={bigBody}>098 98 98 095</p>
+            <PhoneSvg color={theme.colors.accent} />
+            <Text type={'bigBody'}>098 98 98 095</Text>
           </div>
         </div>
       </div>
       <button css={button}>
-        <FavouriteSvg color={colors.accent} />
-        <p css={subscribe}>Улюблені страви</p>
+        <FavouriteSvg color={theme.colors.accent} />
+        <Text type={'subscribe'}>Улюблені страви</Text>
       </button>
     </div>
   );
 };
 
-const headerContainer = css`
-  background-color: ${colors.background};
+const headerContainer = theme => css`
+  background-color: ${theme.colors.background};
   height: 92px;
-  border: 1px solid ${colors.stroke};
+  border: 1px solid ${theme.colors.stroke};
   border-bottom-left-radius: 80px;
   border-bottom-right-radius: 80px;
   display: flex;
@@ -82,11 +83,11 @@ const textNSvgWrapper = css`
   margin-right: 24px;
 `;
 
-const button = css`
+const button = theme => css`
   width: 194px;
   height: 48px;
-  background-color: ${colors.container};
-  border: 1px solid ${colors.stroke};
+  background-color: ${theme.colors.container};
+  border: 1px solid ${theme.colors.stroke};
   border-radius: 8px;
   display: flex;
   justify-content: space-evenly;
@@ -94,7 +95,7 @@ const button = css`
   cursor: pointer;
   margin-right: 132px;
   :hover {
-    border: 1px solid ${colors.accent};
+    border: 1px solid ${theme.colors.accent};
   }
 `;
 

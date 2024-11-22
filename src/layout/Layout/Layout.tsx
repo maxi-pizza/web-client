@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../Header/Header.tsx';
-import Footer from '../Footer/Footer.tsx';
+import Header from 'src/layout/Header/Header.tsx';
+import Footer from 'src/layout/Footer/Footer.tsx';
 
 const Layout = () => {
   return (
