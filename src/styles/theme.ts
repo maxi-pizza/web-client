@@ -7,6 +7,9 @@ export const theme = {
     blockAccent: '#FFD86B',
     container: '#FFFFFF',
     stroke: '#EEEEF5',
+    textWhite: '#ffffff',
+    strokeDark: '#2F2F31',
+    pageIndicator: '#D3D3DD',
   },
   fontWeights: {
     semiBold: 600,
