@@ -18,6 +18,9 @@ const Banner = () => {
       <button css={leftArrowBtn}>
         <ArrowSvg />
       </button>
+      <button css={rightArrowBtn}>
+        <ArrowSvg />
+      </button>
     </div>
   );
 };
@@ -65,6 +68,33 @@ const leftArrowBtn = theme => css`
   border: none;
   color: black;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  margin-left: 132px;
+  cursor: pointer;
+`;
+
+const rightArrowBtn = theme => css`
+  background-color: ${theme.colors.background};
+  width: 53px;
+  height: 53px;
+  border: none;
+  color: black;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-right: 132px;
+  cursor: pointer;
+  svg {
+    transform: rotate(180deg);
+  }
 `;
 
 export default Banner;
