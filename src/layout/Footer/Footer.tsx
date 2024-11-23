@@ -1,84 +1,101 @@
 import React from 'react';
-import {css} from '@emotion/react';
+import {css, useTheme} from '@emotion/react';
 import logo from 'src/assets/logo.png';
 import DistanceSvg from 'src/assets/icons/distance.svg';
 import PaceSvg from 'src/assets/icons/pace.svg';
 import PhoneSvg from 'src/assets/icons/phone.svg';
 import Text from 'src/components/Text.tsx';
-import {theme} from 'src/styles/theme.ts';
+import {theme, WhiteTheme} from 'src/styles/theme.ts';
 import InstagramSvg from 'src/assets/icons/instagram.svg';
 import FacebookSvg from 'src/assets/icons/facebook.svg';
 import TelegramSvg from 'src/assets/icons/telegram.svg';
 
 const Footer = () => {
+  const theme = useTheme() as WhiteTheme;
   return (
     <div css={container}>
-      <img css={logoStyles} src={String(logo)} alt="logo" />
-      <div css={contactInformationWrapper}>
-        <Text type={'h5'} color={theme.colors.textWhite}>
-          Контактна інформація:
-        </Text>
-        <div css={marginWrapper}>
-          <DistanceSvg css={svgStyles} color={theme.colors.accent} />
-          <Text type={'bigBody'} color={'#FFFFFF'}>
-            ЖК Артвилль, вул. Спрейса 1, Одеса
-          </Text>
-        </div>
-        <div css={marginWrapper}>
-          <PaceSvg css={svgStyles} color={theme.colors.accent} />
-          <Text type={'bigBody'} color={theme.colors.textWhite}>
-            10:00-22:00
-          </Text>
-        </div>
-        <div css={marginWrapper}>
-          <PhoneSvg css={svgStyles} color={theme.colors.accent} />
-          <Text type={'bigBody'} color={theme.colors.textWhite}>
-            066-98-98-095
-          </Text>
-        </div>
-        <div css={marginWrapper}>
-          <PhoneSvg css={svgStyles} color={theme.colors.accent} />
-          <Text type={'bigBody'} color={theme.colors.textWhite}>
-            098 98 98 095
-          </Text>
-        </div>
-      </div>
-      <div css={legalInformationWrapper}>
-        <div>
+      <div
+        css={css`
+          display: flex;
+        `}>
+        <img css={logoStyles} src={String(logo)} alt="logo" />
+        <div css={contactInformationWrapper}>
           <Text type={'h5'} color={theme.colors.textWhite}>
-            Юридична інформація
+            Контактна інформація:
           </Text>
+          <div css={marginWrapper}>
+            <DistanceSvg css={svgStyles} color={theme.colors.accent} />
+            <Text type={'bigBody'} color={'#FFFFFF'}>
+              ЖК Артвилль, вул. Спрейса 1, Одеса
+            </Text>
+          </div>
+          <div css={marginWrapper}>
+            <PaceSvg css={svgStyles} color={theme.colors.accent} />
+            <Text type={'bigBody'} color={theme.colors.textWhite}>
+              10:00-22:00
+            </Text>
+          </div>
+          <div css={marginWrapper}>
+            <PhoneSvg css={svgStyles} color={theme.colors.accent} />
+            <Text type={'bigBody'} color={theme.colors.textWhite}>
+              066-98-98-095
+            </Text>
+          </div>
+          <div css={marginWrapper}>
+            <PhoneSvg css={svgStyles} color={theme.colors.accent} />
+            <Text type={'bigBody'} color={theme.colors.textWhite}>
+              098 98 98 095
+            </Text>
+          </div>
         </div>
-        <div css={marginWrapper}>
-          <Text type={'bigBody'} color={theme.colors.textWhite}>
-            Доставка і оплата
-          </Text>
+        <div css={legalInformationWrapper}>
+          <div>
+            <Text type={'h5'} color={theme.colors.textWhite}>
+              Юридична інформація
+            </Text>
+          </div>
+          <div css={marginWrapper}>
+            <Text type={'bigBody'} color={theme.colors.textWhite}>
+              Доставка і оплата
+            </Text>
+          </div>
+          <div css={marginWrapper}>
+            <Text type={'bigBody'} color={theme.colors.textWhite}>
+              Політика конфіденційності
+            </Text>
+          </div>
+          <div css={marginWrapper}>
+            <Text type={'bigBody'} color={theme.colors.textWhite}>
+              Угода користувача
+            </Text>
+          </div>
         </div>
-        <div css={marginWrapper}>
-          <Text type={'bigBody'} color={theme.colors.textWhite}>
-            Політика конфіденційності
+        <div css={socialInformationWrapper}>
+          <Text type={'h5'} color={theme.colors.textWhite}>
+            Ми в соціальних мережах:
           </Text>
-        </div>
-        <div css={marginWrapper}>
-          <Text type={'bigBody'} color={theme.colors.textWhite}>
-            Угода користувача
-          </Text>
+          <div css={socialWrapper}>
+            <button css={socialButton}>
+              <InstagramSvg color={theme.colors.accent} />
+            </button>
+            <button css={socialButton}>
+              <TelegramSvg color={theme.colors.accent} />
+            </button>
+            <button css={socialButton}>
+              <FacebookSvg color={theme.colors.accent} />
+            </button>
+          </div>
         </div>
       </div>
-      <div css={socialInformationWrapper}>
-        <Text type={'h5'} color={theme.colors.textWhite}>
-          Ми в соціальних мережах:
-        </Text>
-        <div css={socialWrapper}>
-          <button css={socialButton}>
-            <InstagramSvg color={theme.colors.accent} />
-          </button>
-          <button css={socialButton}>
-            <TelegramSvg color={theme.colors.accent} />
-          </button>
-          <button css={socialButton}>
-            <FacebookSvg color={theme.colors.accent} />
-          </button>
+      <div css={rightsWrapper}>
+        <div css={horizontalBar} />
+        <div css={textWrapper}>
+          <Text type={'caption'} color={theme.colors.textWhite}>
+            © 2024 Maxi Pizza Sushi.
+          </Text>
+          <Text type={'caption'} color={theme.colors.textWhite}>
+            All Rights Reserved.
+          </Text>
         </div>
       </div>
     </div>
@@ -95,10 +112,11 @@ const container = css`
   position: relative;
   z-index: 3;
   bottom: 0;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const logoStyles = css`
-  margin-left: 132px;
   width: 108px;
   height: 80px;
 `;
@@ -147,4 +165,22 @@ const socialButton = css`
     border: 1px solid ${theme.colors.accent};
   }
 `;
+
+const rightsWrapper = css`
+  margin-top: 32px;
+`;
+
+const horizontalBar = theme => css`
+  width: 1656px;
+  height: 1px;
+  background-color: ${theme.colors.strokeDark};
+`;
+
+const textWrapper = css`
+  opacity: 50%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+`;
+
 export default Footer;

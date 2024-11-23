@@ -8,11 +8,11 @@ const Banner = () => {
     <div css={bannerContainer}>
       <img src={String(BannerImg)} css={imageStyles} alt="banner" />
       <div css={pageControlWrapper}>
-        <div css={pageIndicator}></div>
+        <div css={pageIndicator({isActive: false})}></div>
         <div css={activeIndicator}>
           <div css={pageIndicator({isActive: true})}></div>
         </div>
-        <div css={pageIndicator}></div>
+        <div css={pageIndicator({isActive: false})}></div>
       </div>
       <button css={leftArrowBtn}>
         <ArrowSvg />
@@ -33,6 +33,7 @@ const bannerContainer = css`
 
 const imageStyles = css`
   height: 800px;
+  user-select: none;
 `;
 
 const pageControlWrapper = theme => css`
@@ -49,14 +50,16 @@ const pageControlWrapper = theme => css`
   justify-content: space-evenly;
 `;
 
-const pageIndicator = isActive => theme => css`
-  height: 8px;
-  width: 8px;
-  border-radius: 50%;
-  background-color: ${theme.colors.pageIndicator};
-  margin: 1px;
-  ${isActive ? {backgroundColor: theme.colors.accent} : null}
-`;
+const pageIndicator =
+  ({isActive}: {isActive: boolean}) =>
+  theme => css`
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: ${theme.colors.pageIndicator};
+    margin: 1px;
+    ${isActive ? {backgroundColor: theme.colors.accent} : null}
+  `;
 
 const activeIndicator = theme => css`
   background-color: transparent;

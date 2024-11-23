@@ -108,7 +108,7 @@ const bigBody = theme => css`
 
 const caption = theme => css`
   font-family: ${theme.fontFamily};
-  font-weight: ${theme.fontWeights.medium};
+  font-weight: ${theme.fontWeights.regular};
   font-size: 14px;
   color: ${theme.colors.textPrimary};
   line-height: 19px;
