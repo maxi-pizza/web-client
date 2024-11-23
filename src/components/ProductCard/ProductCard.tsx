@@ -6,11 +6,21 @@ import Text from 'src/components/Text.tsx';
 import VariantImg from 'src/assets/icons/radio_button_partial.svg';
 import PlusSvg from 'src/assets/icons/plus.svg';
 import FavoriteSvg from 'src/assets/icons/favorite.svg';
+import BgDiscountSvg from 'src/assets/icons/bgdiscount.svg';
 
 const ProductCard = () => {
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={container}>
+      <div css={discountWrapper}>
+        <div
+          css={css`
+            position: absolute;
+          `}>
+          <Text type={'subscribe'}>20 %</Text>
+        </div>
+        <BgDiscountSvg />
+      </div>
       <img src={String(ProductImg)} alt={'product'} css={imgStyles} />
       <div css={wrapper}>
         <Text type={'h4'}>Прошутто</Text>
@@ -77,6 +87,7 @@ const container = theme => css`
   border-radius: 12px;
   border: 1px solid ${theme.colors.stroke};
   background-color: ${theme.colors.container};
+  position: relative;
 `;
 
 const wrapper = css`
@@ -158,4 +169,14 @@ const addToFavorite = theme => css`
   align-items: center;
   cursor: pointer;
 `;
+
+const discountWrapper = css`
+  position: absolute;
+  right: 0;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export default ProductCard;
