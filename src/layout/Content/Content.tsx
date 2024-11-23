@@ -2,6 +2,7 @@ import React from 'react';
 import {css} from '@emotion/react';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
+import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 
 const Content = () => {
   return (
@@ -10,6 +11,9 @@ const Content = () => {
         <MenuLayout />
         <div css={searchAndProductsWrapper}>
           <Search />
+          <div>
+            <ProductCard />
+          </div>
         </div>
       </div>
     </div>
