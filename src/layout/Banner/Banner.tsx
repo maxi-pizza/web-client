@@ -1,17 +1,16 @@
 import React from 'react';
 import BannerImg from 'src/assets/banner.png';
 import {css} from '@emotion/react';
-import {theme} from 'src/styles/theme.ts';
 import ArrowSvg from 'src/assets/icons/arrow-left.svg';
 
 const Banner = () => {
   return (
     <div css={bannerContainer}>
-      <img src={String(BannerImg)} alt="banner" />
+      <img src={String(BannerImg)} css={imageStyles} alt="banner" />
       <div css={pageControlWrapper}>
         <div css={pageIndicator}></div>
         <div css={activeIndicator}>
-          <div css={pageIndicator(theme, true)}></div>
+          <div css={pageIndicator({isActive: true})}></div>
         </div>
         <div css={pageIndicator}></div>
       </div>
@@ -32,6 +31,10 @@ const bannerContainer = css`
   position: relative;
 `;
 
+const imageStyles = css`
+  height: 800px;
+`;
+
 const pageControlWrapper = theme => css`
   position: absolute;
   bottom: 0;
@@ -46,7 +49,7 @@ const pageControlWrapper = theme => css`
   justify-content: space-evenly;
 `;
 
-const pageIndicator = (theme, isActive) => css`
+const pageIndicator = isActive => theme => css`
   height: 8px;
   width: 8px;
   border-radius: 50%;
@@ -75,6 +78,10 @@ const leftArrowBtn = theme => css`
   top: 50%;
   margin-left: 132px;
   cursor: pointer;
+  :hover {
+    svg {
+      color: ${theme.colors.accent};
+    }
 `;
 
 const rightArrowBtn = theme => css`
@@ -94,6 +101,11 @@ const rightArrowBtn = theme => css`
   cursor: pointer;
   svg {
     transform: rotate(180deg);
+  }
+  :hover {
+    svg {
+      color: ${theme.colors.accent};
+    }
   }
 `;
 

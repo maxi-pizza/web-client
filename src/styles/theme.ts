@@ -17,3 +17,5 @@ export const theme = {
     regular: 400,
   },
 };
+
+export type WhiteTheme = typeof theme;

@@ -92,8 +92,7 @@ const container = css`
   border-top-right-radius: 80px;
   display: flex;
   padding-top: 32px;
-  //  width: 100%;
-  //  position: absolute;
+  position: relative;
   z-index: 3;
   bottom: 0;
 `;
