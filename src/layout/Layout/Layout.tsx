@@ -7,6 +7,7 @@ import OrderPage from 'src/layout/OrderPage/OrderPage.tsx';
 import ThankYou from 'src/domains/ThankYou/pages/ThankYou.tsx';
 import DeliveryAndPaymentPage from 'src/domains/DeliveryAndPayment/pages/DeliveryAndPaymentPage/DeliveryAndPaymentPage.tsx';
 import {css} from '@emotion/react';
+import Favorite from 'src/domains/Favorite/pages/Favorite.tsx';
 
 const Layout = () => {
   return (
@@ -17,7 +18,8 @@ const Layout = () => {
         {/*<OrderPage />*/}
         {/*<Banner />*/}
         {/*<Content />*/}
-        <DeliveryAndPaymentPage />
+        {/*<DeliveryAndPaymentPage />*/}
+        <Favorite />
       </div>
       <Footer />
     </div>
