@@ -9,6 +9,7 @@ const Text = ({
   children,
   type,
   color,
+  opacity = '1',
 }: {
   children: string;
   type:
@@ -23,6 +24,7 @@ const Text = ({
     | 'title'
     | 'bodyText';
   color?: string;
+  opacity?: string;
 }) => {
   const styleMap = {
     h1,
@@ -43,6 +45,7 @@ const Text = ({
         textStyle,
         css`
           color: ${color};
+          opacity: ${opacity};
         `,
       ]}>
       {children}

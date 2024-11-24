@@ -21,7 +21,7 @@ export default defineConfig({
       include: '**/*.svg',
     }),
   ],
-  base: '/MaxiPizza-front',
+  base: '/',
   resolve: {
     alias: {
       src: '/src',

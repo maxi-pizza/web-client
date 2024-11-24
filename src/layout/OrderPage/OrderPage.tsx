@@ -18,7 +18,6 @@ const OrderPage = () => {
             margin-left: 8px;
           `}>
           <Text type={'bigBody'} color={theme.colors.accent}>
-            {' '}
             / Оформлення замовлення
           </Text>
         </div>

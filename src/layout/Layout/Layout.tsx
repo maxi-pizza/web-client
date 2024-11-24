@@ -4,19 +4,29 @@ import Footer from 'src/layout/Footer/Footer.tsx';
 import Banner from 'src/layout/Banner/Banner.tsx';
 import Content from 'src/layout/Content/Content.tsx';
 import OrderPage from 'src/layout/OrderPage/OrderPage.tsx';
-import ThankYou from 'src/layout/ThankYou/ThankYou.tsx';
+import ThankYou from 'src/domains/ThankYou/pages/ThankYou.tsx';
+import DeliveryAndPaymentPage from 'src/domains/DeliveryAndPayment/pages/DeliveryAndPaymentPage/DeliveryAndPaymentPage.tsx';
+import {css} from '@emotion/react';
 
 const Layout = () => {
   return (
     <div>
       <Header />
-      <ThankYou />
-      {/*<OrderPage />*/}
-      {/*<Banner />*/}
-      {/*<Content />*/}
-      {/*<Footer />*/}
+      <div css={main}>
+        {/*<ThankYou />*/}
+        {/*<OrderPage />*/}
+        {/*<Banner />*/}
+        {/*<Content />*/}
+        <DeliveryAndPaymentPage />
+      </div>
+      <Footer />
     </div>
   );
 };
+
+const main = css`
+  margin-top: -92px;
+  margin-bottom: -92px;
+`;
 
 export default Layout;

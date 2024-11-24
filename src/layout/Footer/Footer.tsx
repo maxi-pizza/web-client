@@ -90,10 +90,10 @@ const Footer = () => {
       <div css={rightsWrapper}>
         <div css={horizontalBar} />
         <div css={textWrapper}>
-          <Text type={'caption'} color={theme.colors.textWhite}>
+          <Text type={'caption'} opacity={'50%'} color={theme.colors.textWhite}>
             © 2024 Maxi Pizza Sushi.
           </Text>
-          <Text type={'caption'} color={theme.colors.textWhite}>
+          <Text type={'caption'} opacity={'50%'} color={theme.colors.textWhite}>
             All Rights Reserved.
           </Text>
         </div>

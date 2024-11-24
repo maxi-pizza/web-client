@@ -83,6 +83,9 @@ const textNSvgWrapper = css`
   display: flex;
   margin-left: 24px;
   margin-right: 24px;
+  svg {
+    margin-right: 8px;
+  }
 `;
 
 const button = theme => css`
