@@ -4,6 +4,8 @@ import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import DeleteSvg from 'src/assets/icons/close.svg';
 import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
+import VectorSvg from 'src/assets/icons/Vector.svg';
+import TumbleweedImg from 'src/assets/icons/tumbleweed.png';
 
 const Favorite = () => {
   const theme = useTheme() as WhiteTheme;
@@ -12,60 +14,98 @@ const Favorite = () => {
       <div
         css={css`
           display: flex;
+          flex-direction: column;
           padding-top: 130px;
           width: 1654px;
           margin-bottom: 32px;
+          min-height: 700px;
         `}>
         <div
           css={css`
-            margin-right: 8px;
+            display: flex;
+            margin-bottom: 32px;
           `}>
-          <Text type={'bigBody'}>Головна</Text>
-        </div>
-        <Text type={'bigBody'} color={theme.colors.accent}>
-          / Улюблені страви
-        </Text>
-      </div>
-      <div css={contentWrapper}>
-        <div css={headingWrapper}>
-          <Text type={'h1'}>Те, що вам подобається</Text>
           <div
             css={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
+              margin-right: 8px;
             `}>
-            <div
-              css={css`
-                display: flex;
-                align-items: center;
-                position: absolute;
-              `}>
-              <DeleteSvg css={theme.colors.accent} />
-              <Text type={'h5'} color={theme.colors.accent}>
-                Очистити все
-              </Text>
-            </div>
-            <button css={deleteButton} />
+            <Text type={'bigBody'}>Головна</Text>
           </div>
+          <Text type={'bigBody'} color={theme.colors.accent}>
+            / Улюблені страви
+          </Text>
         </div>
-        <div css={productsGrid}>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+        <Text type={'h1'}>Хм... тут поки пусто</Text>
+        <div
+          css={css`
+            width: 536px;
+            margin-top: 24px;
+          `}>
+          <Text type={'bigBody'} opacity={'60%'}>
+            Ви ще не додали жодної страви до улюблених, але це легко виправити —
+            просто виберіть свої фаворити на головній, і вони з'являться тут!
+          </Text>
         </div>
+        <img
+          src={String(TumbleweedImg)}
+          alt={'tumbleweed'}
+          css={css`
+            width: 200px;
+            position: absolute;
+            top: 390px;
+            left: 472px;
+          `}
+        />
+        <VectorSvg
+          color={theme.colors.stroke}
+          css={css`
+            position: absolute;
+            top: 473px;
+            left: 0;
+            width: 1900px;
+          `}
+        />
       </div>
+      {/*<div css={contentWrapper}>*/}
+      {/*  <div css={headingWrapper}>*/}
+      {/*    <Text type={'h1'}>Те, що вам подобається</Text>*/}
+      {/*    <div*/}
+      {/*      css={css`*/}
+      {/*        display: flex;*/}
+      {/*        align-items: center;*/}
+      {/*        justify-content: center;*/}
+      {/*      `}>*/}
+      {/*      <div*/}
+      {/*        css={css`*/}
+      {/*          display: flex;*/}
+      {/*          align-items: center;*/}
+      {/*          position: absolute;*/}
+      {/*        `}>*/}
+      {/*        <DeleteSvg css={theme.colors.accent} />*/}
+      {/*        <Text type={'h5'} color={theme.colors.accent}>*/}
+      {/*          Очистити все*/}
+      {/*        </Text>*/}
+      {/*      </div>*/}
+      {/*      <button css={deleteButton} />*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div css={productsGrid}>*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*    <ProductCard />*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </div>
   );
 };
