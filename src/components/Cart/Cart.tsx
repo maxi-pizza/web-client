@@ -5,6 +5,7 @@ import MinusSvg from 'src/assets/icons/minus.svg';
 import PlusSvg from 'src/assets/icons/plus.svg';
 import TrashSvg from 'src/assets/icons/trash.svg';
 import {WhiteTheme} from 'src/styles/theme.ts';
+import Counter from 'src/components/Counter/Counter.tsx';
 
 const Cart = ({withOrderButton = true}: {withOrderButton?: boolean}) => {
   const theme = useTheme() as WhiteTheme;
@@ -19,15 +20,7 @@ const Cart = ({withOrderButton = true}: {withOrderButton?: boolean}) => {
               <Text type={'h5'}>399 грн</Text>
             </div>
             <div css={buttonsWrapper}>
-              <div css={counterWrapper}>
-                <button css={minusButton}>
-                  <MinusSvg color={theme.colors.accent} />
-                </button>
-                <Text type={'h5'}>2</Text>
-                <button css={addButton}>
-                  <PlusSvg color={theme.colors.accent} />
-                </button>
-              </div>
+              <Counter />
               <div css={deleteButtonWrapper}>
                 <button css={deleteButton} />
                 <TrashSvg
@@ -46,15 +39,7 @@ const Cart = ({withOrderButton = true}: {withOrderButton?: boolean}) => {
               <Text type={'h5'}>399 грн</Text>
             </div>
             <div css={buttonsWrapper}>
-              <div css={counterWrapper}>
-                <button css={minusButton}>
-                  <MinusSvg color={theme.colors.accent} />
-                </button>
-                <Text type={'h5'}>2</Text>
-                <button css={addButton}>
-                  <PlusSvg color={theme.colors.accent} />
-                </button>
-              </div>
+              <Counter />
               <div css={deleteButtonWrapper}>
                 <button css={deleteButton} />
                 <TrashSvg
@@ -120,41 +105,6 @@ const buttonsWrapper = css`
   justify-content: space-between;
 `;
 
-const counterWrapper = css`
-  display: flex;
-  align-items: center;
-  width: 130px;
-  justify-content: space-between;
-  svg {
-    height: 22px;
-    width: 22px;
-  }
-`;
-
-const minusButton = theme => css`
-  background-color: transparent;
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  border: 1px solid ${theme.colors.stroke};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
-const addButton = theme => css`
-  background-color: transparent;
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  border: 1px solid ${theme.colors.stroke};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
 const deleteButton = theme => css`
   background-color: ${theme.colors.accent};
   width: 36px;
@@ -199,7 +149,6 @@ const sumWrapper = css`
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
-  margin-bottom: 24px;
 `;
 
 const orderButton = theme => css`
@@ -212,6 +161,7 @@ const orderButton = theme => css`
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 24px;
 `;
 
 export default Cart;

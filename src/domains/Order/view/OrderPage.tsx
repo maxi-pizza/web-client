@@ -3,10 +3,9 @@ import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import MinusSvg from 'src/assets/icons/minus.svg';
-import PlusSVg from 'src/assets/icons/plus.svg';
 import PlusSvg from 'src/assets/icons/plus.svg';
-import TrashSvg from 'src/assets/icons/trash.svg';
 import Cart from 'src/components/Cart/Cart.tsx';
+import Counter from 'src/components/Counter/Counter.tsx';
 
 const OrderPage = () => {
   const theme = useTheme() as WhiteTheme;
@@ -128,14 +127,12 @@ const OrderPage = () => {
             </div>
             <div css={personCountNCommentWrapper}>
               <Text type={'h3'}>Кількість осіб та коментарій</Text>
-              <div css={counterWrapper1}>
-                <button css={counterButton}>
-                  <MinusSvg color={theme.colors.accent} />
-                </button>
-                <Text type={'h5'}>2</Text>
-                <button css={counterButton}>
-                  <PlusSVg color={theme.colors.accent} />
-                </button>
+              <div
+                css={css`
+                  margin-top: 24px;
+                  margin-bottom: 24px;
+                `}>
+                <Counter />
               </div>
               <div>
                 <textarea
@@ -255,27 +252,6 @@ const paymentMethodsWrapper = css``;
 
 const personCountNCommentWrapper = css`
   margin-top: 32px;
-`;
-
-const counterWrapper1 = css`
-  width: 164px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 24px;
-  margin-bottom: 24px;
-`;
-
-const counterButton = theme => css`
-  background-color: ${theme.colors.container};
-  width: 53px;
-  height: 53px;
-  border-radius: 6px;
-  border: 1px solid ${theme.colors.stroke};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 `;
 
 const textareaStyles = theme => css`

@@ -16,7 +16,6 @@ const CategoryCard = ({
   svg?: React.ReactNode;
 }) => {
   const theme = useTheme() as WhiteTheme;
-  console.log(svg);
   return (
     <div css={categoryCard}>
       <div css={redRectangle} />
