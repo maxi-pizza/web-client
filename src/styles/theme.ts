@@ -16,6 +16,12 @@ export const theme = {
     medium: 500,
     regular: 400,
   },
+  media: {
+    mobile: '375px',
+    tablet: '768px',
+    laptop: '1366px',
+    pc: '1920px',
+  },
 };
 
 export type WhiteTheme = typeof theme;

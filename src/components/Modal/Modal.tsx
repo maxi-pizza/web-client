@@ -12,12 +12,6 @@ const Modal = ({
   isVisible: boolean;
   children: React.ReactNode;
 }) => {
-  // if (isVisible) {
-  //   document.body.style.position = 'fixed';
-  // } else {
-  //   document.body.style.overflow = 'visible';
-  //   document.body.style.position = 'static';
-  // }
   return (
     isVisible && (
       <FloatingPortal>
@@ -63,7 +57,6 @@ const modalContainer = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow-y: scroll;
 `;
 
 export default Modal;
