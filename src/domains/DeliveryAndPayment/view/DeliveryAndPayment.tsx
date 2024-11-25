@@ -9,7 +9,7 @@ import CashSvg from 'src/assets/icons/cash.svg';
 import CardSvg from 'src/assets/icons/credit-card.svg';
 import MokMapImg from 'src/assets/mokmap.png';
 
-const DeliveryAndPaymentPage = () => {
+const DeliveryAndPayment = () => {
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={container}>
@@ -171,4 +171,4 @@ const cardsWrapper = css`
   justify-content: space-between;
 `;
 
-export default DeliveryAndPaymentPage;
+export default DeliveryAndPayment;

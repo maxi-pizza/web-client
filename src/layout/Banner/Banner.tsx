@@ -40,6 +40,7 @@ const pageControlWrapper = theme => css`
   position: absolute;
   bottom: 0;
   margin-bottom: 96px;
+  transform: translate(-50%, -50%);
   left: 50%;
   width: 76px;
   height: 24px;

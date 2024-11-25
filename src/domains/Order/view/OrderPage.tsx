@@ -227,6 +227,7 @@ const container = theme => css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 100px;
 `;
 
 const pathContainer = css`
