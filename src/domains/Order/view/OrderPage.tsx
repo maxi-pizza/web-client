@@ -2,18 +2,23 @@ import React from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
-import MinusSvg from 'src/assets/icons/minus.svg';
-import PlusSvg from 'src/assets/icons/plus.svg';
 import Cart from 'src/components/Cart/Cart.tsx';
 import Counter from 'src/components/Counter/Counter.tsx';
 import RadioButton from 'src/components/RadionButton/RadioButton.tsx';
 import SwitchButton from 'src/components/SwitchButton/SwitchButton.tsx';
 import Input from 'src/components/Input/Input.tsx';
+import Dropdown from 'src/components/Dropdown/Dropdown.tsx';
 
 const OrderPage = () => {
   const theme = useTheme() as WhiteTheme;
   const deliveryMethods = [{name: 'Доставка'}, {name: 'Самовивіз'}];
   const paymentMethods = [{name: 'Готівка'}, {name: 'Картка'}];
+  const districts = [
+    {name: 'Центр'},
+    {name: 'Таїрово'},
+    {name: 'Сьоме небо'},
+    {name: 'Селище Котовського'},
+  ];
   return (
     <div css={container}>
       <div css={pathContainer}>
@@ -80,8 +85,8 @@ const OrderPage = () => {
                     placeholder={'Квартира*'}
                   />
                 </div>
-                <input
-                  css={inputStyles({width: 100})}
+                <Dropdown
+                  options={districts}
                   placeholder={'Оберіть найближчий район'}
                 />
               </div>
@@ -109,8 +114,8 @@ const OrderPage = () => {
                     placeholder={'Квартира*'}
                   />
                 </div>
-                <input
-                  css={inputStyles({width: 100})}
+                <Dropdown
+                  options={districts}
                   placeholder={'Оберіть найближчий район'}
                 />
               </div>

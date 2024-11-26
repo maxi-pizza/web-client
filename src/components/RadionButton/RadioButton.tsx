@@ -7,16 +7,12 @@ const RadioButton = ({options}: {options: {name: string}[]}) => {
         display: flex;
       `}>
       {options.map(option => (
-        <div
-          css={css`
-            margin-right: 24px;
-            display: flex;
-          `}>
+        <label css={labelStyles} key={option.name}>
           <RadioGroup.Item value={option.name} css={item}>
             <RadioGroup.Indicator css={indicator} />
           </RadioGroup.Item>
           <Text type={'bigBody'}>{option.name}</Text>
-        </div>
+        </label>
       ))}
     </RadioGroup.Root>
   );
@@ -46,6 +42,7 @@ const indicator = theme => css`
   width: 100%;
   height: 100%;
   position: relative;
+  z-index: 1;
 
   &:after {
     content: '';
@@ -55,6 +52,12 @@ const indicator = theme => css`
     border-radius: 50%;
     background-color: ${theme.colors.accent};
   }
+`;
+
+const labelStyles = css`
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
 `;
 
 export default RadioButton;
