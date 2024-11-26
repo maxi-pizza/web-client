@@ -8,6 +8,7 @@ import Cart from 'src/components/Cart/Cart.tsx';
 import Counter from 'src/components/Counter/Counter.tsx';
 import RadioButton from 'src/components/RadionButton/RadioButton.tsx';
 import SwitchButton from 'src/components/SwitchButton/SwitchButton.tsx';
+import Input from 'src/components/Input/Input.tsx';
 
 const OrderPage = () => {
   const theme = useTheme() as WhiteTheme;
@@ -32,17 +33,20 @@ const OrderPage = () => {
           <div css={contactInformationWrapper}>
             <Text type={'h3'}>Контактні дані</Text>
             <div css={contactInputWrapper}>
-              <input
-                css={inputStyles({width: 33})}
+              <Input
+                width={'33%'}
                 placeholder={'Номер телефону*'}
+                inputType={'text'}
               />
-              <input
-                css={inputStyles({width: 33})}
+              <Input
+                width={'33%'}
                 placeholder={'Номер телефону*'}
+                inputType={'text'}
               />
-              <input
-                css={inputStyles({width: 33})}
+              <Input
+                width={'33%'}
                 placeholder={'Номер телефону*'}
+                inputType={'text'}
               />
             </div>
           </div>
@@ -53,8 +57,9 @@ const OrderPage = () => {
             </div>
             <div css={addressInputWrapper}>
               <div css={inputsWrapper}>
-                <input
-                  css={inputStyles({width: 100})}
+                <Input
+                  inputType={'text'}
+                  width={'100%'}
                   placeholder={'Вулиця*'}
                 />
                 <div
@@ -64,12 +69,14 @@ const OrderPage = () => {
                     margin-top: 8px;
                     margin-bottom: 8px;
                   `}>
-                  <input
-                    css={inputStyles({width: 49})}
+                  <Input
+                    width={'49%'}
+                    inputType={'text'}
                     placeholder={'Під’їзд*'}
                   />
-                  <input
-                    css={inputStyles({width: 49})}
+                  <Input
+                    width={'49%'}
+                    inputType={'text'}
                     placeholder={'Квартира*'}
                   />
                 </div>
@@ -79,8 +86,9 @@ const OrderPage = () => {
                 />
               </div>
               <div css={inputsWrapper}>
-                <input
-                  css={inputStyles({width: 100})}
+                <Input
+                  inputType={'text'}
+                  width={'100%'}
                   placeholder={'Вулиця*'}
                 />
                 <div
@@ -90,12 +98,14 @@ const OrderPage = () => {
                     margin-top: 8px;
                     margin-bottom: 8px;
                   `}>
-                  <input
-                    css={inputStyles({width: 49})}
+                  <Input
+                    width={'49%'}
+                    inputType={'text'}
                     placeholder={'Під’їзд*'}
                   />
-                  <input
-                    css={inputStyles({width: 49})}
+                  <Input
+                    width={'49%'}
+                    inputType={'text'}
                     placeholder={'Квартира*'}
                   />
                 </div>
