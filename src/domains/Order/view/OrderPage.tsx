@@ -7,6 +7,7 @@ import PlusSvg from 'src/assets/icons/plus.svg';
 import Cart from 'src/components/Cart/Cart.tsx';
 import Counter from 'src/components/Counter/Counter.tsx';
 import RadioButton from 'src/components/RadionButton/RadioButton.tsx';
+import SwitchButton from 'src/components/SwitchButton/SwitchButton.tsx';
 
 const OrderPage = () => {
   const theme = useTheme() as WhiteTheme;
@@ -105,7 +106,13 @@ const OrderPage = () => {
               </div>
             </div>
             <div css={toggleContainer}>
-              <Text type={'bigBody'}>В мене приватний будинок</Text>
+              <SwitchButton />
+              <div
+                css={css`
+                  margin-left: 8px;
+                `}>
+                <Text type={'bigBody'}>В мене приватний будинок</Text>
+              </div>
             </div>
             <div css={paymentMethodsWrapper}>
               <Text type={'h3'}>Методи оплати</Text>
@@ -206,23 +213,6 @@ const radioWrapper = css`
   margin-bottom: 26px;
 `;
 
-const radioLabel = theme => css`
-  display: flex;
-  cursor: pointer;
-  margin-right: 24px;
-  user-select: none;
-  margin-top: 25px;
-  margin-bottom: 25px;
-
-  > input {
-    border-color: ${theme.colors.stroke};
-    width: 24px;
-    height: 24px;
-    accent-color: ${theme.colors.accent};
-    margin-right: 8px;
-  }
-`;
-
 const addressInputWrapper = css`
   display: flex;
 `;
@@ -237,6 +227,8 @@ const inputsWrapper = css`
 const toggleContainer = css`
   margin-top: 26px;
   margin-bottom: 34px;
+  display: flex;
+  align-items: center;
 `;
 
 const paymentMethodsWrapper = css``;
