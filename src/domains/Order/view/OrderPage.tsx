@@ -6,9 +6,12 @@ import MinusSvg from 'src/assets/icons/minus.svg';
 import PlusSvg from 'src/assets/icons/plus.svg';
 import Cart from 'src/components/Cart/Cart.tsx';
 import Counter from 'src/components/Counter/Counter.tsx';
+import RadioButton from 'src/components/RadionButton/RadioButton.tsx';
 
 const OrderPage = () => {
   const theme = useTheme() as WhiteTheme;
+  const deliveryMethods = [{name: 'Доставка'}, {name: 'Самовивіз'}];
+  const paymentMethods = [{name: 'Готівка'}, {name: 'Картка'}];
   return (
     <div css={container}>
       <div css={pathContainer}>
@@ -45,14 +48,7 @@ const OrderPage = () => {
           <div css={deliveryMethodAndAddressWrapper}>
             <Text type={'h3'}>Оберіть метод та адресу доставки</Text>
             <div css={radioWrapper}>
-              <label css={radioLabel}>
-                <input type="radio" name="radio" checked />
-                <Text type={'bigBody'}>Доставка</Text>
-              </label>
-              <label css={radioLabel}>
-                <input type="radio" name="radio" />
-                <Text type={'bigBody'}>Самовивіз</Text>
-              </label>
+              <RadioButton options={deliveryMethods} />
             </div>
             <div css={addressInputWrapper}>
               <div css={inputsWrapper}>
@@ -114,14 +110,7 @@ const OrderPage = () => {
             <div css={paymentMethodsWrapper}>
               <Text type={'h3'}>Методи оплати</Text>
               <div css={radioWrapper}>
-                <label css={radioLabel}>
-                  <input type="radio" name="payment" checked />
-                  <Text type={'bigBody'}>Готівка</Text>
-                </label>
-                <label css={radioLabel}>
-                  <input type="radio" name="payment" />
-                  <Text type={'bigBody'}>Картка</Text>
-                </label>
+                <RadioButton options={paymentMethods} />
               </div>
               <input css={inputStyles({width: 33})} placeholder={'Решта з'} />
             </div>
@@ -213,6 +202,8 @@ const deliveryMethodAndAddressWrapper = css`
 
 const radioWrapper = css`
   display: flex;
+  margin-top: 26px;
+  margin-bottom: 26px;
 `;
 
 const radioLabel = theme => css`

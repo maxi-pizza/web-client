@@ -17,11 +17,11 @@ const Layout = () => {
     <div>
       <Header />
       <div css={main}>
-        <RestaurantCloseModal />
+        {/*<RestaurantCloseModal />*/}
         {/*<ThankYou />*/}
-        {/*<OrderPage />*/}
-        <Banner />
-        <Content />
+        <OrderPage />
+        {/*<Banner />*/}
+        {/*<Content />*/}
         {/*<DeliveryAndPayment />*/}
         {/*<Favorite />*/}
         {/*<Error />*/}
