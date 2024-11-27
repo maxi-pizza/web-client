@@ -52,6 +52,10 @@ const container = theme => css`
   position: relative;
   z-index: 2;
   padding-bottom: 182px;
+  @media (max-width: ${theme.media.mobile}) {
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+  }
 `;
 
 const menuWrapper = theme => css`
@@ -60,6 +64,7 @@ const menuWrapper = theme => css`
   display: flex;
   @media (max-width: ${theme.media.mobile}) {
     flex-direction: column;
+    align-items: center;
     margin-left: 0;
   }
 `;
@@ -68,14 +73,34 @@ const searchAndProductsWrapper = theme => css`
   margin-left: 24px;
   @media (max-width: ${theme.media.mobile}) {
     margin-left: 0;
+    width: 343px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
-const headingWrapper = css`
+const headingWrapper = theme => css`
   display: flex;
   margin-top: 48px;
   margin-bottom: 32px;
   align-items: center;
+  width: 100%;
+  svg {
+    height: 36px;
+    width: 36px;
+  }
+  @media (max-width: ${theme.media.mobile}) {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    svg {
+      height: 24px;
+      width: 24px;
+    }
+  }
 `;
 
 const productsGrid = theme => css`
