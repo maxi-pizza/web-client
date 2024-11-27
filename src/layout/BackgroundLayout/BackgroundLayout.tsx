@@ -22,6 +22,9 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           top: 0;
           left: 0;
+          @media (max-width: ${theme.media.mobile}) {
+            display: none;
+          }
         `}
         color={theme.colors.accent}
       />
@@ -30,6 +33,9 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           top: 467px;
           left: 268px;
+          @media (max-width: ${theme.media.mobile}) {
+            display: none;
+          }
         `}
         color={theme.colors.stroke}
       />
@@ -38,6 +44,10 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           right: 200px;
           top: 176px;
+          @media (max-width: ${theme.media.mobile}) {
+            top: 134px;
+            right: 19px;
+          }
         `}
         color={theme.colors.stroke}
       />
@@ -46,6 +56,9 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           top: 216px;
           left: 515px;
+          @media (max-width: ${theme.media.mobile}) {
+            display: none;
+          }
         `}
         color={theme.colors.stroke}
       />
@@ -54,6 +67,9 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           top: 367px;
           right: 484px;
+          @media (max-width: ${theme.media.mobile}) {
+            display: none;
+          }
         `}
         color={theme.colors.stroke}
       />
@@ -62,6 +78,10 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           bottom: 246px;
           right: 336px;
+          @media (max-width: ${theme.media.mobile}) {
+            top: 101px;
+            left: 21px;
+          }
         `}
         color={theme.colors.stroke}
       />
@@ -70,6 +90,9 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           right: 0;
           bottom: 0;
+          @media (max-width: ${theme.media.mobile}) {
+            display: none;
+          }
         `}
         color={theme.colors.accent}
       />
@@ -78,6 +101,9 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           bottom: 137px;
           left: 343px;
+          @media (max-width: ${theme.media.mobile}) {
+            display: none;
+          }
         `}
         color={theme.colors.stroke}
       />

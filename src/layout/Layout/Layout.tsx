@@ -18,8 +18,8 @@ const Layout = () => {
       <Header />
       <div css={main}>
         {/*<RestaurantCloseModal />*/}
-        {/*<ThankYou />*/}
-        <OrderPage />
+        <ThankYou />
+        {/*<OrderPage />*/}
         {/*<Banner />*/}
         {/*<Content />*/}
         {/*<DeliveryAndPayment />*/}

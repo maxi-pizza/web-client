@@ -11,11 +11,15 @@ const ThankYou = () => {
   return (
     <BackgroundLayout>
       <div css={wrapper}>
-        <CheckedSvg />
+        <CheckedSvg css={checkedSvg} />
         <div
           css={css`
             margin-top: 32px;
             margin-bottom: 24px;
+            @media (max-width: ${theme.media.mobile}) {
+              margin-top: 25px;
+              margin-bottom: 15px;
+            }
           `}>
           <Text type={'h1'}>Дякуємо Вам!</Text>
         </div>
@@ -30,6 +34,9 @@ const ThankYou = () => {
             width: 100%;
             justify-content: space-between;
             position: relative;
+            @media (max-width: ${theme.media.mobile}) {
+              margin-top: 40px;
+            }
           `}>
           <div css={circleWrapper}>
             <div css={activeCircle}>
@@ -46,6 +53,10 @@ const ThankYou = () => {
                 position: absolute;
                 top: 25px;
                 left: 110px;
+                @media (max-width: ${theme.media.mobile}) {
+                  top: 16px;
+                  left: 79px;
+                }
               `,
             ]}
           />
@@ -64,6 +75,10 @@ const ThankYou = () => {
                 position: absolute;
                 top: 25px;
                 right: 124px;
+                @media (max-width: ${theme.media.mobile}) {
+                  top: 16px;
+                  right: 92px;
+                }
               `,
             ]}
           />
@@ -95,7 +110,7 @@ const ThankYou = () => {
   );
 };
 
-const wrapper = css`
+const wrapper = theme => css`
   position: relative;
   z-index: 1;
   display: flex;
@@ -103,6 +118,9 @@ const wrapper = css`
   width: 536px;
   align-items: center;
   text-align: center;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 343px;
+  }
 `;
 
 const circle = theme => css`
@@ -114,6 +132,11 @@ const circle = theme => css`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 15px;
+  }
 `;
 
 const activeCircle = theme => css`
@@ -124,6 +147,11 @@ const activeCircle = theme => css`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 15px;
+  }
 `;
 
 const circleWrapper = css`
@@ -135,6 +163,9 @@ const horizontalBar = theme => css`
   height: 1px;
   width: 100px;
   background-color: ${theme.colors.stroke};
+  @media (max-width: ${theme.media.mobile}) {
+    width: 54px;
+  }
 `;
 
 const homeButton = theme => css`
@@ -145,6 +176,18 @@ const homeButton = theme => css`
   border-radius: 8px;
   margin-top: 80px;
   cursor: pointer;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-top: 60px;
+  }
+`;
+
+const checkedSvg = theme => css`
+  width: 120px;
+  height: 120px;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 export default ThankYou;

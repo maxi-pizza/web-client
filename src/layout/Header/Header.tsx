@@ -67,6 +67,7 @@ const headerContainer = theme => css`
   @media (max-width: ${theme.media.mobile}) {
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
+    height: 80px;
   }
 `;
 
