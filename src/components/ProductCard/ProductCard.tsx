@@ -42,7 +42,7 @@ const ProductCard = () => {
                 30 см
               </Text>
             </div>
-            <div css={variantStyle()}>
+            <div css={variantStyle({isActive: false})}>
               <VariantImg color={theme.colors.textPrimary} />
               <Text type={'title'} color={theme.colors.textPrimary}>
                 45 см
@@ -76,9 +76,13 @@ const ProductCard = () => {
   );
 };
 
-const imgStyles = css`
+const imgStyles = theme => css`
   width: 318px;
   height: 250px;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 343px;
+    height: 188px;
+  }
 `;
 
 const container = theme => css`
@@ -88,45 +92,63 @@ const container = theme => css`
   border: 1px solid ${theme.colors.stroke};
   background-color: ${theme.colors.container};
   position: relative;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 343px;
+    height: 382px;
+  }
 `;
 
-const wrapper = css`
-  margin-left: 16px;
-  margin-top: 24px;
+const wrapper = theme => css`
+  margin: 24px 16px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin: 15px;
+  }
 `;
 
-const textWrapper = css`
+const textWrapper = theme => css`
   margin-top: 8px;
   margin-bottom: 16px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-bottom: 12px;
+  }
 `;
 
 const variantWrapper = css`
   display: flex;
 `;
-const variantStyle = isActive => theme => css`
-  height: 32px;
-  width: 89px;
-  display: flex;
-  ${isActive
-    ? {
-        border: `1px solid ${theme.colors.accent}`,
-        borderRadius: '20px',
-      }
-    : null}
-  align-items: center;
-  justify-content: space-evenly;
-  cursor: pointer;
-  margin-right: 8px;
-`;
+const variantStyle =
+  ({isActive}) =>
+  theme => css`
+    height: 32px;
+    width: 89px;
+    display: flex;
+    ${isActive
+      ? {
+          border: `1px solid ${theme.colors.accent}`,
+          borderRadius: '20px',
+        }
+      : null}
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+    margin-right: 8px;
+    @media (max-width: ${theme.media.mobile}) {
+      width: 81px;
+      height: 29px;
+    }
+  `;
 
 const weightWrapper = css`
   opacity: 30%;
-  margin-right: 16px;
 `;
 
-const priceAndButtonsWrapper = css`
+const priceAndButtonsWrapper = theme => css`
   display: flex;
   margin-top: 17px;
+  justify-content: space-between;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-top: 12px;
+  }
 `;
 
 const pricesWrapper = css`
@@ -143,7 +165,6 @@ const buttonWrapper = css`
   display: flex;
   width: 104px;
   justify-content: space-between;
-  margin-left: 103px;
 `;
 
 const addButton = theme => css`
@@ -156,6 +177,14 @@ const addButton = theme => css`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+  @media (max-width: ${theme.media.mobile}) {
+    width: 44px;
+    height: 44px;
+  }
 `;
 
 const addToFavorite = theme => css`
@@ -168,6 +197,18 @@ const addToFavorite = theme => css`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+  @media (max-width: ${theme.media.mobile}) {
+    width: 44px;
+    height: 44px;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const discountWrapper = css`
