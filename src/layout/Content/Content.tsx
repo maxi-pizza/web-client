@@ -13,7 +13,9 @@ const Content = () => {
       <div css={menuWrapper}>
         <MenuLayout />
         <div css={searchAndProductsWrapper}>
-          <Search />
+          <div css={searchWrapper}>
+            <Search />
+          </div>
           <div css={headingWrapper}>
             <DiscountSvg
               css={css`
@@ -33,7 +35,9 @@ const Content = () => {
             <ProductCard />
           </div>
         </div>
-        <Cart />
+        <div css={cartWrapper}>
+          <Cart />
+        </div>
       </div>
     </div>
   );
@@ -43,17 +47,20 @@ const container = theme => css`
   background-color: ${theme.colors.background};
   border-top-left-radius: 80px;
   border-top-right-radius: 80px;
-  height: 1900px;
   margin-top: -80px;
   margin-bottom: -80px;
   position: relative;
   z-index: 2;
+  padding-bottom: 182px;
 `;
 
-const menuWrapper = css`
+const menuWrapper = theme => css`
   padding-top: 80px;
   margin-left: 135px;
   display: flex;
+  @media (max-width: ${theme.media.mobile}) {
+    flex-direction: column;
+  }
 `;
 
 const searchAndProductsWrapper = css`
@@ -67,10 +74,26 @@ const headingWrapper = css`
   align-items: center;
 `;
 
-const productsGrid = css`
+const productsGrid = theme => css`
   display: grid;
   gap: 16px;
   grid-template-columns: 1fr 1fr 1fr;
+  @media (max-width: ${theme.media.mobile}) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const cartWrapper = theme => css`
+  margin-left: 24px;
+  @media (max-width: ${theme.media.mobile}) {
+    display: none;
+  }
+`;
+
+const searchWrapper = theme => css`
+  @media (max-width: ${theme.media.mobile}) {
+    display: none;
+  }
 `;
 
 export default Content;

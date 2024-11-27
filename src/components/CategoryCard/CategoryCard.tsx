@@ -51,7 +51,6 @@ const categoryCard = theme => css`
   display: flex;
   align-items: center;
   position: relative;
-  margin-bottom: 8px;
 `;
 
 const redRectangle = theme => css`

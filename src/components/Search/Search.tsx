@@ -14,7 +14,7 @@ const Search = () => {
 };
 
 const container = css`
-  width: 986px;
+  width: 100%;
   height: 53px;
   position: relative;
 `;

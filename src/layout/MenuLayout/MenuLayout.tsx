@@ -18,7 +18,7 @@ import CategoryCard from 'src/components/CategoryCard/CategoryCard.tsx';
 
 const MenuLayout = () => {
   return (
-    <div>
+    <div css={container}>
       <CategoryCard
         backgroundImg={DiscountCircleImg}
         text={'Акційні пропозиції'}
@@ -37,5 +37,12 @@ const MenuLayout = () => {
     </div>
   );
 };
+
+const container = theme => css`
+  @media (max-width: ${theme.media.mobile}) {
+    display: flex;
+    overflow: scroll;
+  }
+`;
 
 export default MenuLayout;

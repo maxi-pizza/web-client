@@ -10,6 +10,7 @@ export const theme = {
     textWhite: '#ffffff',
     strokeDark: '#2F2F31',
     pageIndicator: '#D3D3DD',
+    footer: '#242425',
   },
   fontWeights: {
     semiBold: 600,

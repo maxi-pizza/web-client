@@ -14,10 +14,7 @@ const Footer = () => {
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={container}>
-      <div
-        css={css`
-          display: flex;
-        `}>
+      <div css={contentWrapper}>
         <img css={logoStyles} src={String(logo)} alt="logo" />
         <div css={contactInformationWrapper}>
           <Text type={'h5'} color={theme.colors.textWhite}>
@@ -102,9 +99,8 @@ const Footer = () => {
   );
 };
 
-const container = css`
-  height: 318px;
-  background-color: #242425;
+const container = theme => css`
+  background-color: ${theme.colors.footer};
   border-top-left-radius: 80px;
   border-top-right-radius: 80px;
   display: flex;
@@ -114,11 +110,26 @@ const container = css`
   bottom: 0;
   flex-direction: column;
   align-items: center;
+  @media (max-width: ${theme.media.mobile}) {
+    padding-top: 16px;
+  }
 `;
 
-const logoStyles = css`
+const contentWrapper = theme => css`
+  display: flex;
+  @media (max-width: ${theme.media.mobile}) {
+    flex-direction: column;
+    margin-left: 16px;
+  }
+`;
+
+const logoStyles = theme => css`
   width: 108px;
   height: 80px;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 68px;
+    height: 50px;
+  }
 `;
 
 const marginWrapper = css`

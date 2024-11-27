@@ -1,14 +1,18 @@
 import React from 'react';
-import {css} from '@emotion/react';
+import {css, useTheme} from '@emotion/react';
 import logo from 'src/assets/logo.png';
 import DistanceSvg from 'src/assets/icons/distance.svg';
 import PaceSvg from 'src/assets/icons/pace.svg';
 import PhoneSvg from 'src/assets/icons/phone.svg';
 import FavouriteSvg from 'src/assets/icons/favorite.svg';
 import Text from 'src/components/Text.tsx';
-import {theme} from 'src/styles/theme.ts';
+import HeaderButton from 'src/components/HeaderButton/HeaderButton.tsx';
+import CartSvg from 'src/assets/icons/cart.svg';
+import SearchSvg from 'src/assets/icons/search.svg';
+import {WhiteTheme} from 'src/styles/theme.ts';
 
 const Header = () => {
+  const theme = useTheme() as WhiteTheme;
   return (
     <div css={headerContainer}>
       <div css={wrapper}>
@@ -39,6 +43,12 @@ const Header = () => {
         <FavouriteSvg color={theme.colors.accent} />
         <Text type={'subscribe'}>Улюблені страви</Text>
       </button>
+      <div css={mobileHeaderMenu}>
+        <HeaderButton icon={<SearchSvg />} />
+        <HeaderButton icon={<DistanceSvg />} />
+        <HeaderButton icon={<FavouriteSvg />} />
+        <HeaderButton icon={<CartSvg />} />
+      </div>
     </div>
   );
 };
@@ -68,8 +78,11 @@ const verticalBar = css`
   height: 22px;
 `;
 
-const contentWrapper = css`
+const contentWrapper = theme => css`
   display: flex;
+  @media (max-width: ${theme.media.mobile}) {
+    display: none;
+  }
 `;
 
 const wrapper = css`
@@ -101,6 +114,17 @@ const button = theme => css`
   margin-right: 132px;
   :hover {
     border: 1px solid ${theme.colors.accent};
+  }
+  @media (max-width: ${theme.media.mobile}) {
+    display: none;
+  }
+`;
+
+const mobileHeaderMenu = theme => css`
+  display: none;
+  @media (max-width: ${theme.media.mobile}) {
+    display: flex;
+    width: 194px;
   }
 `;
 
