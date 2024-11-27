@@ -64,12 +64,22 @@ const headerContainer = theme => css`
   justify-content: space-between;
   position: relative;
   z-index: 3;
+  @media (max-width: ${theme.media.mobile}) {
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
 `;
 
-const logoStyles = css`
+const logoStyles = theme => css`
   width: 81px;
   height: 60px;
   margin-right: 56px;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 68px;
+    height: 50px;
+    margin-right: 0;
+    margin-left: 16px;
+  }
 `;
 
 const verticalBar = css`
@@ -85,11 +95,14 @@ const contentWrapper = theme => css`
   }
 `;
 
-const wrapper = css`
+const wrapper = theme => css`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-left: 132px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-left: 0;
+  }
 `;
 
 const textNSvgWrapper = css`
@@ -124,7 +137,9 @@ const mobileHeaderMenu = theme => css`
   display: none;
   @media (max-width: ${theme.media.mobile}) {
     display: flex;
+    justify-content: space-between;
     width: 194px;
+    margin-right: 16px;
   }
 `;
 

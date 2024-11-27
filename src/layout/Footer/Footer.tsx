@@ -112,7 +112,9 @@ const container = theme => css`
   align-items: center;
   @media (max-width: ${theme.media.mobile}) {
     padding-top: 16px;
-  }
+    align-items:  normal ;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
 `;
 
 const contentWrapper = theme => css`
@@ -142,18 +144,30 @@ const svgStyles = css`
   margin-right: 8px;
 `;
 
-const contactInformationWrapper = css`
+const contactInformationWrapper = theme => css`
   margin-left: 312px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-left: 0;
+    margin-top: 20px;
+  }
 `;
 
-const legalInformationWrapper = css`
+const legalInformationWrapper = theme => css`
   margin-left: 180px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-left: 0;
+    margin-top: 20px;
+  }
 `;
 
-const socialInformationWrapper = css`
+const socialInformationWrapper = theme => css`
   margin-left: 180px;
   display: flex;
   flex-direction: column;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-left: 0;
+    margin-top: 20px;
+  }
 `;
 
 const socialWrapper = css`
@@ -177,12 +191,15 @@ const socialButton = css`
   }
 `;
 
-const rightsWrapper = css`
+const rightsWrapper = theme => css`
   margin-top: 32px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-top: 20px;
+  }
 `;
 
 const horizontalBar = theme => css`
-  width: 1656px;
+  width: 100%;
   height: 1px;
   background-color: ${theme.colors.strokeDark};
 `;

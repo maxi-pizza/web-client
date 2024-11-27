@@ -60,11 +60,15 @@ const menuWrapper = theme => css`
   display: flex;
   @media (max-width: ${theme.media.mobile}) {
     flex-direction: column;
+    margin-left: 0;
   }
 `;
 
-const searchAndProductsWrapper = css`
+const searchAndProductsWrapper = theme => css`
   margin-left: 24px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-left: 0;
+  }
 `;
 
 const headingWrapper = css`

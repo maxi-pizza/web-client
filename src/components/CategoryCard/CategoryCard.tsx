@@ -51,6 +51,9 @@ const categoryCard = theme => css`
   display: flex;
   align-items: center;
   position: relative;
+  @media (max-width: ${theme.media.mobile}) {
+    height: 48px;
+  }
 `;
 
 const redRectangle = theme => css`
