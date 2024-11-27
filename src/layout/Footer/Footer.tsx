@@ -134,10 +134,13 @@ const logoStyles = theme => css`
   }
 `;
 
-const marginWrapper = css`
+const marginWrapper = theme => css`
   display: flex;
   align-items: center;
   margin-top: 16px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-top: 10px;
+  }
 `;
 
 const svgStyles = css`

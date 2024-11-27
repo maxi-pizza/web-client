@@ -38,21 +38,15 @@ const OrderPage = () => {
           <div css={contactInformationWrapper}>
             <Text type={'h3'}>Контактні дані</Text>
             <div css={contactInputWrapper}>
-              <Input
-                width={'33%'}
-                placeholder={'Номер телефону*'}
-                inputType={'text'}
-              />
-              <Input
-                width={'33%'}
-                placeholder={'Номер телефону*'}
-                inputType={'text'}
-              />
-              <Input
-                width={'33%'}
-                placeholder={'Номер телефону*'}
-                inputType={'text'}
-              />
+              <div css={contactInput}>
+                <Input placeholder={'Номер телефону*'} inputType={'text'} />
+              </div>
+              <div css={contactInput}>
+                <Input placeholder={'Номер телефону*'} inputType={'text'} />
+              </div>
+              <div css={contactInput}>
+                <Input placeholder={'Номер телефону*'} inputType={'text'} />
+              </div>
             </div>
           </div>
           <div css={deliveryMethodAndAddressWrapper}>
@@ -67,28 +61,27 @@ const OrderPage = () => {
                   width={'100%'}
                   placeholder={'Вулиця*'}
                 />
-                <div
-                  css={css`
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 8px;
-                    margin-bottom: 8px;
-                  `}>
-                  <Input
-                    width={'49%'}
-                    inputType={'text'}
-                    placeholder={'Під’їзд*'}
-                  />
+                <div css={addressInformationWrapper}>
+                  <div css={mobileMargin}>
+                    <Input
+                      width={'49%'}
+                      inputType={'text'}
+                      placeholder={'Під’їзд*'}
+                    />
+                  </div>
+
                   <Input
                     width={'49%'}
                     inputType={'text'}
                     placeholder={'Квартира*'}
                   />
                 </div>
-                <Dropdown
-                  options={districts}
-                  placeholder={'Оберіть найближчий район'}
-                />
+                <div css={mobileMargin}>
+                  <Dropdown
+                    options={districts}
+                    placeholder={'Оберіть найближчий район'}
+                  />
+                </div>
               </div>
               <div css={inputsWrapper}>
                 <Input
@@ -96,18 +89,14 @@ const OrderPage = () => {
                   width={'100%'}
                   placeholder={'Вулиця*'}
                 />
-                <div
-                  css={css`
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 8px;
-                    margin-bottom: 8px;
-                  `}>
-                  <Input
-                    width={'49%'}
-                    inputType={'text'}
-                    placeholder={'Під’їзд*'}
-                  />
+                <div css={addressInformationWrapper}>
+                  <div css={mobileMargin}>
+                    <Input
+                      width={'49%'}
+                      inputType={'text'}
+                      placeholder={'Під’їзд*'}
+                    />
+                  </div>
                   <Input
                     width={'49%'}
                     inputType={'text'}
@@ -134,7 +123,9 @@ const OrderPage = () => {
               <div css={radioWrapper}>
                 <RadioButton options={paymentMethods} />
               </div>
-              <input css={inputStyles({width: 33})} placeholder={'Решта з'} />
+              <div css={contactInput}>
+                <Input inputType={'number'} placeholder={'Решта з'} />
+              </div>
             </div>
             <div css={personCountNCommentWrapper}>
               <Text type={'h3'}>Кількість осіб та коментарій</Text>
@@ -160,7 +151,9 @@ const OrderPage = () => {
             </button>
           </div>
         </div>
-        <Cart withOrderButton={false} />
+        <div>
+          <Cart withOrderButton={false} />
+        </div>
       </div>
     </div>
   );
@@ -172,18 +165,30 @@ const container = theme => css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px;
+  padding-top: 140px;
+  padding-bottom: 100px;
+  @media (max-width: ${theme.media.mobile}) {
+    padding-bottom: 50px;
+  }
 `;
 
-const pathContainer = css`
+const pathContainer = theme => css`
   width: 1376px;
   display: flex;
-  padding-top: 140px;
   margin-bottom: 32px;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 343px;
+  }
 `;
 
-const cardWrapper = css`
+const cardWrapper = theme => css`
+  width: 1376px;
   display: flex;
+  justify-content: space-between;
+  @media (max-width: ${theme.media.mobile}) {
+    flex-direction: column-reverse;
+    width: 343px;
+  }
 `;
 const orderCard = theme => css`
   width: 956px;
@@ -192,30 +197,36 @@ const orderCard = theme => css`
   border: 1px solid ${theme.colors.stroke};
   padding: 32px;
   margin-bottom: 80px;
+  @media (max-width: ${theme.media.mobile}) {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    background-color: transparent;
+    width: 343px;
+    padding: 0;
+    margin-top: 20px;
+  }
 `;
 
 const contactInformationWrapper = css`
   margin-top: 32px;
 `;
 
-const inputStyles =
-  ({width}: {width: number}) =>
-  theme => css`
-    width: ${width}%;
-    height: 53px;
-    outline: none;
-    border: 1px solid ${theme.colors.stroke};
-    border-radius: 8px;
-    padding-left: 16px;
-    font-family: ${theme.fontFamily};
-    font-size: 16px;
-    font-weight: ${theme.fontWeights.regular};
-  `;
-
-const contactInputWrapper = css`
+const contactInputWrapper = theme => css`
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
+  @media (max-width: ${theme.media.mobile}) {
+    flex-direction: column;
+  }
+`;
+
+const contactInput = theme => css`
+  width: 33%;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 100%;
+    margin-bottom: 8px;
+  }
 `;
 
 const deliveryMethodAndAddressWrapper = css`
@@ -228,15 +239,37 @@ const radioWrapper = css`
   margin-bottom: 26px;
 `;
 
-const addressInputWrapper = css`
+const addressInputWrapper = theme => css`
   display: flex;
+  @media (max-width: ${theme.media.mobile}) {
+    flex-direction: column;
+  }
 `;
 
-const inputsWrapper = css`
+const addressInformationWrapper = theme => css`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  @media (max-width: ${theme.media.mobile}) {
+    flex-direction: column;
+  }
+`;
+
+const mobileMargin = theme => css`
+  margin-bottom: 0;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-bottom: 8px;
+  }
+`;
+
+const inputsWrapper = theme => css`
   display: flex;
   flex-direction: column;
-  width: 50%;
   margin-right: 8px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin-right: 0;
+  }
 `;
 
 const toggleContainer = css`

@@ -19,9 +19,9 @@ const Layout = () => {
       <div css={main}>
         {/*<RestaurantCloseModal />*/}
         {/*<ThankYou />*/}
-        {/*<OrderPage />*/}
-        <Banner />
-        <Content />
+        <OrderPage />
+        {/*<Banner />*/}
+        {/*<Content />*/}
         {/*<DeliveryAndPayment />*/}
         {/*<Favorite />*/}
         {/*<Error />*/}

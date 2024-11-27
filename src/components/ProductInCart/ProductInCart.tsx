@@ -29,9 +29,12 @@ const ProductInCart = () => {
   );
 };
 
-const cartItemWrapper = css`
+const cartItemWrapper = theme => css`
   width: 348px;
   margin-top: 32px;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 313px;
+  }
 `;
 
 const cartItemTextWrapper = css`

@@ -64,7 +64,7 @@ const container = theme => css`
   @media (max-width: ${theme.media.mobile}) {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 341px;
     overflow: scroll;
   }
 `;

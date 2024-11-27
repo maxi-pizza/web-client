@@ -46,18 +46,27 @@ const cart = theme => css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 343px;
+  }
 `;
 
 const dottedLine = theme => css`
   height: 1px;
   width: 348px;
   border-top: 1px dashed ${theme.colors.stroke};
+  @media (max-width: ${theme.media.mobile}) {
+    width: 313px;
+  }
 `;
 
 const horizontalLine = theme => css`
   height: 1px;
   width: 348px;
   background-color: ${theme.colors.stroke};
+  @media (max-width: ${theme.media.mobile}) {
+    width: 313px;
+  }
 `;
 
 const cartFooter = css`
@@ -86,6 +95,9 @@ const orderButton = theme => css`
   border-radius: 8px;
   cursor: pointer;
   margin-top: 24px;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 313px;
+  }
 `;
 
 export default Cart;

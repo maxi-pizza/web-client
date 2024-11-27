@@ -4,11 +4,9 @@ import {WhiteTheme} from 'src/styles/theme.ts';
 
 const Input = ({
   inputType,
-  width,
   placeholder,
 }: {
   inputType: 'text' | 'tel' | 'number' | 'email';
-  width: string;
   placeholder: string;
 }) => {
   const theme = useTheme() as WhiteTheme;
@@ -17,7 +15,7 @@ const Input = ({
       type={inputType}
       placeholder={placeholder}
       css={css`
-        width: ${width};
+        width: 100%;
         height: 53px;
         outline: none;
         border: 1px solid ${theme.colors.stroke};
