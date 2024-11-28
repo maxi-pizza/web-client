@@ -207,11 +207,15 @@ const horizontalBar = theme => css`
   background-color: ${theme.colors.strokeDark};
 `;
 
-const textWrapper = css`
+const textWrapper = theme => css`
   opacity: 50%;
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
+  @media (max-width: ${theme.media.mobile}) {
+    margin: 0;
+    padding: 16px;
+  }
 `;
 
 export default Footer;
