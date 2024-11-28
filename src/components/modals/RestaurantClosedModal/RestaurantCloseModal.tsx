@@ -22,7 +22,7 @@ const RestaurantCloseModal = observer(() => {
             margin-top: 24px;
             margin-bottom: 24px;
           `}>
-          <Text type={'h1'}>Ми зараз зачинені!</Text>
+          <Text type={'h2'}>Ми зараз зачинені!</Text>
         </div>
         <Text type={'h4'} opacity={'60%'}>
           Ви можете переглянути меню, але замовлення буде прийнято лише після
@@ -33,12 +33,15 @@ const RestaurantCloseModal = observer(() => {
   );
 });
 
-const modalWrapper = css`
+const modalWrapper = theme => css`
   display: flex;
   flex-direction: column;
   width: 536px;
   align-items: center;
   text-align: center;
+  @media (max-width: ${theme.media.mobile}) {
+    width: 283px;
+  }
 `;
 
 export default RestaurantCloseModal;

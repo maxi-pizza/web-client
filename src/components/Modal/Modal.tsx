@@ -35,6 +35,9 @@ const contentWrapper = theme => css`
   border: 1px solid ${theme.colors.stroke};
   border-radius: 12px;
   display: flex;
+  @media (max-width: ${theme.media.mobile}) {
+    padding: 30px;
+  }
 `;
 const close = theme => css`
   position: absolute;
