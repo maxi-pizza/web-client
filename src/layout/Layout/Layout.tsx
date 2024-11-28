@@ -23,8 +23,8 @@ const Layout = () => {
         {/*<Banner />*/}
         {/*<Content />*/}
         {/*<DeliveryAndPayment />*/}
-        <Favorite />
-        {/*<Error />*/}
+        {/*<Favorite />*/}
+        <Error />
       </div>
       <Footer />
     </div>

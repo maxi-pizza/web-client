@@ -15,6 +15,12 @@ const Error = () => {
           position: absolute;
           bottom: 100px;
           right: 102px;
+          @media (max-width: ${theme.media.mobile}) {
+            width: 312px;
+            height: 112px;
+            bottom: 112px;
+            left: 45px;
+          }
         `}
       />
       <div
@@ -23,6 +29,10 @@ const Error = () => {
           position: relative;
           z-index: 1;
           height: 500px;
+          @media (max-width: ${theme.media.mobile}) {
+            width: 100%;
+            margin-top: 104px;
+          }
         `}>
         <Text type={'h1'}>Щось пішло не так</Text>
         <div
@@ -30,6 +40,9 @@ const Error = () => {
             margin-top: 24px;
             margin-bottom: 40px;
             width: 536px;
+            @media (max-width: ${theme.media.mobile}) {
+              width: 343px;
+            }
           `}>
           <Text type={'bigBody'} opacity={'60%'}>
             Упс! Схоже, ви натрапили на мертве посилання, давайте повернемося до
@@ -49,8 +62,10 @@ const Error = () => {
 
 const backButton = theme => css`
   background-color: ${theme.colors.accent};
+  width: 201px;
+  height: 51px;
   display: flex;
-  padding: 16px 40px;
+  justify-content: center;
   align-items: center;
   border: none;
   border-radius: 8px;
@@ -60,6 +75,10 @@ const backButton = theme => css`
     width: 18px;
     height: 18px;
     margin-left: 6px;
+  }
+  @media (max-width: ${theme.media.mobile}) {
+    width: 100%;
+    height: 48px;
   }
 `;
 

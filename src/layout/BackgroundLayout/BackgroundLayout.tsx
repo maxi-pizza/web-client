@@ -8,10 +8,8 @@ import FriedPotatoesSvg from 'src/assets/icons/fried-potatoes.svg';
 import PizzaSvg from 'src/assets/icons/pizza.svg';
 import RightRectangle from 'src/assets/icons/RectangleRight.svg';
 import SushiSvg from 'src/assets/icons/sushi.svg';
-import CheckedSvg from 'src/assets/icons/checked.svg';
-import Text from 'src/components/Text.tsx';
-import ArrowSvg from 'src/assets/icons/arrow-left.svg';
 import {WhiteTheme} from 'src/styles/theme.ts';
+import RectangleMobileSvg from 'src/assets/icons/rectanglemobile.svg';
 
 const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
   const theme = useTheme() as WhiteTheme;
@@ -25,6 +23,14 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
           @media (max-width: ${theme.media.mobile}) {
             display: none;
           }
+        `}
+        color={theme.colors.accent}
+      />
+      <RectangleMobileSvg
+        css={css`
+          position: absolute;
+          bottom: 0;
+          left: 0;
         `}
         color={theme.colors.accent}
       />
