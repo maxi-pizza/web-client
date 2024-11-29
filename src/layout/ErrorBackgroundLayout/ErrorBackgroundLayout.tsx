@@ -1,25 +1,25 @@
 import React from 'react';
-import Rectangle from 'src/assets/icons/Rectangle.svg';
 import {css, useTheme} from '@emotion/react';
-import BurritosSvg from 'src/assets/icons/burritos.svg';
+import {WhiteTheme} from 'src/styles/theme.ts';
+import Rectangle from 'src/assets/icons/Rectangle.svg';
+import RectangleMobileSvg from 'src/assets/icons/rectanglemobile.svg';
 import NigiriSvg from 'src/assets/icons/nigiri.svg';
 import NoodlesSvg from 'src/assets/icons/noodles.svg';
 import FriedPotatoesSvg from 'src/assets/icons/fried-potatoes.svg';
 import PizzaSvg from 'src/assets/icons/pizza.svg';
 import RightRectangle from 'src/assets/icons/RectangleRight.svg';
-import SushiSvg from 'src/assets/icons/sushi.svg';
-import {WhiteTheme} from 'src/styles/theme.ts';
-import RectangleMobileSvg from 'src/assets/icons/rectanglemobile.svg';
+import SodaSvg from 'src/assets/icons/soda.svg';
 
-const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
+const ErrorBackgroundLayout = ({children}: {children: React.ReactNode}) => {
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={container}>
       <Rectangle
         css={css`
+          transform: rotate(90deg);
           position: absolute;
           top: 0;
-          left: 0;
+          right: 4px;
           @media (max-width: ${theme.media.mobile}) {
             display: none;
           }
@@ -29,33 +29,32 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <RectangleMobileSvg
         css={css`
           display: none;
-          @meida (max-width: ${theme.media.mobile}) {
+          @media (max-width: ${theme.media.mobile}) {
+            display: block;
             position: absolute;
             bottom: 0;
             left: 0;
           }
         `}
-        color={theme.colors.accent}
       />
-      <BurritosSvg
+      <SodaSvg
         css={css`
           position: absolute;
-          top: 467px;
-          left: 268px;
+          top: 433px;
+          left: 524px;
           @media (max-width: ${theme.media.mobile}) {
             display: none;
           }
         `}
-        color={theme.colors.stroke}
       />
       <NigiriSvg
         css={css`
           position: absolute;
-          right: 200px;
-          top: 176px;
+          right: 328px;
+          top: 188px;
           @media (max-width: ${theme.media.mobile}) {
-            top: 125px;
-            right: 13px;
+            top: 336px;
+            right: 43px;
             width: 60px;
             height: 60px;
           }
@@ -65,10 +64,13 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <NoodlesSvg
         css={css`
           position: absolute;
-          top: 216px;
-          left: 515px;
+          top: 186px;
+          left: 839px;
           @media (max-width: ${theme.media.mobile}) {
-            display: none;
+            top: 340px;
+            left: 35px;
+            width: 60px;
+            height: 60px;
           }
         `}
         color={theme.colors.stroke}
@@ -76,10 +78,13 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <FriedPotatoesSvg
         css={css`
           position: absolute;
-          top: 367px;
-          right: 484px;
+          top: 300px;
+          right: 637px;
           @media (max-width: ${theme.media.mobile}) {
-            display: none;
+            top: 430px;
+            right: 148px;
+            width: 60px;
+            height: 60px;
           }
         `}
         color={theme.colors.stroke}
@@ -87,13 +92,10 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <PizzaSvg
         css={css`
           position: absolute;
-          bottom: 246px;
-          right: 336px;
+          bottom: 258px;
+          left: 317px;
           @media (max-width: ${theme.media.mobile}) {
-            top: 101px;
-            left: 40px;
-            width: 60px;
-            height: 60px;
+            display: none;
           }
         `}
         color={theme.colors.stroke}
@@ -101,24 +103,14 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <RightRectangle
         css={css`
           position: absolute;
-          right: 0;
+          left: 0;
           bottom: 0;
+          transform: rotate(90deg);
           @media (max-width: ${theme.media.mobile}) {
             display: none;
           }
         `}
         color={theme.colors.accent}
-      />
-      <SushiSvg
-        css={css`
-          position: absolute;
-          bottom: 137px;
-          left: 343px;
-          @media (max-width: ${theme.media.mobile}) {
-            display: none;
-          }
-        `}
-        color={theme.colors.stroke}
       />
       <div>{children}</div>
     </div>
@@ -133,6 +125,9 @@ const container = theme => css`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: ${theme.media.mobile}) {
+    align-items: flex-start;
+  }
 `;
 
-export default BackgroundLayout;
+export default ErrorBackgroundLayout;

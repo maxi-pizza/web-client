@@ -86,6 +86,10 @@ const leftArrowBtn = theme => css`
     svg {
       color: ${theme.colors.accent};
     }
+  }
+  @media (max-width: ${theme.media.mobile}) {
+    display: none;
+  }
 `;
 
 const rightArrowBtn = theme => css`
@@ -110,6 +114,9 @@ const rightArrowBtn = theme => css`
     svg {
       color: ${theme.colors.accent};
     }
+  }
+  @media (max-width: ${theme.media.mobile}) {
+    display: none;
   }
 `;
 

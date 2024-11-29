@@ -33,6 +33,7 @@ const CategoryCard = ({
       <div
         css={css`
           margin-left: 12px;
+          white-space: nowrap;
         `}>
         <Text type={'h5'} color={theme.colors.textWhite}>
           {text}
@@ -53,6 +54,8 @@ const categoryCard = theme => css`
   position: relative;
   @media (max-width: ${theme.media.mobile}) {
     height: 48px;
+    padding-right: 50px;
+    width: auto;
   }
 `;
 

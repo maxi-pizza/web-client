@@ -1,5 +1,5 @@
 import React from 'react';
-import BackgroundLayout from 'src/layout/BackgroundLayout/BackgroundLayout.tsx';
+import ErrorBackgroundLayout from 'src/layout/ErrorBackgroundLayout/ErrorBackgroundLayout.tsx';
 import Text from 'src/components/Text.tsx';
 import {css, useTheme} from '@emotion/react';
 import NoRouteSvg from '/src/assets/icons/404.svg';
@@ -9,7 +9,7 @@ import {WhiteTheme} from 'src/styles/theme.ts';
 const Error = () => {
   const theme = useTheme() as WhiteTheme;
   return (
-    <BackgroundLayout>
+    <ErrorBackgroundLayout>
       <NoRouteSvg
         css={css`
           position: absolute;
@@ -56,7 +56,7 @@ const Error = () => {
           <Arrow color={theme.colors.textWhite} />
         </button>
       </div>
-    </BackgroundLayout>
+    </ErrorBackgroundLayout>
   );
 };
 
