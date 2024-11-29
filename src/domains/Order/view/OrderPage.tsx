@@ -167,7 +167,7 @@ const container = theme => css`
   align-items: center;
   padding-top: 140px;
   padding-bottom: 100px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     padding-bottom: 50px;
   }
 `;
@@ -176,7 +176,7 @@ const pathContainer = theme => css`
   width: 1376px;
   display: flex;
   margin-bottom: 32px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 343px;
   }
 `;
@@ -185,7 +185,7 @@ const cardWrapper = theme => css`
   width: 1376px;
   display: flex;
   justify-content: space-between;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     flex-direction: column-reverse;
     width: 343px;
   }
@@ -197,7 +197,7 @@ const orderCard = theme => css`
   border: 1px solid ${theme.colors.stroke};
   padding: 32px;
   margin-bottom: 80px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: flex;
     flex-direction: column;
     border: none;
@@ -216,14 +216,14 @@ const contactInputWrapper = theme => css`
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
   }
 `;
 
 const contactInput = theme => css`
   width: 33%;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 100%;
     margin-bottom: 8px;
   }
@@ -241,7 +241,7 @@ const radioWrapper = css`
 
 const addressInputWrapper = theme => css`
   display: flex;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
   }
 `;
@@ -251,14 +251,14 @@ const addressInformationWrapper = theme => css`
   justify-content: space-between;
   margin-top: 8px;
   margin-bottom: 8px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
   }
 `;
 
 const mobileMargin = theme => css`
   margin-bottom: 0;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-bottom: 8px;
   }
 `;
@@ -267,7 +267,7 @@ const inputsWrapper = theme => css`
   display: flex;
   flex-direction: column;
   margin-right: 8px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-right: 0;
   }
 `;

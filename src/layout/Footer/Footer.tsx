@@ -110,27 +110,39 @@ const container = theme => css`
   bottom: 0;
   flex-direction: column;
   align-items: center;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     padding-top: 16px;
-    align-items:  normal ;
+    align-items: normal;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
+  }
 `;
 
 const contentWrapper = theme => css`
   display: flex;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
     margin-left: 16px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-left: 0;
   }
 `;
 
 const logoStyles = theme => css`
   width: 108px;
   height: 80px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 68px;
     height: 50px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    width: 108px;
+    height: 80px;
+    margin-top: 20px;
   }
 `;
 
@@ -138,7 +150,7 @@ const marginWrapper = theme => css`
   display: flex;
   align-items: center;
   margin-top: 16px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-top: 10px;
   }
 `;
@@ -149,17 +161,23 @@ const svgStyles = css`
 
 const contactInformationWrapper = theme => css`
   margin-left: 312px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-left: 0;
     margin-top: 20px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    margin-right: 20px;
   }
 `;
 
 const legalInformationWrapper = theme => css`
   margin-left: 180px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-left: 0;
     margin-top: 20px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    margin-right: 20px;
   }
 `;
 
@@ -167,7 +185,7 @@ const socialInformationWrapper = theme => css`
   margin-left: 180px;
   display: flex;
   flex-direction: column;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-left: 0;
     margin-top: 20px;
   }
@@ -196,7 +214,7 @@ const socialButton = css`
 
 const rightsWrapper = theme => css`
   margin-top: 32px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-top: 20px;
   }
 `;
@@ -212,7 +230,7 @@ const textWrapper = theme => css`
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin: 0;
     padding: 16px;
   }

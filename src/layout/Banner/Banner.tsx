@@ -25,14 +25,12 @@ const Banner = () => {
 };
 
 const bannerContainer = css`
-  height: 800px;
   margin-top: -92px;
   z-index: 1;
   position: relative;
 `;
 
 const imageStyles = css`
-  height: 800px;
   user-select: none;
 `;
 
@@ -87,7 +85,7 @@ const leftArrowBtn = theme => css`
       color: ${theme.colors.accent};
     }
   }
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
 `;
@@ -115,7 +113,7 @@ const rightArrowBtn = theme => css`
       color: ${theme.colors.accent};
     }
   }
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
 `;

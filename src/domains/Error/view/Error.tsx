@@ -15,7 +15,7 @@ const Error = () => {
           position: absolute;
           bottom: 100px;
           right: 102px;
-          @media (max-width: ${theme.media.mobile}) {
+          @media (min-width: ${theme.media.mobile}) {
             width: 312px;
             height: 112px;
             bottom: 112px;
@@ -29,7 +29,7 @@ const Error = () => {
           position: relative;
           z-index: 1;
           height: 500px;
-          @media (max-width: ${theme.media.mobile}) {
+          @media (min-width: ${theme.media.mobile}) {
             width: 100%;
             margin-top: 104px;
           }
@@ -76,7 +76,7 @@ const backButton = theme => css`
     height: 18px;
     margin-left: 6px;
   }
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 100%;
     height: 48px;
   }

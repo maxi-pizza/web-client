@@ -20,7 +20,7 @@ const ErrorBackgroundLayout = ({children}: {children: React.ReactNode}) => {
           position: absolute;
           top: 0;
           right: 4px;
-          @media (max-width: ${theme.media.mobile}) {
+          @media (min-width: ${theme.media.mobile}) {
             display: none;
           }
         `}
@@ -29,7 +29,7 @@ const ErrorBackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <RectangleMobileSvg
         css={css`
           display: none;
-          @media (max-width: ${theme.media.mobile}) {
+          @media (min-width: ${theme.media.mobile}) {
             display: block;
             position: absolute;
             bottom: 0;

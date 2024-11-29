@@ -79,7 +79,7 @@ const ProductCard = () => {
 const imgStyles = theme => css`
   width: 318px;
   height: 250px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 343px;
     height: 188px;
   }
@@ -92,7 +92,7 @@ const container = theme => css`
   border: 1px solid ${theme.colors.stroke};
   background-color: ${theme.colors.container};
   position: relative;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 343px;
     height: 382px;
   }
@@ -100,7 +100,7 @@ const container = theme => css`
 
 const wrapper = theme => css`
   margin: 24px 16px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin: 15px;
   }
 `;
@@ -108,7 +108,7 @@ const wrapper = theme => css`
 const textWrapper = theme => css`
   margin-top: 8px;
   margin-bottom: 16px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-bottom: 12px;
   }
 `;
@@ -132,7 +132,7 @@ const variantStyle =
     justify-content: space-evenly;
     cursor: pointer;
     margin-right: 8px;
-    @media (max-width: ${theme.media.mobile}) {
+    @media (min-width: ${theme.media.mobile}) {
       width: 81px;
       height: 29px;
     }
@@ -146,7 +146,7 @@ const priceAndButtonsWrapper = theme => css`
   display: flex;
   margin-top: 17px;
   justify-content: space-between;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-top: 12px;
   }
 `;
@@ -181,7 +181,7 @@ const addButton = theme => css`
     width: 20px;
     height: 20px;
   }
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 44px;
     height: 44px;
   }
@@ -201,7 +201,7 @@ const addToFavorite = theme => css`
     width: 24px;
     height: 24px;
   }
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 44px;
     height: 44px;
     svg {

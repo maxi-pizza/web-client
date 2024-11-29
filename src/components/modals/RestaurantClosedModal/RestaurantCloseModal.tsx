@@ -39,7 +39,7 @@ const modalWrapper = theme => css`
   width: 536px;
   align-items: center;
   text-align: center;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 283px;
   }
 `;

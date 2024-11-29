@@ -57,7 +57,7 @@ const h1 = theme => css`
   font-family: ${theme.fontFamily};
   font-weight: ${theme.fontWeights.semiBold};
   font-size: 46px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     font-size: 32px;
   }
   color: ${theme.colors.textPrimary};
@@ -68,7 +68,7 @@ const h2 = theme => css`
   font-family: ${theme.fontFamily};
   font-weight: ${theme.fontWeights.semiBold};
   font-size: 34px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     font-size: 22px;
   }
   color: ${theme.colors.textPrimary};
@@ -79,7 +79,7 @@ const h3 = theme => css`
   font-family: ${theme.fontFamily};
   font-weight: ${theme.fontWeights.semiBold};
   font-size: 24px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     font-size: 18px;
   }
   color: ${theme.colors.textPrimary};
@@ -90,7 +90,7 @@ const h4 = theme => css`
   font-family: ${theme.fontFamily};
   font-weight: ${theme.fontWeights.semiBold};
   font-size: 20px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     font-size: 16px;
   }
   color: ${theme.colors.textPrimary};
@@ -101,7 +101,7 @@ const h5 = theme => css`
   font-family: ${theme.fontFamily};
   font-weight: ${theme.fontWeights.semiBold};
   font-size: 16px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     font-size: 14px;
   }
   color: ${theme.colors.textPrimary};
@@ -120,7 +120,7 @@ const bigBody = theme => css`
   font-family: ${theme.fontFamily};
   font-weight: ${theme.fontWeights.regular};
   font-size: 16px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     font-size: 14px;
   }
   color: ${theme.colors.textPrimary};
@@ -130,7 +130,7 @@ const bigBody = theme => css`
 const caption = theme => css`
   font-family: ${theme.fontFamily};
   font-weight: ${theme.fontWeights.regular};
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     font-size: 12px;
   }
   font-size: 14px;
@@ -142,7 +142,7 @@ const title = theme => css`
   font-family: ${theme.fontFamily};
   font-weight: ${theme.fontWeights.medium};
   font-size: 14px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     font-size: 12px;
   }
   color: ${theme.colors.textPrimary};

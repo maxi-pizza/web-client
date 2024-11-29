@@ -64,7 +64,7 @@ const headerContainer = theme => css`
   justify-content: space-between;
   position: relative;
   z-index: 3;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
     height: 80px;
@@ -75,11 +75,14 @@ const logoStyles = theme => css`
   width: 81px;
   height: 60px;
   margin-right: 56px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 68px;
     height: 50px;
     margin-right: 0;
     margin-left: 16px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    margin-left: 32px;
   }
 `;
 
@@ -91,7 +94,7 @@ const verticalBar = css`
 
 const contentWrapper = theme => css`
   display: flex;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
 `;
@@ -101,17 +104,20 @@ const wrapper = theme => css`
   align-items: center;
   justify-content: space-between;
   margin-left: 132px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-left: 0;
   }
 `;
 
-const textNSvgWrapper = css`
+const textNSvgWrapper = theme => css`
   display: flex;
   margin-left: 24px;
   margin-right: 24px;
   svg {
     margin-right: 8px;
+  }
+  @media (min-width: ${theme.media.mobile}) {
+    margin-left: 0;
   }
 `;
 
@@ -129,18 +135,21 @@ const button = theme => css`
   :hover {
     border: 1px solid ${theme.colors.accent};
   }
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
 `;
 
 const mobileHeaderMenu = theme => css`
   display: none;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: flex;
     justify-content: space-between;
     width: 194px;
     margin-right: 16px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    margin-right: 32px;
   }
 `;
 

@@ -20,11 +20,11 @@ const Layout = () => {
         <RestaurantCloseModal />
         {/*<ThankYou />*/}
         {/*<OrderPage />*/}
-        {/*<Banner />*/}
-        {/*<Content />*/}
+        <Banner />
+        <Content />
         {/*<DeliveryAndPayment />*/}
         {/*<Favorite />*/}
-        <Error />
+        {/*<Error />*/}
       </div>
       <Footer />
     </div>

@@ -32,7 +32,7 @@ const ProductInCart = () => {
 const cartItemWrapper = theme => css`
   width: 348px;
   margin-top: 32px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 313px;
   }
 `;

@@ -61,17 +61,22 @@ const MenuLayout = () => {
 const container = theme => css`
   display: flex;
   flex-direction: column;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: flex;
     flex-direction: row;
     width: 341px;
+    overflow: scroll;
+  }
+  @media (min-width: ${theme.media.mobile}) {
+    display: flex;
+    flex-direction: row;
     overflow: scroll;
   }
 `;
 
 const categoryWrapper = theme => css`
   margin-right: 0;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-right: 8px;
   }
 `;

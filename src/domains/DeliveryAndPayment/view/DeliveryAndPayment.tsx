@@ -19,7 +19,7 @@ const DeliveryAndPayment = () => {
             display: flex;
             width: 1656px;
             margin-bottom: 32px;
-            @media (max-width: ${theme.media.mobile}) {
+            @media (min-width: ${theme.media.mobile}) {
               width: 343px;
               margin-bottom: 25px;
             }
@@ -71,7 +71,7 @@ const DeliveryAndPayment = () => {
             <div>
               <div
                 css={css`
-                @media (max-width: ${theme.media.mobile}) {
+                  @media (min-width: ${theme.media.mobile}) {
                   margin-top: 30px;
                `}>
                 <Text type={'h3'}>Способи оплати</Text>
@@ -132,7 +132,7 @@ const wrapper = theme => css`
   align-items: center;
   flex-direction: column;
   padding-bottom: 134px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     padding-top: 105px;
   }
 `;
@@ -143,7 +143,7 @@ const card = theme => css`
   background-color: ${theme.colors.container};
   border-radius: 12px;
   border: 1px solid ${theme.colors.stroke};
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 343px;
     padding: 0;
     border: none;
@@ -160,7 +160,7 @@ const deliveryTextWrapper = theme => css`
     height: 22px;
     width: 22px;
   }
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     align-items: flex-start;
   }
 `;
@@ -176,7 +176,7 @@ const verticalBar = theme => css`
   background-color: ${theme.colors.stroke};
   margin-left: 24px;
   margin-right: 24px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
 `;
@@ -186,7 +186,7 @@ const paymentWrapper = theme => css`
   svg {
     margin-bottom: 16px;
   }
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-top: 20px;
     svg {
       margin-bottom: 16px;
@@ -196,7 +196,7 @@ const paymentWrapper = theme => css`
 
 const paymentsWrapper = theme => css`
   display: flex;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     display: flex;
     flex-direction: column;
     margin-bottom: 30px;
@@ -207,7 +207,7 @@ const cardsWrapper = theme => css`
   display: flex;
   width: 1656px;
   justify-content: space-between;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 343px;
     flex-direction: column;
   }
@@ -215,7 +215,7 @@ const cardsWrapper = theme => css`
 
 const mobileTextWrapper = theme => css`
   display: flex;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
   }
 `;

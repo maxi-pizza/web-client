@@ -18,7 +18,7 @@ const Favorite = () => {
           padding-top: 130px;
           width: 1654px;
           margin-bottom: 32px;
-          @media (max-width: ${theme.media.mobile}) {
+          @media (min-width: ${theme.media.mobile}) {
             width: 343px;
             margin-bottom: 25px;
           }
@@ -44,7 +44,7 @@ const Favorite = () => {
           css={css`
             width: 536px;
             margin-top: 24px;
-            @media (max-width: ${theme.media.mobile}) {
+            @media (min-width: ${theme.media.mobile}) {
               width: 343px;
             }
           `}>
@@ -61,7 +61,7 @@ const Favorite = () => {
             position: absolute;
             top: 390px;
             left: 472px;
-            @media (max-width: ${theme.media.mobile}) {
+            @media (min-width: ${theme.media.mobile}) {
               width: 80px;
               height: 80px;
               top: 312px;
@@ -76,7 +76,7 @@ const Favorite = () => {
             top: 473px;
             left: 0;
             width: 1900px;
-            @media (max-width: ${theme.media.mobile}) {
+            @media (min-width: ${theme.media.mobile}) {
               width: 100%;
               top: 300px;
             }
@@ -91,7 +91,7 @@ const Favorite = () => {
       {/*        display: flex;*/}
       {/*        align-items: center;*/}
       {/*        justify-content: center;*/}
-      {/*        @media (max-width: ${theme.media.mobile}) {*/}
+      {/*@media (min-width: ${theme.media.mobile}) {*/}
       {/*          margin-top: 10px;*/}
       {/*        }*/}
       {/*      `}>*/}
@@ -140,7 +140,7 @@ const contentWrapper = theme => css`
   padding-bottom: 172px;
   min-height: 680px;
   width: 1654px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 343px;
   }
 `;
@@ -149,7 +149,7 @@ const headingWrapper = theme => css`
   display: flex;
   justify-content: space-between;
   margin-bottom: 32px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 16px;
@@ -170,7 +170,7 @@ const deleteButton = theme => css`
   opacity: 20%;
   border-radius: 8px;
   cursor: pointer;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 343px;
     height: 48px;
   }
@@ -180,7 +180,7 @@ const productsGrid = theme => css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 16px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     grid-template-columns: 1fr;
   }
 `;

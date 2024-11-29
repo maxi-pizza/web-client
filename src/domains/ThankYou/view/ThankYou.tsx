@@ -16,7 +16,7 @@ const ThankYou = () => {
           css={css`
             margin-top: 32px;
             margin-bottom: 24px;
-            @media (max-width: ${theme.media.mobile}) {
+            @media (min-width: ${theme.media.mobile}) {
               margin-top: 25px;
               margin-bottom: 15px;
             }
@@ -34,7 +34,7 @@ const ThankYou = () => {
             width: 100%;
             justify-content: space-between;
             position: relative;
-            @media (max-width: ${theme.media.mobile}) {
+            @media (min-width: ${theme.media.mobile}) {
               margin-top: 40px;
             }
           `}>
@@ -53,7 +53,7 @@ const ThankYou = () => {
                 position: absolute;
                 top: 25px;
                 left: 110px;
-                @media (max-width: ${theme.media.mobile}) {
+                @media (min-width: ${theme.media.mobile}) {
                   top: 16px;
                   left: 79px;
                 }
@@ -75,7 +75,7 @@ const ThankYou = () => {
                 position: absolute;
                 top: 25px;
                 right: 124px;
-                @media (max-width: ${theme.media.mobile}) {
+                @media (min-width: ${theme.media.mobile}) {
                   top: 16px;
                   right: 92px;
                 }
@@ -118,7 +118,7 @@ const wrapper = theme => css`
   width: 536px;
   align-items: center;
   text-align: center;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 343px;
   }
 `;
@@ -132,7 +132,7 @@ const circle = theme => css`
   display: flex;
   align-items: center;
   justify-content: center;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 32px;
     height: 32px;
     margin-bottom: 15px;
@@ -147,7 +147,7 @@ const activeCircle = theme => css`
   display: flex;
   align-items: center;
   justify-content: center;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 32px;
     height: 32px;
     margin-bottom: 15px;
@@ -163,7 +163,7 @@ const horizontalBar = theme => css`
   height: 1px;
   width: 100px;
   background-color: ${theme.colors.stroke};
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 54px;
   }
 `;
@@ -176,7 +176,7 @@ const homeButton = theme => css`
   border-radius: 8px;
   margin-top: 80px;
   cursor: pointer;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     margin-top: 60px;
   }
 `;
@@ -184,7 +184,7 @@ const homeButton = theme => css`
 const checkedSvg = theme => css`
   width: 120px;
   height: 120px;
-  @media (max-width: ${theme.media.mobile}) {
+  @media (min-width: ${theme.media.mobile}) {
     width: 60px;
     height: 60px;
   }
