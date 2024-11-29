@@ -79,6 +79,9 @@ const searchAndProductsWrapper = theme => css`
     align-items: center;
     justify-content: center;
   }
+  @media (min-width: ${theme.media.tablet}) {
+    width: 653px;
+  }
 `;
 
 const headingWrapper = theme => css`
@@ -109,6 +112,9 @@ const productsGrid = theme => css`
   grid-template-columns: 1fr 1fr 1fr;
   @media (min-width: ${theme.media.mobile}) {
     grid-template-columns: 1fr;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    grid-template-columns: 1fr 1fr;
   }
 `;
 

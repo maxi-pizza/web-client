@@ -67,10 +67,8 @@ const container = theme => css`
     width: 341px;
     overflow: scroll;
   }
-  @media (min-width: ${theme.media.mobile}) {
-    display: flex;
-    flex-direction: row;
-    overflow: scroll;
+  @media (min-width: ${theme.media.tablet}) {
+    width: 653px;
   }
 `;
 
