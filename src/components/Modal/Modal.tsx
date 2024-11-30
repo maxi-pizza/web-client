@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {css} from '@emotion/react';
 import CloseSvg from 'src/assets/icons/close.svg';
 import {FloatingOverlay, FloatingPortal} from '@floating-ui/react';
@@ -12,10 +12,20 @@ const Modal = ({
   isVisible: boolean;
   children: React.ReactNode;
 }) => {
+  const overlayRef = useRef(null);
+  const onClose = e => {
+    if (e.target === overlayRef.current) {
+      handleModal(!isVisible);
+    }
+  };
   return (
     isVisible && (
       <FloatingPortal>
-        <FloatingOverlay css={modalContainer} lockScroll>
+        <FloatingOverlay
+          onClick={e => onClose(e)}
+          ref={overlayRef}
+          css={modalContainer}
+          lockScroll>
           <div css={contentWrapper}>
             <div css={close} onClick={() => handleModal(!isVisible)}>
               <CloseSvg />

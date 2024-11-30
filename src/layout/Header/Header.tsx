@@ -69,20 +69,26 @@ const headerContainer = theme => css`
     border-bottom-right-radius: 40px;
     height: 80px;
   }
+  @media (min-width: ${theme.media.laptop}) {
+    height: 92px;
+    border-bottom-left-radius: 80px;
+    border-bottom-right-radius: 80px;
+  }
 `;
 
 const logoStyles = theme => css`
-  width: 81px;
-  height: 60px;
-  margin-right: 56px;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 68px;
-    height: 50px;
-    margin-right: 0;
-    margin-left: 16px;
-  }
+  width: 68px;
+  height: 50px;
+  margin-left: 16px;
   @media (min-width: ${theme.media.tablet}) {
     margin-left: 32px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 81px;
+    height: 60px;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    margin-right: 56px;
   }
 `;
 
@@ -93,9 +99,9 @@ const verticalBar = css`
 `;
 
 const contentWrapper = theme => css`
-  display: flex;
-  @media (min-width: ${theme.media.mobile}) {
-    display: none;
+  display: none;
+  @media (min-width: ${theme.media.laptop}) {
+    display: flex;
   }
 `;
 
@@ -107,17 +113,19 @@ const wrapper = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     margin-left: 0;
   }
+  @media (min-width: ${theme.media.laptop}) {
+  }
 `;
 
 const textNSvgWrapper = theme => css`
-  display: flex;
-  margin-left: 24px;
-  margin-right: 24px;
-  svg {
-    margin-right: 8px;
-  }
+  margin-left: 0;
   @media (min-width: ${theme.media.mobile}) {
-    margin-left: 0;
+    display: flex;
+    margin-left: 24px;
+    margin-right: 24px;
+    svg {
+      margin-right: 8px;
+    }
   }
 `;
 
@@ -138,18 +146,21 @@ const button = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
+  @media (min-width: ${theme.media.laptop}) {
+    display: flex;
+  }
 `;
 
 const mobileHeaderMenu = theme => css`
-  display: none;
-  @media (min-width: ${theme.media.mobile}) {
-    display: flex;
-    justify-content: space-between;
-    width: 194px;
-    margin-right: 16px;
-  }
+  display: flex;
+  justify-content: space-between;
+  width: 194px;
+  margin-right: 16px;
   @media (min-width: ${theme.media.tablet}) {
     margin-right: 32px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    display: none;
   }
 `;
 

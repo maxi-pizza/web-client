@@ -1,7 +1,7 @@
 import {makeAutoObservable} from 'mobx';
 
 class ModalsStore {
-  restaurantClosedModal = false;
+  restaurantClosedModal = true;
   constructor() {
     makeAutoObservable(this);
   }
