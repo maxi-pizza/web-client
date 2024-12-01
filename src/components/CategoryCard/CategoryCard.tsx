@@ -44,8 +44,6 @@ const CategoryCard = ({
 };
 
 const categoryCard = theme => css`
-  width: 223px;
-  height: 53px;
   background-color: ${theme.colors.accent};
   border: 1px solid ${theme.colors.stroke};
   border-radius: 8px;

@@ -2,11 +2,21 @@ import React from 'react';
 import BannerImg from 'src/assets/banner.png';
 import {css} from '@emotion/react';
 import ArrowSvg from 'src/assets/icons/arrow-left.svg';
+import {useBreakpoint2} from 'src/common/hooks/useBreakpoint.ts';
+import BannerMobileImg from 'src/assets/banner-mobile.png';
 
 const Banner = () => {
+  const {isLaptop, isDesktop} = useBreakpoint2();
+  console.log(isLaptop);
   return (
     <div css={bannerContainer}>
-      <img src={String(BannerImg)} css={imageStyles} alt="banner" />
+      <img
+        css={imageStyles}
+        src={
+          isLaptop || isDesktop ? String(BannerImg) : String(BannerMobileImg)
+        }
+        alt={'baner'}
+      />
       <div css={pageControlWrapper}>
         <div css={pageIndicator({isActive: false})}></div>
         <div css={activeIndicator}>

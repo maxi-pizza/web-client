@@ -56,25 +56,14 @@ const OrderPage = () => {
             </div>
             <div css={addressInputWrapper}>
               <div css={inputsWrapper}>
-                <Input
-                  inputType={'text'}
-                  width={'100%'}
-                  placeholder={'Вулиця*'}
-                />
+                <Input inputType={'text'} placeholder={'Вулиця*'} />
                 <div css={addressInformationWrapper}>
-                  <div css={mobileMargin}>
-                    <Input
-                      width={'49%'}
-                      inputType={'text'}
-                      placeholder={'Під’їзд*'}
-                    />
+                  <div css={halfInput}>
+                    <Input inputType={'text'} placeholder={'Під’їзд*'} />
                   </div>
-
-                  <Input
-                    width={'49%'}
-                    inputType={'text'}
-                    placeholder={'Квартира*'}
-                  />
+                  <div css={halfInput}>
+                    <Input inputType={'text'} placeholder={'Квартира*'} />
+                  </div>
                 </div>
                 <div css={mobileMargin}>
                   <Dropdown
@@ -84,24 +73,14 @@ const OrderPage = () => {
                 </div>
               </div>
               <div css={inputsWrapper}>
-                <Input
-                  inputType={'text'}
-                  width={'100%'}
-                  placeholder={'Вулиця*'}
-                />
+                <Input inputType={'text'} placeholder={'Вулиця*'} />
                 <div css={addressInformationWrapper}>
-                  <div css={mobileMargin}>
-                    <Input
-                      width={'49%'}
-                      inputType={'text'}
-                      placeholder={'Під’їзд*'}
-                    />
+                  <div css={halfInput}>
+                    <Input inputType={'text'} placeholder={'Під’їзд*'} />
                   </div>
-                  <Input
-                    width={'49%'}
-                    inputType={'text'}
-                    placeholder={'Квартира*'}
-                  />
+                  <div css={halfInput}>
+                    <Input inputType={'text'} placeholder={'Квартира*'} />
+                  </div>
                 </div>
                 <Dropdown
                   options={districts}
@@ -168,35 +147,51 @@ const container = theme => css`
   padding-top: 140px;
   padding-bottom: 100px;
   @media (min-width: ${theme.media.mobile}) {
-    padding-bottom: 50px;
+    padding-bottom: 120px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    padding-bottom: 100px;
   }
 `;
 
 const pathContainer = theme => css`
-  width: 1376px;
   display: flex;
   margin-bottom: 32px;
   @media (min-width: ${theme.media.mobile}) {
     width: 343px;
   }
+  @media (min-width: ${theme.media.tablet}) {
+    width: 740px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 1160px;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    width: 1376px;
+  }
 `;
 
 const cardWrapper = theme => css`
-  width: 1376px;
   display: flex;
   justify-content: space-between;
   @media (min-width: ${theme.media.mobile}) {
     flex-direction: column-reverse;
     width: 343px;
   }
+  @media (min-width: ${theme.media.tablet}) {
+    width: 740px;
+    align-items: center;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    flex-direction: row;
+    width: 1160px;
+    align-items: normal;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    width: 1376px;
+  }
 `;
 const orderCard = theme => css`
-  width: 956px;
-  background-color: ${theme.colors.container};
-  border-radius: 12px;
-  border: 1px solid ${theme.colors.stroke};
-  padding: 32px;
-  margin-bottom: 80px;
   @media (min-width: ${theme.media.mobile}) {
     display: flex;
     flex-direction: column;
@@ -205,6 +200,20 @@ const orderCard = theme => css`
     width: 343px;
     padding: 0;
     margin-top: 20px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    border-radius: 12px;
+    border: 1px solid ${theme.colors.stroke};
+    background-color: ${theme.colors.container};
+    padding: 32px;
+    margin-bottom: 80px;
+    width: 740px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    margin-top: 0;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    width: 956px;
   }
 `;
 
@@ -219,13 +228,31 @@ const contactInputWrapper = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
   }
+  @media (min-width: ${theme.media.tablet}) {
+    width: 100%;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    flex-wrap: nowrap;
+  }
 `;
 
 const contactInput = theme => css`
-  width: 33%;
   @media (min-width: ${theme.media.mobile}) {
     width: 100%;
     margin-bottom: 8px;
+  }
+  @media (min-width: ${theme.media.tablet}) {
+    width: 100%;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 49%;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    margin-right: 8px;
   }
 `;
 
@@ -244,6 +271,9 @@ const addressInputWrapper = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
   }
+  @media (min-width: ${theme.media.pc}) {
+    flex-direction: row;
+  }
 `;
 
 const addressInformationWrapper = theme => css`
@@ -254,11 +284,23 @@ const addressInformationWrapper = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     flex-direction: column;
   }
+  @media (min-width: ${theme.media.laptop}) {
+    flex-direction: row;
+    margin-bottom: 0;
+  }
 `;
 
 const mobileMargin = theme => css`
   margin-bottom: 0;
+  width: 100%;
   @media (min-width: ${theme.media.mobile}) {
+    margin-bottom: 8px;
+  }
+`;
+
+const halfInput = theme => css`
+  @media (min-width: ${theme.media.laptop}) {
+    width: 49%;
     margin-bottom: 8px;
   }
 `;
@@ -269,6 +311,9 @@ const inputsWrapper = theme => css`
   margin-right: 8px;
   @media (min-width: ${theme.media.mobile}) {
     margin-right: 0;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    margin-right: 8px;
   }
 `;
 

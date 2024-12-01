@@ -85,6 +85,7 @@ const categoryWrapper = theme => css`
   @media (min-width: ${theme.media.laptop}) {
     width: auto;
     margin-right: 24px;
+    margin-bottom: 8px;
   }
 `;
 
