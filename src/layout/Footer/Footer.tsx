@@ -101,8 +101,6 @@ const Footer = () => {
 
 const container = theme => css`
   background-color: ${theme.colors.footer};
-  border-top-left-radius: 80px;
-  border-top-right-radius: 80px;
   display: flex;
   padding-top: 32px;
   position: relative;
@@ -115,6 +113,10 @@ const container = theme => css`
     align-items: normal;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    border-top-left-radius: 80px;
+    border-top-right-radius: 80px;
   }
 `;
 
@@ -133,8 +135,6 @@ const contentWrapper = theme => css`
 `;
 
 const logoStyles = theme => css`
-  width: 108px;
-  height: 80px;
   @media (min-width: ${theme.media.mobile}) {
     width: 68px;
     height: 50px;
@@ -149,9 +149,11 @@ const logoStyles = theme => css`
 const marginWrapper = theme => css`
   display: flex;
   align-items: center;
-  margin-top: 16px;
   @media (min-width: ${theme.media.mobile}) {
     margin-top: 10px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    margin-top: 16px;
   }
 `;
 

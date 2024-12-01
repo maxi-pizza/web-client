@@ -148,6 +148,7 @@ const button = theme => css`
   }
   @media (min-width: ${theme.media.laptop}) {
     display: flex;
+    margin-right: 32px;
   }
 `;
 

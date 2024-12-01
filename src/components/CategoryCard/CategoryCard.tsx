@@ -57,6 +57,10 @@ const categoryCard = theme => css`
     padding-right: 50px;
     width: auto;
   }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 223px;
+    height: 53px;
+  }
 `;
 
 const redRectangle = theme => css`

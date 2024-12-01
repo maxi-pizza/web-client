@@ -56,6 +56,10 @@ const container = theme => css`
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
   }
+  @media (min-width: ${theme.media.laptop}) {
+    border-top-left-radius: 80px;
+    border-top-right-radius: 80px;
+  }
 `;
 
 const menuWrapper = theme => css`
@@ -66,6 +70,11 @@ const menuWrapper = theme => css`
     flex-direction: column;
     align-items: center;
     margin-left: 0;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    flex-direction: row;
+    align-items: normal;
+    justify-content: center;
   }
 `;
 
@@ -86,14 +95,8 @@ const searchAndProductsWrapper = theme => css`
 
 const headingWrapper = theme => css`
   display: flex;
-  margin-top: 48px;
-  margin-bottom: 32px;
   align-items: center;
   width: 100%;
-  svg {
-    height: 36px;
-    width: 36px;
-  }
   @media (min-width: ${theme.media.mobile}) {
     display: flex;
     justify-content: flex-start;
@@ -102,6 +105,17 @@ const headingWrapper = theme => css`
     svg {
       height: 24px;
       width: 24px;
+    }
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    display: flex;
+    margin-top: 48px;
+    margin-bottom: 32px;
+    align-items: center;
+    width: 100%;
+    svg {
+      height: 36px;
+      width: 36px;
     }
   }
 `;
@@ -123,11 +137,18 @@ const cartWrapper = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
+  @media (min-width: ${theme.media.laptop}) {
+    display: block;
+  }
 `;
 
 const searchWrapper = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     display: none;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    display: block;
+    width: 100%;
   }
 `;
 
