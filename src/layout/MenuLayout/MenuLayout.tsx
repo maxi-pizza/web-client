@@ -73,6 +73,7 @@ const container = theme => css`
   @media (min-width: ${theme.media.laptop}) {
     flex-direction: column;
     width: auto;
+    overflow: hidden;
   }
 `;
 

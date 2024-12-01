@@ -91,6 +91,9 @@ const searchAndProductsWrapper = theme => css`
   @media (min-width: ${theme.media.tablet}) {
     width: 653px;
   }
+  @media (min-width: ${theme.media.pc}) {
+    width: 986px;
+  }
 `;
 
 const headingWrapper = theme => css`
@@ -129,6 +132,9 @@ const productsGrid = theme => css`
   }
   @media (min-width: ${theme.media.tablet}) {
     grid-template-columns: 1fr 1fr;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `;
 

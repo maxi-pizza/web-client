@@ -27,7 +27,7 @@ const ProductCard = () => {
         <div css={textWrapper}>
           <Text type={'caption'}>
             Склад: прошутто, фета, моцарелла, каперси, орегано.
-          </Text>{' '}
+          </Text>
         </div>
         <div
           css={css`

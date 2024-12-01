@@ -109,11 +109,11 @@ const wrapper = theme => css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 132px;
   @media (min-width: ${theme.media.mobile}) {
     margin-left: 0;
   }
-  @media (min-width: ${theme.media.laptop}) {
+  @media (min-width: ${theme.media.pc}) {
+    margin-left: 132px;
   }
 `;
 
@@ -139,7 +139,6 @@ const button = theme => css`
   justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
-  margin-right: 132px;
   :hover {
     border: 1px solid ${theme.colors.accent};
   }
@@ -149,6 +148,9 @@ const button = theme => css`
   @media (min-width: ${theme.media.laptop}) {
     display: flex;
     margin-right: 32px;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    margin-right: 132px;
   }
 `;
 

@@ -30,10 +30,12 @@ const ProductInCart = () => {
 };
 
 const cartItemWrapper = theme => css`
-  width: 348px;
   margin-top: 32px;
   @media (min-width: ${theme.media.mobile}) {
     width: 313px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 348px;
   }
 `;
 

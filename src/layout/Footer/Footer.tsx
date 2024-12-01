@@ -132,6 +132,9 @@ const contentWrapper = theme => css`
     justify-content: space-evenly;
     margin-left: 0;
   }
+  @media (min-width: ${theme.media.pc}) {
+    justify-content: normal;
+  }
 `;
 
 const logoStyles = theme => css`
@@ -143,6 +146,9 @@ const logoStyles = theme => css`
     width: 108px;
     height: 80px;
     margin-top: 20px;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    margin-left: 132px;
   }
 `;
 
@@ -170,6 +176,10 @@ const contactInformationWrapper = theme => css`
   @media (min-width: ${theme.media.tablet}) {
     margin-right: 20px;
   }
+  @media (min-width: ${theme.media.pc}) {
+    margin-left: 312px;
+    margin-right: 0;
+  }
 `;
 
 const legalInformationWrapper = theme => css`
@@ -181,15 +191,21 @@ const legalInformationWrapper = theme => css`
   @media (min-width: ${theme.media.tablet}) {
     margin-right: 20px;
   }
+  @media (min-width: ${theme.media.pc}) {
+    margin-right: 0;
+    margin-left: 180px;
+  }
 `;
 
 const socialInformationWrapper = theme => css`
-  margin-left: 180px;
   display: flex;
   flex-direction: column;
   @media (min-width: ${theme.media.mobile}) {
     margin-left: 0;
     margin-top: 20px;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    margin-left: 180px;
   }
 `;
 
@@ -215,9 +231,14 @@ const socialButton = css`
 `;
 
 const rightsWrapper = theme => css`
-  margin-top: 32px;
   @media (min-width: ${theme.media.mobile}) {
     margin-top: 20px;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -225,6 +246,9 @@ const horizontalBar = theme => css`
   width: 100%;
   height: 1px;
   background-color: ${theme.colors.strokeDark};
+  @media (min-width: ${theme.media.pc}) {
+    width: 1656px;
+  }
 `;
 
 const textWrapper = theme => css`
@@ -235,6 +259,9 @@ const textWrapper = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     margin: 0;
     padding: 16px;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    width: 1656px;
   }
 `;
 

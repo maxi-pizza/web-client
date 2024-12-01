@@ -88,6 +88,9 @@ const leftArrowBtn = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
+  @media (min-width: ${theme.media.laptop}) {
+    display: block;
+  }
 `;
 
 const rightArrowBtn = theme => css`
@@ -115,6 +118,9 @@ const rightArrowBtn = theme => css`
   }
   @media (min-width: ${theme.media.mobile}) {
     display: none;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    display: block;
   }
 `;
 

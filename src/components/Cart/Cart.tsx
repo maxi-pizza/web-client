@@ -40,7 +40,6 @@ const cartWrapper = css`
 
 const cart = theme => css`
   background-color: ${theme.colors.container};
-  width: 396px;
   border: 1px solid ${theme.colors.stroke};
   border-radius: 12px;
   display: flex;
@@ -48,6 +47,9 @@ const cart = theme => css`
   align-items: center;
   @media (min-width: ${theme.media.mobile}) {
     width: 343px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 396px;
   }
 `;
 
@@ -58,14 +60,19 @@ const dottedLine = theme => css`
   @media (min-width: ${theme.media.mobile}) {
     width: 313px;
   }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 348px;
+  }
 `;
 
 const horizontalLine = theme => css`
   height: 1px;
-  width: 348px;
   background-color: ${theme.colors.stroke};
   @media (min-width: ${theme.media.mobile}) {
     width: 313px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 348px;
   }
 `;
 
@@ -97,6 +104,9 @@ const orderButton = theme => css`
   margin-top: 24px;
   @media (max-width: ${theme.media.mobile}) {
     width: 313px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    width: 348px;
   }
 `;
 
