@@ -16,47 +16,50 @@ const ErrorBackgroundLayout = ({children}: {children: React.ReactNode}) => {
     <div css={container}>
       <Rectangle
         css={css`
-          transform: rotate(90deg);
-          position: absolute;
-          top: 0;
-          right: 4px;
-          @media (min-width: ${theme.media.mobile}) {
-            display: none;
+          display: none;
+          @media (min-width: ${theme.media.tablet}) {
+            display: flex;
+            transform: rotate(90deg);
+            position: absolute;
+            top: 0;
+            right: 0;
           }
         `}
         color={theme.colors.accent}
       />
       <RectangleMobileSvg
         css={css`
-          display: none;
-          @media (min-width: ${theme.media.mobile}) {
-            display: block;
-            position: absolute;
-            bottom: 0;
-            left: 0;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          @media (min-width: ${theme.media.tablet}) {
+            display: none;
           }
         `}
       />
       <SodaSvg
         css={css`
-          position: absolute;
-          top: 433px;
-          left: 524px;
-          @media (max-width: ${theme.media.mobile}) {
-            display: none;
+          display: none;
+          @media (min-width: ${theme.media.tablet}) {
+            display: block;
+            position: absolute;
+            top: 433px;
+            left: 524px;
           }
         `}
       />
       <NigiriSvg
         css={css`
           position: absolute;
-          right: 328px;
-          top: 188px;
-          @media (max-width: ${theme.media.mobile}) {
-            top: 336px;
-            right: 43px;
-            width: 60px;
-            height: 60px;
+          top: 336px;
+          right: 43px;
+          width: 60px;
+          height: 60px;
+          @media (min-width: ${theme.media.tablet}) {
+            right: 328px;
+            top: 188px;
+            width: 120px;
+            height: 120px;
           }
         `}
         color={theme.colors.stroke}
@@ -64,13 +67,15 @@ const ErrorBackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <NoodlesSvg
         css={css`
           position: absolute;
-          top: 186px;
-          left: 839px;
-          @media (max-width: ${theme.media.mobile}) {
-            top: 340px;
-            left: 35px;
-            width: 60px;
-            height: 60px;
+          top: 340px;
+          left: 35px;
+          width: 60px;
+          height: 60px;
+          @media (min-width: ${theme.media.tablet}) {
+            top: 186px;
+            left: 600px;
+            width: 120px;
+            height: 120px;
           }
         `}
         color={theme.colors.stroke}
@@ -78,36 +83,40 @@ const ErrorBackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <FriedPotatoesSvg
         css={css`
           position: absolute;
-          top: 300px;
-          right: 637px;
-          @media (max-width: ${theme.media.mobile}) {
-            top: 430px;
-            right: 148px;
-            width: 60px;
-            height: 60px;
+          top: 430px;
+          right: 148px;
+          width: 60px;
+          height: 60px;
+          @media (min-width: ${theme.media.tablet}) {
+            top: 300px;
+            right: 637px;
+            width: 120px;
+            height: 120px;
           }
         `}
         color={theme.colors.stroke}
       />
       <PizzaSvg
         css={css`
-          position: absolute;
-          bottom: 258px;
-          left: 317px;
-          @media (max-width: ${theme.media.mobile}) {
-            display: none;
+          display: none;
+          @media (min-width: ${theme.media.tablet}) {
+            display: block;
+            position: absolute;
+            bottom: 150px;
+            left: 317px;
           }
         `}
         color={theme.colors.stroke}
       />
       <RightRectangle
         css={css`
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          transform: rotate(90deg);
-          @media (max-width: ${theme.media.mobile}) {
-            display: none;
+          display: none;
+          @media (min-width: ${theme.media.tablet}) {
+            display: block;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            transform: rotate(90deg);
           }
         `}
         color={theme.colors.accent}
@@ -123,10 +132,10 @@ const container = theme => css`
   margin-top: -92px;
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
-  @media (max-width: ${theme.media.mobile}) {
-    align-items: flex-start;
+  align-items: center;
+  @media (min-width: ${theme.media.tablet}) {
+    justify-content: flex-start;
   }
 `;
 

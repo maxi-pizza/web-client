@@ -13,25 +13,31 @@ const Error = () => {
       <NoRouteSvg
         css={css`
           position: absolute;
-          bottom: 100px;
-          right: 102px;
-          @media (min-width: ${theme.media.mobile}) {
-            width: 312px;
-            height: 112px;
-            bottom: 112px;
-            left: 45px;
+          width: 312px;
+          height: 112px;
+          bottom: 112px;
+          left: 45px;
+          @media (min-width: ${theme.media.tablet}) {
+            left: unset;
+            bottom: 100px;
+            right: 102px;
           }
         `}
       />
       <div
         css={css`
-          width: 1656px;
-          position: relative;
-          z-index: 1;
-          height: 500px;
           @media (min-width: ${theme.media.mobile}) {
             width: 100%;
-            margin-top: 104px;
+            height: 400px;
+          }
+          @media (min-width: ${theme.media.tablet}) {
+            margin-left: 110px;
+          }
+          @media (min-width: ${theme.media.pc}) {
+            margin-left: 132px;
+            width: 1656px;
+            position: relative;
+            height: 500px;
           }
         `}>
         <Text type={'h1'}>Щось пішло не так</Text>
@@ -39,9 +45,9 @@ const Error = () => {
           css={css`
             margin-top: 24px;
             margin-bottom: 40px;
-            width: 536px;
-            @media (max-width: ${theme.media.mobile}) {
-              width: 343px;
+            width: 343px;
+            @media (min-width: ${theme.media.tablet}) {
+              width: 536px;
             }
           `}>
           <Text type={'bigBody'} opacity={'60%'}>
@@ -70,6 +76,7 @@ const backButton = theme => css`
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  position: relative;
   svg {
     transform: rotate(180deg);
     width: 18px;
@@ -77,8 +84,8 @@ const backButton = theme => css`
     margin-left: 6px;
   }
   @media (min-width: ${theme.media.mobile}) {
-    width: 100%;
     height: 48px;
+    width: 343px;
   }
 `;
 
