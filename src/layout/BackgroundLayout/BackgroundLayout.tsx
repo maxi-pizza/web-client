@@ -17,33 +17,35 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
     <div css={container}>
       <Rectangle
         css={css`
-          position: absolute;
-          top: 0;
-          left: 0;
-          @media (min-width: ${theme.media.mobile}) {
-            display: none;
+          display: none;
+          @media (min-width: ${theme.media.tablet}) {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
           }
         `}
         color={theme.colors.accent}
       />
       <RectangleMobileSvg
         css={css`
-          display: none;
-          @media (min-width: ${theme.media.mobile}) {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          @media (min-width: ${theme.media.tablet}) {
+            display: none;
           }
         `}
         color={theme.colors.accent}
       />
       <BurritosSvg
         css={css`
-          position: absolute;
-          top: 467px;
-          left: 268px;
-          @media (min-width: ${theme.media.mobile}) {
-            display: none;
+          display: none;
+          @media (min-width: ${theme.media.laptop}) {
+            display: block;
+            position: absolute;
+            top: 467px;
+            left: 268px;
           }
         `}
         color={theme.colors.stroke}
@@ -51,35 +53,15 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <NigiriSvg
         css={css`
           position: absolute;
-          right: 200px;
-          top: 176px;
-          @media (min-width: ${theme.media.mobile}) {
-            top: 125px;
-            right: 13px;
-            width: 60px;
-            height: 60px;
-          }
-        `}
-        color={theme.colors.stroke}
-      />
-      <NoodlesSvg
-        css={css`
-          position: absolute;
-          top: 216px;
-          left: 515px;
-          @media (min-width: ${theme.media.mobile}) {
-            display: none;
-          }
-        `}
-        color={theme.colors.stroke}
-      />
-      <FriedPotatoesSvg
-        css={css`
-          position: absolute;
-          top: 367px;
-          right: 484px;
-          @media (min-width: ${theme.media.mobile}) {
-            display: none;
+          top: 125px;
+          right: 13px;
+          width: 60px;
+          height: 60px;
+          @media (min-width: ${theme.media.tablet}) {
+            right: 200px;
+            top: 176px;
+            width: 120px;
+            height: 120px;
           }
         `}
         color={theme.colors.stroke}
@@ -87,35 +69,65 @@ const BackgroundLayout = ({children}: {children: React.ReactNode}) => {
       <PizzaSvg
         css={css`
           position: absolute;
-          bottom: 246px;
-          right: 336px;
-          @media (min-width: ${theme.media.mobile}) {
-            top: 101px;
-            left: 40px;
-            width: 60px;
-            height: 60px;
+          top: 101px;
+          left: 40px;
+          width: 60px;
+          height: 60px;
+          @media (min-width: ${theme.media.tablet}) {
+            top: unset;
+            bottom: 150px;
+            right: 336px;
+            left: unset;
+            width: 120px;
+            height: 120px;
+          }
+        `}
+        color={theme.colors.stroke}
+      />
+      <NoodlesSvg
+        css={css`
+          display: none;
+          @media (min-width: ${theme.media.laptop}) {
+            display: block;
+            position: absolute;
+            top: 216px;
+            left: 315px;
+          }
+        `}
+        color={theme.colors.stroke}
+      />
+      <FriedPotatoesSvg
+        css={css`
+          display: none;
+          @media (min-width: ${theme.media.laptop}) {
+            display: block;
+            position: absolute;
+            top: 367px;
+            right: 484px;
           }
         `}
         color={theme.colors.stroke}
       />
       <RightRectangle
         css={css`
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          @media (min-width: ${theme.media.mobile}) {
-            display: none;
+          display: none;
+          @media (min-width: ${theme.media.tablet}) {
+            display: block;
+            position: absolute;
+            right: 0;
+            bottom: 0;
           }
         `}
         color={theme.colors.accent}
       />
       <SushiSvg
         css={css`
-          position: absolute;
-          bottom: 137px;
-          left: 343px;
-          @media (min-width: ${theme.media.mobile}) {
-            display: none;
+          display: none;
+          @media (min-width: ${theme.media.laptop}) {
+            display: block;
+            position: absolute;
+            bottom: 137px;
+            left: 343px;
           }
         `}
         color={theme.colors.stroke}
