@@ -17,11 +17,17 @@ const DeliveryAndPayment = () => {
         <div
           css={css`
             display: flex;
-            width: 1656px;
-            margin-bottom: 32px;
-            @media (min-width: ${theme.media.mobile}) {
-              width: 343px;
-              margin-bottom: 25px;
+            width: 343px;
+            margin-bottom: 25px;
+            @media (min-width: ${theme.media.pc}) {
+              width: 1656px;
+              margin-bottom: 32px;
+            }
+            @media (min-width: ${theme.media.laptop}) {
+              width: 816px;
+            }
+            @media (min-width: ${theme.media.pc}) {
+              width: 1656px;
             }
           `}>
           <Text type={'bigBody'}>Головна</Text>
@@ -71,9 +77,11 @@ const DeliveryAndPayment = () => {
             <div>
               <div
                 css={css`
-                  @media (min-width: ${theme.media.mobile}) {
                   margin-top: 30px;
-               `}>
+                  @media (min-width: ${theme.media.laptop}) {
+                    margin-top: 0;
+                  }
+                `}>
                 <Text type={'h3'}>Способи оплати</Text>
               </div>
               <div css={paymentsWrapper}>
@@ -127,41 +135,43 @@ const container = theme => css`
 `;
 
 const wrapper = theme => css`
-  padding-top: 148px;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding-bottom: 134px;
-  @media (min-width: ${theme.media.mobile}) {
-    padding-top: 105px;
+  padding-top: 105px;
+  @media (min-width: ${theme.media.laptop}) {
+    padding-top: 148px;
   }
 `;
 
 const card = theme => css`
-  width: 816px;
-  padding: 32px;
-  background-color: ${theme.colors.container};
-  border-radius: 12px;
-  border: 1px solid ${theme.colors.stroke};
-  @media (min-width: ${theme.media.mobile}) {
-    width: 343px;
-    padding: 0;
-    border: none;
-    background-color: ${theme.colors.background};
+  width: 343px;
+  padding: 0;
+  border: none;
+  background-color: ${theme.colors.background};
+
+  @media (min-width: ${theme.media.laptop}) {
+    width: 816px;
+    padding: 32px;
+    background-color: ${theme.colors.container};
+    border-radius: 12px;
+    border: 1px solid ${theme.colors.stroke};
+    margin-bottom: 30px;
   }
 `;
 
 const deliveryTextWrapper = theme => css`
   display: flex;
-  align-items: center;
   margin-bottom: 16px;
+  align-items: flex-start;
   svg {
     margin-right: 8px;
     height: 22px;
     width: 22px;
   }
-  @media (min-width: ${theme.media.mobile}) {
-    align-items: flex-start;
+  @media (min-width: ${theme.media.laptop}) {
+    align-items: center;
   }
 `;
 
@@ -171,52 +181,63 @@ const deliveryWrapper = css`
 `;
 
 const verticalBar = theme => css`
-  width: 1px;
-  height: 22px;
-  background-color: ${theme.colors.stroke};
-  margin-left: 24px;
-  margin-right: 24px;
-  @media (min-width: ${theme.media.mobile}) {
-    display: none;
+  display: none;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 1px;
+    height: 22px;
+    background-color: ${theme.colors.stroke};
+    margin-left: 24px;
+    margin-right: 24px;
   }
 `;
 
 const paymentWrapper = theme => css`
-  margin-top: 24px;
+  margin-top: 20px;
   svg {
     margin-bottom: 16px;
   }
-  @media (min-width: ${theme.media.mobile}) {
-    margin-top: 20px;
+
+  @media (min-width: ${theme.media.laptop}) {
+    margin-top: 24px;
     svg {
       margin-bottom: 16px;
     }
+  }
+  @media (min-width: ${theme.media.pc}) {
+    margin-right: 24px;
   }
 `;
 
 const paymentsWrapper = theme => css`
   display: flex;
-  @media (min-width: ${theme.media.mobile}) {
+  flex-direction: column;
+  margin-bottom: 30px;
+  @media (min-width: ${theme.media.laptop}) {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
+    flex-direction: unset;
+    margin-bottom: 0;
   }
 `;
 
 const cardsWrapper = theme => css`
   display: flex;
-  width: 1656px;
-  justify-content: space-between;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 343px;
-    flex-direction: column;
+  width: 343px;
+  flex-direction: column;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 816px;
+    justify-content: space-between;
+  }
+  @media (min-width: ${theme.media.pc}) {
+    flex-direction: unset;
+    width: 1656px;
   }
 `;
 
 const mobileTextWrapper = theme => css`
   display: flex;
-  @media (min-width: ${theme.media.mobile}) {
-    flex-direction: column;
+  flex-direction: column;
+  @media (min-width: ${theme.media.laptop}) {
+    flex-direction: unset;
   }
 `;
 
