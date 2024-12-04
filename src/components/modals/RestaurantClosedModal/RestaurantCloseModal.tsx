@@ -36,11 +36,12 @@ const RestaurantCloseModal = observer(() => {
 const modalWrapper = theme => css`
   display: flex;
   flex-direction: column;
-  width: 536px;
   align-items: center;
   text-align: center;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 283px;
+  width: 283px;
+
+  @media (min-width: ${theme.media.tablet}) {
+    width: 536px;
   }
 `;
 
