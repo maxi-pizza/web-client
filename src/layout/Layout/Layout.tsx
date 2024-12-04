@@ -22,8 +22,8 @@ const Layout = () => {
         {/*<OrderPage />*/}
         {/*<Banner />*/}
         {/*<Content />*/}
-        <DeliveryAndPayment />
-        {/*<Favorite />*/}
+        {/*<DeliveryAndPayment />*/}
+        <Favorite />
         {/*<Error />*/}
       </div>
       <Footer />
