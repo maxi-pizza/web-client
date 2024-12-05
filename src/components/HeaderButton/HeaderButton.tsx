@@ -6,10 +6,10 @@ const HeaderButton = ({
   handleButton,
 }: {
   icon: React.ReactNode;
-  handleButton?: (a: boolean) => void;
+  handleButton?: (a: React.MouseEvent<HTMLButtonElement>) => void;
 }) => {
   return (
-    <button onClick={() => handleButton(true)} css={container}>
+    <button onClick={a => handleButton(a)} css={container}>
       {icon}
     </button>
   );

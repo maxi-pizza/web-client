@@ -3,6 +3,7 @@ import {makeAutoObservable} from 'mobx';
 class ModalsStore {
   restaurantClosedModal = true;
   cartModal = false;
+  contactInformationModal = false;
   constructor() {
     makeAutoObservable(this);
   }
@@ -11,6 +12,9 @@ class ModalsStore {
   }
   handleCartModal(isVisible: boolean) {
     this.cartModal = isVisible;
+  }
+  handleContactInformationModal(isVisible: boolean) {
+    this.contactInformationModal = isVisible;
   }
 }
 

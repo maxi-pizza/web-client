@@ -51,7 +51,14 @@ const Header = () => {
       </Link>
       <div css={mobileHeaderMenu}>
         <HeaderButton icon={<SearchSvg />} />
-        <HeaderButton icon={<DistanceSvg />} />
+        <HeaderButton
+          handleButton={() =>
+            modalsStore.handleContactInformationModal(
+              !modalsStore.contactInformationModal,
+            )
+          }
+          icon={<DistanceSvg />}
+        />
         <HeaderButton icon={<FavouriteSvg />} />
         <HeaderButton
           handleButton={() =>
