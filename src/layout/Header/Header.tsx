@@ -10,13 +10,17 @@ import HeaderButton from 'src/components/HeaderButton/HeaderButton.tsx';
 import CartSvg from 'src/assets/icons/cart.svg';
 import SearchSvg from 'src/assets/icons/search.svg';
 import {WhiteTheme} from 'src/styles/theme.ts';
+import {Link} from 'react-router-dom';
+import {favoriteRoute, homeRoute} from 'src/routes.ts';
 
 const Header = () => {
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={headerContainer}>
       <div css={wrapper}>
-        <img css={logoStyles} src={String(logo)} alt={'logo'} />
+        <Link to={homeRoute}>
+          <img css={logoStyles} src={String(logo)} alt={'logo'} />
+        </Link>
         <div css={contentWrapper}>
           <div css={textNSvgWrapper}>
             <DistanceSvg color={theme.colors.accent} />
@@ -39,10 +43,10 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <button css={button}>
+      <Link css={button} to={favoriteRoute}>
         <FavouriteSvg color={theme.colors.accent} />
         <Text type={'subscribe'}>Улюблені страви</Text>
-      </button>
+      </Link>
       <div css={mobileHeaderMenu}>
         <HeaderButton icon={<SearchSvg />} />
         <HeaderButton icon={<DistanceSvg />} />
@@ -139,6 +143,7 @@ const button = theme => css`
   justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
+  text-decoration: unset;
   :hover {
     border: 1px solid ${theme.colors.accent};
   }

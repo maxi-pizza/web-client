@@ -6,37 +6,41 @@ import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 import Text from 'src/components/Text.tsx';
 import DiscountSvg from 'src/assets/icons/discount.svg';
 import Cart from 'src/components/Cart/Cart.tsx';
+import Banner from 'src/layout/Banner/Banner.tsx';
 
 const Content = () => {
   return (
-    <div css={container}>
-      <div css={menuWrapper}>
-        <MenuLayout />
-        <div css={searchAndProductsWrapper}>
-          <div css={searchWrapper}>
-            <Search />
+    <div>
+      <Banner />
+      <div css={container}>
+        <div css={menuWrapper}>
+          <MenuLayout />
+          <div css={searchAndProductsWrapper}>
+            <div css={searchWrapper}>
+              <Search />
+            </div>
+            <div css={headingWrapper}>
+              <DiscountSvg
+                css={css`
+                  height: 36px;
+                  width: 36px;
+                  margin-right: 16px;
+                `}
+              />
+              <Text type={'h2'}>Акційні пропозиції</Text>
+            </div>
+            <div css={productsGrid}>
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+            </div>
           </div>
-          <div css={headingWrapper}>
-            <DiscountSvg
-              css={css`
-                height: 36px;
-                width: 36px;
-                margin-right: 16px;
-              `}
-            />
-            <Text type={'h2'}>Акційні пропозиції</Text>
+          <div css={cartWrapper}>
+            <Cart />
           </div>
-          <div css={productsGrid}>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-          </div>
-        </div>
-        <div css={cartWrapper}>
-          <Cart />
         </div>
       </div>
     </div>

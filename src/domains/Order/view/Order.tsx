@@ -9,7 +9,7 @@ import SwitchButton from 'src/components/SwitchButton/SwitchButton.tsx';
 import Input from 'src/components/Input/Input.tsx';
 import Dropdown from 'src/components/Dropdown/Dropdown.tsx';
 
-const OrderPage = () => {
+const Order = () => {
   const theme = useTheme() as WhiteTheme;
   const deliveryMethods = [{name: 'Доставка'}, {name: 'Самовивіз'}];
   const paymentMethods = [{name: 'Готівка'}, {name: 'Картка'}];
@@ -355,4 +355,4 @@ const orderButton = theme => css`
   margin-top: 32px;
 `;
 
-export default OrderPage;
+export default Order;
