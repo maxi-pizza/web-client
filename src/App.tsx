@@ -41,6 +41,9 @@ const globalStyles = css`
   table {
     border-collapse: collapse;
   }
+  a {
+    text-decoration: unset;
+  }
 `;
 
 export default App;

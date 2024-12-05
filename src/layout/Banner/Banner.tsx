@@ -8,8 +8,7 @@ import BannerMobileImg from 'src/assets/banner-mobile.png';
 const Banner = () => {
   const mobile = useIsMobile();
   const tablet = useIsTablet();
-  console.log(tablet);
-  console.log(mobile);
+
   return (
     <div css={bannerContainer}>
       <img

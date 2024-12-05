@@ -39,9 +39,11 @@ const modalWrapper = theme => css`
   align-items: center;
   text-align: center;
   width: 283px;
+  padding: 30px;
 
   @media (min-width: ${theme.media.tablet}) {
     width: 536px;
+    padding: 60px;
   }
 `;
 

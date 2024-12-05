@@ -1,8 +1,18 @@
 import React from 'react';
 import {css} from '@emotion/react';
 
-const HeaderButton = ({icon}: {icon: React.ReactNode}) => {
-  return <button css={container}>{icon}</button>;
+const HeaderButton = ({
+  icon,
+  handleButton,
+}: {
+  icon: React.ReactNode;
+  handleButton?: (a: boolean) => void;
+}) => {
+  return (
+    <button onClick={() => handleButton(true)} css={container}>
+      {icon}
+    </button>
+  );
 };
 
 const container = theme => css`

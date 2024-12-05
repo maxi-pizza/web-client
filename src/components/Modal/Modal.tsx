@@ -40,24 +40,28 @@ const Modal = ({
 
 const contentWrapper = theme => css`
   position: relative;
-  padding: 60px;
   background-color: ${theme.colors.background};
   border: 1px solid ${theme.colors.stroke};
   border-radius: 12px;
   display: flex;
-  @media (min-width: ${theme.media.mobile}) {
-    padding: 30px;
-  }
 `;
 const close = theme => css`
   position: absolute;
   cursor: pointer;
-  top: 30px;
-  right: 30px;
+  top: 17px;
+  right: 17px;
   svg {
-    width: 32px;
-    height: 32px;
+    width: 20px;
+    height: 20px;
     color: ${theme.colors.textPrimary};
+  }
+  @media (min-width: ${theme.laptop}) {
+    top: 30px;
+    right: 30px;
+    svg {
+      width: 32px;
+      height: 32px;
+    }
   }
 `;
 

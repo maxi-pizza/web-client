@@ -12,6 +12,7 @@ import Error from 'src/domains/Error/view/Error.tsx';
 import Modal from 'src/components/Modal/Modal.tsx';
 import RestaurantCloseModal from 'src/components/modals/RestaurantClosedModal/RestaurantCloseModal.tsx';
 import {Outlet} from 'react-router-dom';
+import CartModal from 'src/components/modals/CartModal/CartModal.tsx';
 
 const Layout = () => {
   return (
@@ -19,13 +20,7 @@ const Layout = () => {
       <Header />
       <div css={main}>
         <RestaurantCloseModal />
-        {/*<ThankYou />*/}
-        {/*<Order />*/}
-        {/*<Banner />*/}
-        {/*<Content />*/}
-        {/*<DeliveryAndPayment />*/}
-        {/*<Favorite />*/}
-        {/*<Error />*/}
+        <CartModal />
         <Outlet />
       </div>
       <Footer />

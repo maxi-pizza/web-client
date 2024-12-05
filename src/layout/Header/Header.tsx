@@ -12,9 +12,11 @@ import SearchSvg from 'src/assets/icons/search.svg';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
 import {favoriteRoute, homeRoute} from 'src/routes.ts';
+import modalsStore from 'src/stores/modalsStore.ts';
 
 const Header = () => {
   const theme = useTheme() as WhiteTheme;
+  console.log(modalsStore.cartModal);
   return (
     <div css={headerContainer}>
       <div css={wrapper}>
@@ -51,7 +53,12 @@ const Header = () => {
         <HeaderButton icon={<SearchSvg />} />
         <HeaderButton icon={<DistanceSvg />} />
         <HeaderButton icon={<FavouriteSvg />} />
-        <HeaderButton icon={<CartSvg />} />
+        <HeaderButton
+          handleButton={() =>
+            modalsStore.handleCartModal(!modalsStore.cartModal)
+          }
+          icon={<CartSvg />}
+        />
       </div>
     </div>
   );
@@ -143,7 +150,6 @@ const button = theme => css`
   justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
-  text-decoration: unset;
   :hover {
     border: 1px solid ${theme.colors.accent};
   }

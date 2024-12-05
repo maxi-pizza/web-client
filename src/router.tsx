@@ -1,10 +1,4 @@
 import {createBrowserRouter} from 'react-router-dom';
-import Layout from 'src/layout/Layout/Layout.tsx';
-import Content from 'src/layout/Content/Content.tsx';
-import Favorite from 'src/domains/Favorite/view/Favorite.tsx';
-import DeliveryAndPayment from 'src/domains/DeliveryAndPayment/view/DeliveryAndPayment.tsx';
-import ThankYou from 'src/domains/ThankYou/view/ThankYou.tsx';
-import Order from 'src/domains/Order/view/Order.tsx';
 import {
   deliveryAndPaymentRoute,
   favoriteRoute,
@@ -13,6 +7,16 @@ import {
   thankYouRoute,
 } from 'src/routes.ts';
 import Error from 'src/domains/Error/view/Error.tsx';
+import {lazy} from 'react';
+
+const Layout = lazy(() => import('src/layout/Layout/Layout.tsx'));
+const ThankYou = lazy(() => import('src/domains/ThankYou/view/ThankYou.tsx'));
+const Order = lazy(() => import('src/domains/Order/view/Order.tsx'));
+const DeliveryAndPayment = lazy(
+  () => import('src/domains/DeliveryAndPayment/view/DeliveryAndPayment.tsx'),
+);
+const Content = lazy(() => import('src/layout/Content/Content.tsx'));
+const Favorite = lazy(() => import('src/domains/Favorite/view/Favorite.tsx'));
 
 export const router = createBrowserRouter([
   {

@@ -3,13 +3,26 @@ import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import ProductInCart from 'src/components/ProductInCart/ProductInCart.tsx';
+import {Link} from 'react-router-dom';
+import {orderRoute} from 'src/routes.ts';
 
-const Cart = ({withOrderButton = true}: {withOrderButton?: boolean}) => {
+const Cart = ({
+  withOrderButton = true,
+  modal = false,
+}: {
+  withOrderButton?: boolean;
+  modal?: boolean;
+}) => {
   const theme = useTheme() as WhiteTheme;
   return (
-    <div css={cart}>
-      <div css={cartWrapper}>
+    <div css={cart({isModal: modal})}>
+      <div
+        css={css`
+          margin-top: 32px;
+        `}>
         <Text type={'h3'}>Ваше замовлення</Text>
+      </div>
+      <div css={cartWrapper}>
         <ProductInCart />
         <div css={dottedLine} />
         <ProductInCart />
@@ -21,11 +34,11 @@ const Cart = ({withOrderButton = true}: {withOrderButton?: boolean}) => {
           <Text type={'h4'}>1399 грн</Text>
         </div>
         {withOrderButton && (
-          <button css={orderButton}>
+          <Link css={orderButton} to={orderRoute}>
             <Text type={'h5'} color={theme.colors.textWhite}>
               Замовити
             </Text>
-          </button>
+          </Link>
         )}
       </div>
     </div>
@@ -33,25 +46,29 @@ const Cart = ({withOrderButton = true}: {withOrderButton?: boolean}) => {
 };
 
 const cartWrapper = css`
-  padding-top: 32px;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
-const cart = theme => css`
-  background-color: ${theme.colors.container};
-  border: 1px solid ${theme.colors.stroke};
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 343px;
-  }
-  @media (min-width: ${theme.media.laptop}) {
-    width: 396px;
-  }
-`;
+const cart =
+  ({isModal}) =>
+  theme => css`
+    background-color: ${isModal
+      ? theme.colors.background
+      : theme.colors.container};
+    border: ${isModal ? 'none' : `1px solid ${theme.colors.stroke}`};
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @media (min-width: ${theme.media.mobile}) {
+      width: 343px;
+    }
+    @media (min-width: ${theme.media.laptop}) {
+      width: 396px;
+    }
+  `;
 
 const dottedLine = theme => css`
   height: 1px;
@@ -93,8 +110,8 @@ const sumWrapper = css`
 
 const orderButton = theme => css`
   background-color: ${theme.colors.accent};
-  width: 348px;
-  height: 53px;
+  width: 313px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,10 +120,10 @@ const orderButton = theme => css`
   cursor: pointer;
   margin-top: 24px;
   @media (max-width: ${theme.media.mobile}) {
-    width: 313px;
   }
   @media (min-width: ${theme.media.laptop}) {
     width: 348px;
+    height: 53px;
   }
 `;
 
