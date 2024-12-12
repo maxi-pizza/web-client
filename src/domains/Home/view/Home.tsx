@@ -1,14 +1,18 @@
 import React from 'react';
-import {css} from '@emotion/react';
+import Banner from 'src/layout/Banner/Banner.tsx';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
-import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
-import Text from 'src/components/Text.tsx';
 import DiscountSvg from 'src/assets/icons/discount.svg';
+import {css} from '@emotion/react';
+import Text from 'src/components/Text.tsx';
+import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 import Cart from 'src/components/Cart/Cart.tsx';
-import Banner from 'src/layout/Banner/Banner.tsx';
+import {useQuery} from '@tanstack/react-query';
+import {productsQuery} from 'src/domains/Home/products.query.ts';
 
-const Content = () => {
+const Home = () => {
+  const {data: productsData} = useQuery(productsQuery);
+  console.log(productsData);
   return (
     <div>
       <Banner />
@@ -162,4 +166,4 @@ const searchWrapper = theme => css`
   }
 `;
 
-export default Content;
+export default Home;

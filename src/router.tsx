@@ -15,7 +15,7 @@ const Order = lazy(() => import('src/domains/Order/view/Order.tsx'));
 const DeliveryAndPayment = lazy(
   () => import('src/domains/DeliveryAndPayment/view/DeliveryAndPayment.tsx'),
 );
-const Content = lazy(() => import('src/layout/Content/Content.tsx'));
+const Home = lazy(() => import('src/domains/Home/view/Home.tsx'));
 const Favorite = lazy(() => import('src/domains/Favorite/view/Favorite.tsx'));
 
 export const router = createBrowserRouter([
@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
       },
       {
         path: homeRoute,
-        element: <Content />,
+        element: <Home />,
       },
       {
         path: favoriteRoute,

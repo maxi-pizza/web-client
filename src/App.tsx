@@ -2,12 +2,16 @@ import {css, Global, ThemeProvider} from '@emotion/react';
 import {theme} from 'src/styles/theme.ts';
 import {RouterProvider} from 'react-router-dom';
 import {router} from 'src/router.tsx';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 function App() {
+  const queryClient = new QueryClient();
   return (
     <ThemeProvider theme={theme}>
-      <Global styles={globalStyles} />
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <Global styles={globalStyles} />
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
