@@ -178,10 +178,17 @@ const searchWrapper = theme => css`
   }
 `;
 
-const stickyCategories = css`
-  height: 100%;
+const stickyCategories = theme => css`
+  height: 90vh;
   position: sticky;
   top: 0;
+  overflow-y: scroll;
+  @media (min-width: ${theme.media.mobile}) {
+    margin-right: 8px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    margin-right: 24px;
+  }
 `;
 
 export default Home;

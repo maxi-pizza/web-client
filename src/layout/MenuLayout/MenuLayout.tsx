@@ -20,7 +20,8 @@ const MenuLayout = () => {
   const {data: categoryData} = useQuery(productsQuery);
   const categories = (categoryData || []).map(category => ({
     id: category.id,
-    name: category.slug,
+    name: category.name,
+    slug: category.slug,
   }));
 
   return (
@@ -62,12 +63,8 @@ const container = theme => css`
 
 const categoryWrapper = theme => css`
   margin-right: 0;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-right: 8px;
-  }
   @media (min-width: ${theme.media.laptop}) {
     width: auto;
-    margin-right: 24px;
     margin-bottom: 8px;
   }
 `;
