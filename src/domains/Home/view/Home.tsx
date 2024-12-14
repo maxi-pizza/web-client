@@ -10,15 +10,27 @@ import Cart from 'src/components/Cart/Cart.tsx';
 import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
 
+const f = [
+  {id: 1, slug: 'piza', products: []},
+  {id: 2, slug: 'napoi', products: []},
+  {id: 3, slug: 'sushi', products: []},
+  {id: 4, slug: 'seti', products: []},
+];
 const Home = () => {
-  const {data: productsData} = useQuery(productsQuery);
-  console.log(productsData);
+  const {data: productsData, isLoading} = useQuery(productsQuery);
+  const products = [];
+  const items = (productsData || []).map(category =>
+    category.products.map(product => products.push(product)),
+  );
+
   return (
     <div>
       <Banner />
       <div css={container}>
         <div css={menuWrapper}>
-          <MenuLayout />
+          <div css={stickyCategories}>
+            <MenuLayout />
+          </div>
           <div css={searchAndProductsWrapper}>
             <div css={searchWrapper}>
               <Search />
@@ -34,12 +46,9 @@ const Home = () => {
               <Text type={'h2'}>Акційні пропозиції</Text>
             </div>
             <div css={productsGrid}>
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
+              {products.map(product => (
+                <ProductCard product={product} key={product.name} />
+              ))}
             </div>
           </div>
           <div css={cartWrapper}>
@@ -148,6 +157,9 @@ const productsGrid = theme => css`
 
 const cartWrapper = theme => css`
   margin-left: 24px;
+  height: 100%;
+  position: sticky;
+  top: 0;
   @media (min-width: ${theme.media.mobile}) {
     display: none;
   }
@@ -164,6 +176,12 @@ const searchWrapper = theme => css`
     display: block;
     width: 100%;
   }
+`;
+
+const stickyCategories = css`
+  height: 100%;
+  position: sticky;
+  top: 0;
 `;
 
 export default Home;

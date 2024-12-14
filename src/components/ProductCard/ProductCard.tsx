@@ -1,5 +1,4 @@
 import React from 'react';
-import ProductImg from 'src/assets/product.png';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import Text from 'src/components/Text.tsx';
@@ -8,7 +7,18 @@ import PlusSvg from 'src/assets/icons/plus.svg';
 import FavoriteSvg from 'src/assets/icons/favorite.svg';
 import BgDiscountSvg from 'src/assets/icons/bgdiscount.svg';
 
-const ProductCard = () => {
+type Product = {
+  id: number;
+  slug: string;
+  name: string;
+  image: string;
+  description: string | null;
+  weight: string;
+  price: string;
+  unit: string;
+};
+
+const ProductCard = ({product}: {product: Product}) => {
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={container}>
@@ -21,9 +31,9 @@ const ProductCard = () => {
         </div>
         <BgDiscountSvg />
       </div>
-      <img src={String(ProductImg)} alt={'product'} css={imgStyles} />
+      <img src={product.image} alt={'product'} css={imgStyles} />
       <div css={wrapper}>
-        <Text type={'h4'}>Прошутто</Text>
+        <Text type={'h4'}>{product.name}</Text>
         <div css={textWrapper}>
           <Text type={'caption'}>
             Склад: прошутто, фета, моцарелла, каперси, орегано.
@@ -51,7 +61,7 @@ const ProductCard = () => {
           </div>
           <div css={weightWrapper}>
             <Text type={'title'} color={theme.colors.textPrimary}>
-              350 г.
+              {`${product.weight} ${product.unit}.`}
             </Text>
           </div>
         </div>
@@ -60,7 +70,7 @@ const ProductCard = () => {
             <div css={price}>
               <Text type={'h5'}>399 грн</Text>
             </div>
-            <Text type={'h4'}>399 грн</Text>
+            <Text type={'h4'}>{product.price} грн</Text>
           </div>
           <div css={buttonWrapper}>
             <button css={addToFavorite}>

@@ -13,8 +13,16 @@ import SodaImg from 'src/assets/icons/soda.png';
 import GravyImg from 'src/assets/icons/gravy.png';
 import DiscountCircleImg from 'src/assets/icons/discount.png';
 import CategoryCard from 'src/components/CategoryCard/CategoryCard.tsx';
+import {useQuery} from '@tanstack/react-query';
+import {productsQuery} from 'src/domains/Home/products.query.ts';
 
 const MenuLayout = () => {
+  const {data: categoryData} = useQuery(productsQuery);
+  const categories = (categoryData || []).map(category => ({
+    id: category.id,
+    name: category.slug,
+  }));
+
   return (
     <div css={container}>
       <div css={categoryWrapper}>
@@ -24,36 +32,11 @@ const MenuLayout = () => {
           svg={<DiscountSvg />}
         />
       </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={PizzaImg} text={'Піца'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={BurritoImg} text={'Буріто'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={SushiImg} text={'Холодні роли'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={ChukaImg} text={'Гарячі роли'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={MakiImg} text={'Сети'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={NigiriImg} text={'Суші & Гункани'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={NoodlesImg} text={'WOK'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={FriedImg} text={'Снеки'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={SodaImg} text={'Прохолодні напої'} />
-      </div>
-      <div css={categoryWrapper}>
-        <CategoryCard backgroundImg={GravyImg} text={'Соуси'} />
-      </div>
+      {categories.map(category => (
+        <div css={categoryWrapper} key={category.name}>
+          <CategoryCard backgroundImg={PizzaImg} text={category.name} />
+        </div>
+      ))}
     </div>
   );
 };

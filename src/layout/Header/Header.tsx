@@ -16,7 +16,6 @@ import modalsStore from 'src/stores/modalsStore.ts';
 
 const Header = () => {
   const theme = useTheme() as WhiteTheme;
-  console.log(modalsStore.cartModal);
   return (
     <div css={headerContainer}>
       <div css={wrapper}>

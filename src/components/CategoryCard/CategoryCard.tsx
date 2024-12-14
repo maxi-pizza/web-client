@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
@@ -16,8 +16,9 @@ const CategoryCard = ({
   svg?: React.ReactNode;
 }) => {
   const theme = useTheme() as WhiteTheme;
+  const [isActive, setIsActive] = useState(false);
   return (
-    <div css={categoryCard}>
+    <div css={categoryCard({isActive: isActive})}>
       <div css={redRectangle} />
       <img src={String(backgroundImg)} alt={'discount'} css={imgWrapper} />
       {svg && (
@@ -35,7 +36,9 @@ const CategoryCard = ({
           margin-left: 12px;
           white-space: nowrap;
         `}>
-        <Text type={'h5'} color={theme.colors.textWhite}>
+        <Text
+          type={'h5'}
+          color={isActive ? theme.colors.textWhite : theme.colors.textPrimary}>
           {text}
         </Text>
       </div>
@@ -43,23 +46,28 @@ const CategoryCard = ({
   );
 };
 
-const categoryCard = theme => css`
-  background-color: ${theme.colors.accent};
-  border: 1px solid ${theme.colors.stroke};
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  @media (min-width: ${theme.media.mobile}) {
-    height: 48px;
-    padding-right: 50px;
-    width: auto;
-  }
-  @media (min-width: ${theme.media.laptop}) {
-    width: 223px;
-    height: 53px;
-  }
-`;
+const categoryCard =
+  ({isActive}) =>
+  theme => css`
+    background-color: ${isActive
+      ? theme.colors.accent
+      : theme.colors.container};
+    border: 1px solid ${theme.colors.stroke};
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    @media (min-width: ${theme.media.mobile}) {
+      height: 48px;
+      padding-right: 50px;
+      width: auto;
+    }
+    @media (min-width: ${theme.media.laptop}) {
+      width: 223px;
+      height: 53px;
+    }
+  `;
 
 const redRectangle = theme => css`
   width: 3px;
