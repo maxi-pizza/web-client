@@ -10,7 +10,9 @@ import ContactInformationModal from 'src/components/modals/ContactInformationMod
 const Layout = () => {
   return (
     <div>
-      <Header />
+      <div css={stickyHeader}>
+        <Header />
+      </div>
       <div css={main}>
         <RestaurantCloseModal />
         <CartModal />
@@ -27,4 +29,10 @@ const main = css`
   margin-bottom: -92px;
 `;
 
+const stickyHeader = css`
+  height: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+`;
 export default Layout;

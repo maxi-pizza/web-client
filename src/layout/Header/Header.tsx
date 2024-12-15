@@ -72,20 +72,15 @@ const Header = () => {
 
 const headerContainer = theme => css`
   background-color: ${theme.colors.background};
-  height: 92px;
   border: 1px solid ${theme.colors.stroke};
-  border-bottom-left-radius: 80px;
-  border-bottom-right-radius: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   z-index: 3;
-  @media (min-width: ${theme.media.mobile}) {
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    height: 80px;
-  }
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  height: 80px;
   @media (min-width: ${theme.media.laptop}) {
     height: 92px;
     border-bottom-left-radius: 80px;

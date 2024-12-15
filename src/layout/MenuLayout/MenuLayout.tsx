@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {css} from '@emotion/react';
 import DiscountSvg from 'src/assets/icons/discount.svg';
 import MakiImg from 'src/assets/icons/maki.png';
@@ -24,6 +24,12 @@ const MenuLayout = () => {
     slug: category.slug,
   }));
 
+  const [activeCategory, setActiveCategory] = useState<string>();
+
+  const handleSetActive = (slug: string) => {
+    setActiveCategory(slug);
+  };
+
   return (
     <div css={container}>
       <div css={categoryWrapper}>
@@ -31,11 +37,20 @@ const MenuLayout = () => {
           backgroundImg={DiscountCircleImg}
           text={'Акційні пропозиції'}
           svg={<DiscountSvg />}
+          category={{id: 0, name: 'Акційні пропозиції', slug: 'promotions'}}
+          setActive={handleSetActive}
+          activeCategory={activeCategory}
         />
       </div>
       {categories.map(category => (
         <div css={categoryWrapper} key={category.name}>
-          <CategoryCard backgroundImg={PizzaImg} text={category.name} />
+          <CategoryCard
+            backgroundImg={PizzaImg}
+            text={category.name}
+            category={category}
+            setActive={handleSetActive}
+            activeCategory={activeCategory}
+          />
         </div>
       ))}
     </div>

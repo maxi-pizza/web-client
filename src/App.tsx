@@ -30,6 +30,7 @@ const globalStyles = css`
     height: 100%;
     font-size: 100%;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
   }
 
   img {

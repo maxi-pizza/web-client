@@ -194,14 +194,15 @@ const searchWrapper = theme => css`
 
 const stickyCategories = theme => css`
   position: sticky;
-  height: 95vh;
   top: 0;
-  overflow-y: scroll;
+  z-index: 1;
   @media (min-width: ${theme.media.mobile}) {
     margin-right: 8px;
   }
   @media (min-width: ${theme.media.laptop}) {
     margin-right: 24px;
+    overflow-y: scroll;
+    height: 95vh;
   }
 `;
 

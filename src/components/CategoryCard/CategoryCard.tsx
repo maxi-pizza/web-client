@@ -1,24 +1,36 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+};
 const CategoryCard = ({
   backgroundImg,
   text,
+  category,
   svg,
+  setActive,
+  activeCategory,
 }: {
   backgroundImg: React.DetailedHTMLProps<
     React.ImgHTMLAttributes<HTMLImageElement>,
     HTMLImageElement
   >;
   text: string;
+  category: Category;
   svg?: React.ReactNode;
+  setActive: (category: string) => void;
+  activeCategory: string;
 }) => {
   const theme = useTheme() as WhiteTheme;
-  const [isActive, setIsActive] = useState(false);
   return (
-    <div css={categoryCard({isActive: isActive})}>
+    <div
+      css={categoryCard({isActive: activeCategory === category.slug})}
+      onClick={() => setActive(category.slug)}>
       <div css={redRectangle} />
       <img src={String(backgroundImg)} alt={'discount'} css={imgWrapper} />
       {svg && (
@@ -38,7 +50,11 @@ const CategoryCard = ({
         `}>
         <Text
           type={'h5'}
-          color={isActive ? theme.colors.textWhite : theme.colors.textPrimary}>
+          color={
+            activeCategory === category.slug
+              ? theme.colors.textWhite
+              : theme.colors.textPrimary
+          }>
           {text}
         </Text>
       </div>

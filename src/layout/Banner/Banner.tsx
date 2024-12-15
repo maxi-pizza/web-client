@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
-import BannerImg from 'src/assets/banner.png';
+import React, {useEffect, useState} from 'react';
 import {css} from '@emotion/react';
 import ArrowSvg from 'src/assets/icons/arrow-left.svg';
 import {useIsMobile, useIsTablet} from 'src/common/hooks/useMedia.ts';
-import BannerMobileImg from 'src/assets/banner-mobile.png';
+
 import {motion, AnimatePresence} from 'framer-motion';
 import {wrap} from 'motion';
+
 import Banner1 from 'src/assets/banner.png';
 import Banner2 from 'src/assets/banner2.png';
 import Banner3 from 'src/assets/banner3.png';
 import Banner4 from 'src/assets/banner4.png';
 import Banner5 from 'src/assets/banner5.png';
+
+import BannerMobile1 from 'src/assets/banner-mobile.png';
+import BannerMobile2 from 'src/assets/banner-mobile2.png';
+import BannerMobile3 from 'src/assets/banner-mobile3.png';
+import BannerMobile4 from 'src/assets/banner-mobile4.png';
+import BannerMobile5 from 'src/assets/banner-mobile5.png';
 
 const variants = {
   enter: (direction: number) => {
@@ -44,8 +50,17 @@ const Banner = () => {
   };
 
   const images = [Banner1, Banner2, Banner3, Banner4, Banner5];
+  const mobileImages = [
+    BannerMobile1,
+    BannerMobile2,
+    BannerMobile3,
+    BannerMobile4,
+    BannerMobile5,
+  ];
 
-  images.forEach(preloadImage);
+  useEffect(() => {
+    images.forEach(preloadImage);
+  }, []);
 
   const [[page, direction], setPage] = useState([0, 0]);
   const mobile = useIsMobile();
@@ -56,23 +71,22 @@ const Banner = () => {
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
   };
-  // setTimeout(() => paginate(1), 10000);
+  // setTimeout(() => paginate(1), 7000);
   return (
     <div css={bannerContainer}>
       <AnimatePresence initial={false} custom={direction}>
         <motion.img
           key={page}
-          src={images[imageIndex]}
+          src={mobile ? mobileImages[imageIndex] : images[imageIndex]}
           custom={direction}
           variants={variants}
           initial={'enter'}
           animate={'center'}
           exit={'exit'}
           transition={{
-            x: {type: 'spring', stiffness: 300, damping: 30},
             opacity: {duration: 0.2},
           }}
-          drag={'x'}
+          drag="x"
           dragConstraints={{left: 0, right: 0}}
           dragElastic={1}
           onDragEnd={(e, {offset, velocity}) => {
@@ -110,18 +124,27 @@ const Banner = () => {
   );
 };
 
-const bannerContainer = css`
+const bannerContainer = theme => css`
   margin-top: -92px;
   z-index: 1;
   position: relative;
-  height: 800px;
+  width: 100%;
+  padding-top: calc(700 / 350 * 100%);
+  @media (min-width: ${theme.media.tablet}) {
+    padding-top: calc(1000 / 1800 * 100%);
+  }
+  @media (min-width: ${theme.media.laptop}) {
+    padding-top: calc(800 / 1920 * 100%);
+  }
   img {
     position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    user-select: none;
   }
-`;
-
-const imageStyles = css`
-  user-select: none;
 `;
 
 const pageControlWrapper =
