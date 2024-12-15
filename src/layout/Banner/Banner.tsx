@@ -12,14 +12,6 @@ import Banner3 from 'src/assets/banner3.png';
 import Banner4 from 'src/assets/banner4.png';
 import Banner5 from 'src/assets/banner5.png';
 
-const images = [
-  'src/assets/banner.png',
-  'src/assets/banner2.png',
-  'src/assets/banner3.png',
-  'src/assets/banner4.png',
-  'src/assets/banner5.png',
-];
-
 const variants = {
   enter: (direction: number) => {
     return {
@@ -46,6 +38,15 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 const Banner = () => {
+  const preloadImage = src => {
+    const img = new Image();
+    img.src = src;
+  };
+
+  const images = [Banner1, Banner2, Banner3, Banner4, Banner5];
+
+  images.forEach(preloadImage);
+
   const [[page, direction], setPage] = useState([0, 0]);
   const mobile = useIsMobile();
   const tablet = useIsTablet();
@@ -56,7 +57,6 @@ const Banner = () => {
     setPage([page + newDirection, newDirection]);
   };
   // setTimeout(() => paginate(1), 10000);
-  console.log(imageIndex);
   return (
     <div css={bannerContainer}>
       <AnimatePresence initial={false} custom={direction}>
@@ -92,10 +92,10 @@ const Banner = () => {
       {/*/>*/}
       <div css={pageControlWrapper({slidesCount: images.length})}>
         {images.map((image, i) => (
-          <div css={activeIndicator({isActive: i === imageIndex})}>
+          <div css={activeIndicator({isActive: i === imageIndex})} key={i}>
             <div
               css={pageIndicator({isActive: i === imageIndex})}
-              key={image}
+              onClick={() => paginate(i - imageIndex)}
             />
           </div>
         ))}

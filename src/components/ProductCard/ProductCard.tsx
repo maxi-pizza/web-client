@@ -7,7 +7,7 @@ import PlusSvg from 'src/assets/icons/plus.svg';
 import FavoriteSvg from 'src/assets/icons/favorite.svg';
 import BgDiscountSvg from 'src/assets/icons/bgdiscount.svg';
 
-type Product = {
+export type Product = {
   id: number;
   slug: string;
   name: string;
@@ -89,6 +89,8 @@ const ProductCard = ({product}: {product: Product}) => {
 const imgStyles = theme => css`
   width: 318px;
   height: 250px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   @media (max-width: ${theme.media.tablet}) {
     width: 343px;
     height: 188px;

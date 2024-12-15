@@ -5,22 +5,23 @@ import Search from 'src/components/Search/Search.tsx';
 import DiscountSvg from 'src/assets/icons/discount.svg';
 import {css} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
-import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
+import ProductCard, {Product} from 'src/components/ProductCard/ProductCard.tsx';
 import Cart from 'src/components/Cart/Cart.tsx';
 import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
 
-const f = [
-  {id: 1, slug: 'piza', products: []},
-  {id: 2, slug: 'napoi', products: []},
-  {id: 3, slug: 'sushi', products: []},
-  {id: 4, slug: 'seti', products: []},
-];
+type Category = {
+  id: string;
+  name: string;
+  slug: string;
+  products: Product[] | null;
+};
+
 const Home = () => {
-  const {data: productsData, isLoading} = useQuery(productsQuery);
-  const products = [];
-  const items = (productsData || []).map(category =>
-    category.products.map(product => products.push(product)),
+  const {data: productsData} = useQuery(productsQuery);
+
+  const items: Category[] = (productsData || []).map(
+    categoryWithProducts => categoryWithProducts,
   );
 
   return (
@@ -35,21 +36,32 @@ const Home = () => {
             <div css={searchWrapper}>
               <Search />
             </div>
-            <div css={headingWrapper}>
-              <DiscountSvg
-                css={css`
-                  height: 36px;
-                  width: 36px;
-                  margin-right: 16px;
-                `}
-              />
-              <Text type={'h2'}>Акційні пропозиції</Text>
-            </div>
-            <div css={productsGrid}>
-              {products.map(product => (
-                <ProductCard product={product} key={product.name} />
-              ))}
-            </div>
+            {/*<div css={headingWrapper}>*/}
+            {/*  <DiscountSvg*/}
+            {/*    css={css`*/}
+            {/*      height: 36px;*/}
+            {/*      width: 36px;*/}
+            {/*      margin-right: 16px;*/}
+            {/*    `}*/}
+            {/*  />*/}
+            {/*  <Text type={'h2'}>Акційні пропозиції</Text>*/}
+            {/*</div>*/}
+            {items.map(item => (
+              <div key={item.id}>
+                {!item.products || item.products.length > 0 ? (
+                  <>
+                    <div css={headingWrapper} key={item.name}>
+                      <Text type={'h2'}>{item.name}</Text>
+                    </div>
+                    <div css={productsGrid} key={item.slug}>
+                      {item.products?.map(product => (
+                        <ProductCard product={product} key={product.name} />
+                      ))}
+                    </div>
+                  </>
+                ) : null}
+              </div>
+            ))}
           </div>
           <div css={cartWrapper}>
             <Cart />
@@ -110,6 +122,8 @@ const searchAndProductsWrapper = theme => css`
   }
   @media (min-width: ${theme.media.pc}) {
     width: 986px;
+    display: flex;
+    justify-content: flex-start;
   }
 `;
 
@@ -173,14 +187,14 @@ const searchWrapper = theme => css`
     display: none;
   }
   @media (min-width: ${theme.media.laptop}) {
-    display: block;
+    display: flex;
     width: 100%;
   }
 `;
 
 const stickyCategories = theme => css`
-  height: 90vh;
   position: sticky;
+  height: 95vh;
   top: 0;
   overflow-y: scroll;
   @media (min-width: ${theme.media.mobile}) {
