@@ -193,62 +193,54 @@ const activeIndicator =
   `;
 
 const leftArrowBtn = theme => css`
-  background-color: ${theme.colors.background};
-  width: 53px;
-  height: 53px;
-  border: none;
-  color: black;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 50%;
-  margin-left: 132px;
-  cursor: pointer;
-  z-index: 2;
-  :hover {
-    svg {
-      color: ${theme.colors.accent};
-    }
-  }
-  @media (min-width: ${theme.media.mobile}) {
-    display: none;
-  }
+  display: none;
+
   @media (min-width: ${theme.media.laptop}) {
-    display: block;
+    background-color: ${theme.colors.background};
+    width: 53px;
+    height: 53px;
+    border: none;
+    color: black;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    margin-left: 132px;
+    cursor: pointer;
+    z-index: 2;
+    :hover {
+      svg {
+        color: ${theme.colors.accent};
+      }
+    }
   }
 `;
 
 const rightArrowBtn = theme => css`
-  background-color: ${theme.colors.background};
-  width: 53px;
-  height: 53px;
-  border: none;
-  color: black;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  margin-right: 132px;
-  cursor: pointer;
-  z-index: 2;
-  svg {
-    transform: rotate(180deg);
-  }
-  :hover {
-    svg {
-      color: ${theme.colors.accent};
-    }
-  }
-  @media (min-width: ${theme.media.mobile}) {
-    display: none;
-  }
+  display: none;
+
   @media (min-width: ${theme.media.laptop}) {
-    display: block;
+    background-color: ${theme.colors.background};
+    width: 53px;
+    height: 53px;
+    border: none;
+    color: black;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    margin-left: 132px;
+    cursor: pointer;
+    z-index: 2;
+    :hover {
+      svg {
+        color: ${theme.colors.accent};
+      }
+    }
   }
 `;
 

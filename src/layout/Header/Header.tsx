@@ -121,44 +121,38 @@ const wrapper = theme => css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-left: 0;
-  }
+  margin-left: 0;
+
   @media (min-width: ${theme.media.pc}) {
     margin-left: 132px;
   }
 `;
 
-const textNSvgWrapper = theme => css`
-  margin-left: 0;
-  @media (min-width: ${theme.media.mobile}) {
-    display: flex;
-    margin-left: 24px;
-    margin-right: 24px;
-    svg {
-      margin-right: 8px;
-    }
+const textNSvgWrapper = css`
+  display: flex;
+  margin-left: 24px;
+  margin-right: 24px;
+  svg {
+    margin-right: 8px;
   }
 `;
 
 const button = theme => css`
-  width: 194px;
-  height: 48px;
-  background-color: ${theme.colors.container};
-  border: 1px solid ${theme.colors.stroke};
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  cursor: pointer;
-  :hover {
-    border: 1px solid ${theme.colors.accent};
-  }
-  @media (min-width: ${theme.media.mobile}) {
-    display: none;
-  }
+  display: none;
+
   @media (min-width: ${theme.media.laptop}) {
+    width: 194px;
+    height: 48px;
+    background-color: ${theme.colors.container};
+    border: 1px solid ${theme.colors.stroke};
+    border-radius: 8px;
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    cursor: pointer;
+    :hover {
+      border: 1px solid ${theme.colors.accent};
+    }
     margin-right: 32px;
   }
   @media (min-width: ${theme.media.pc}) {

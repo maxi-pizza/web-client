@@ -24,7 +24,7 @@ const MenuLayout = () => {
     slug: category.slug,
   }));
 
-  const [activeCategory, setActiveCategory] = useState<string>();
+  const [activeCategory, setActiveCategory] = useState();
 
   const handleSetActive = (slug: string) => {
     setActiveCategory(slug);
@@ -59,13 +59,10 @@ const MenuLayout = () => {
 
 const container = theme => css`
   display: flex;
-  flex-direction: column;
-  @media (min-width: ${theme.media.mobile}) {
-    display: flex;
-    flex-direction: row;
-    width: 341px;
-    overflow: scroll;
-  }
+  flex-direction: row;
+  width: 341px;
+  overflow: scroll;
+
   @media (min-width: ${theme.media.tablet}) {
     width: 653px;
   }

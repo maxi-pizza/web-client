@@ -74,14 +74,16 @@ const categoryCard =
     align-items: center;
     position: relative;
     cursor: pointer;
-    @media (min-width: ${theme.media.mobile}) {
-      height: 48px;
-      padding-right: 50px;
-      width: auto;
-    }
+
+    height: 48px;
+    padding-right: 50px;
+    width: auto;
+    margin-right: 8px;
+
     @media (min-width: ${theme.media.laptop}) {
       width: 223px;
       height: 53px;
+      margin-right: 0;
     }
   `;
 

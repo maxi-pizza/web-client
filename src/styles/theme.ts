@@ -11,6 +11,7 @@ export const theme = {
     strokeDark: '#2F2F31',
     pageIndicator: '#D3D3DD',
     footer: '#242425',
+    backgroundImg: '#FFD86B80',
   },
   fontWeights: {
     semiBold: 600,

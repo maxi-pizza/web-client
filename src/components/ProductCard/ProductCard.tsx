@@ -31,7 +31,9 @@ const ProductCard = ({product}: {product: Product}) => {
         </div>
         <BgDiscountSvg />
       </div>
-      <img src={product.image} alt={'product'} css={imgStyles} />
+      <div css={imgBackground}>
+        <img src={product.image} alt={'product'} css={imgStyles} />
+      </div>
       <div css={wrapper}>
         <Text type={'h4'}>{product.name}</Text>
         <div css={textWrapper}>
@@ -91,10 +93,16 @@ const imgStyles = theme => css`
   height: 250px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  object-fit: contain;
+  background-color: ${theme.colors.backgroundImg};
   @media (max-width: ${theme.media.tablet}) {
     width: 343px;
     height: 188px;
   }
+`;
+
+const imgBackground = theme => css`
+  background-color: ${theme.colors.backgroundImg};
 `;
 
 const container = theme => css`

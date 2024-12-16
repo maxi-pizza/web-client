@@ -74,17 +74,13 @@ const Home = () => {
 
 const container = theme => css`
   background-color: ${theme.colors.background};
-  border-top-left-radius: 80px;
-  border-top-right-radius: 80px;
   margin-top: -80px;
   margin-bottom: -80px;
   position: relative;
   z-index: 2;
   padding-bottom: 182px;
-  @media (min-width: ${theme.media.mobile}) {
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-  }
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
   @media (min-width: ${theme.media.laptop}) {
     border-top-left-radius: 80px;
     border-top-right-radius: 80px;
@@ -93,13 +89,11 @@ const container = theme => css`
 
 const menuWrapper = theme => css`
   padding-top: 80px;
-  margin-left: 135px;
   display: flex;
-  @media (min-width: ${theme.media.mobile}) {
-    flex-direction: column;
-    align-items: center;
-    margin-left: 0;
-  }
+  flex-direction: column;
+  align-items: center;
+  margin-left: 0;
+
   @media (min-width: ${theme.media.laptop}) {
     flex-direction: row;
     align-items: normal;
@@ -108,15 +102,13 @@ const menuWrapper = theme => css`
 `;
 
 const searchAndProductsWrapper = theme => css`
-  margin-left: 24px;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-left: 0;
-    width: 343px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  margin-left: 0;
+  width: 343px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   @media (min-width: ${theme.media.tablet}) {
     width: 653px;
   }
@@ -128,18 +120,15 @@ const searchAndProductsWrapper = theme => css`
 `;
 
 const headingWrapper = theme => css`
+  width: 100%;
   display: flex;
   align-items: center;
-  width: 100%;
-  @media (min-width: ${theme.media.mobile}) {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    svg {
-      height: 24px;
-      width: 24px;
-    }
+  justify-content: flex-start;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  svg {
+    height: 24px;
+    width: 24px;
   }
   @media (min-width: ${theme.media.laptop}) {
     display: flex;
@@ -157,10 +146,8 @@ const headingWrapper = theme => css`
 const productsGrid = theme => css`
   display: grid;
   gap: 16px;
-  grid-template-columns: 1fr 1fr 1fr;
-  @media (min-width: ${theme.media.mobile}) {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: 1fr;
+
   @media (min-width: ${theme.media.tablet}) {
     grid-template-columns: 1fr 1fr;
   }
@@ -170,22 +157,20 @@ const productsGrid = theme => css`
 `;
 
 const cartWrapper = theme => css`
-  margin-left: 24px;
-  height: 100%;
-  position: sticky;
-  top: 0;
-  @media (min-width: ${theme.media.mobile}) {
-    display: none;
-  }
+  display: none;
+
   @media (min-width: ${theme.media.laptop}) {
     display: block;
+    margin-left: 24px;
+    height: 100%;
+    position: sticky;
+    top: 0;
   }
 `;
 
 const searchWrapper = theme => css`
-  @media (min-width: ${theme.media.mobile}) {
-    display: none;
-  }
+  display: none;
+
   @media (min-width: ${theme.media.laptop}) {
     display: flex;
     width: 100%;
@@ -196,9 +181,8 @@ const stickyCategories = theme => css`
   position: sticky;
   top: 0;
   z-index: 1;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-right: 8px;
-  }
+  margin-right: 8px;
+
   @media (min-width: ${theme.media.laptop}) {
     margin-right: 24px;
     overflow-y: scroll;
