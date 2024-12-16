@@ -70,8 +70,9 @@ const Favorite = () => {
               display: flex;
               align-items: center;
               justify-content: center;
-              @media (min-width: ${theme.media.mobile}) {
-                margin-top: 10px;
+              margin-top: 10px;
+              @media (min-width: ${theme.media.laptop}) {
+                margin-top: 0;
               }
             `}>
             <div css={deleteButtonWrapper}>

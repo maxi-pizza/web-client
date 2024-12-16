@@ -89,15 +89,16 @@ const ProductCard = ({product}: {product: Product}) => {
 };
 
 const imgStyles = theme => css`
-  width: 318px;
-  height: 250px;
+  width: 343px;
+  height: 188px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   object-fit: contain;
   background-color: ${theme.colors.backgroundImg};
-  @media (max-width: ${theme.media.tablet}) {
-    width: 343px;
-    height: 188px;
+
+  @media (min-width: ${theme.media.laptop}) {
+    width: 318px;
+    height: 250px;
   }
 `;
 
@@ -106,30 +107,31 @@ const imgBackground = theme => css`
 `;
 
 const container = theme => css`
-  width: 318px;
-  height: 482px;
+  width: 343px;
+  height: 382px;
   border-radius: 12px;
   border: 1px solid ${theme.colors.stroke};
   background-color: ${theme.colors.container};
   position: relative;
-  @media (max-width: ${theme.media.tablet}) {
-    width: 343px;
-    height: 382px;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 318px;
+    height: 482px;
   }
 `;
 
 const wrapper = theme => css`
-  margin: 24px 16px;
-  @media (max-width: ${theme.media.tablet}) {
-    margin: 15px;
+  margin: 15px;
+
+  @media (min-width: ${theme.media.laptop}) {
+    margin: 24px 16px;
   }
 `;
 
 const textWrapper = theme => css`
-  margin-top: 8px;
-  margin-bottom: 16px;
-  @media (max-width: ${theme.media.tablet}) {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
+  @media (min-width: ${theme.media.laptop}) {
+    margin-top: 8px;
+    margin-bottom: 16px;
   }
 `;
 
@@ -139,8 +141,8 @@ const variantWrapper = css`
 const variantStyle =
   ({isActive}) =>
   theme => css`
-    height: 32px;
-    width: 89px;
+    width: 81px;
+    height: 29px;
     display: flex;
     ${isActive
       ? {
@@ -152,9 +154,10 @@ const variantStyle =
     justify-content: space-evenly;
     cursor: pointer;
     margin-right: 8px;
-    @media (max-width: ${theme.media.tablet}) {
-      width: 81px;
-      height: 29px;
+
+    @media (min-width: ${theme.media.laptop}) {
+      height: 32px;
+      width: 89px;
     }
   `;
 
@@ -164,10 +167,11 @@ const weightWrapper = css`
 
 const priceAndButtonsWrapper = theme => css`
   display: flex;
-  margin-top: 17px;
   justify-content: space-between;
-  @media (max-width: ${theme.media.tablet}) {
-    margin-top: 12px;
+  margin-top: 12px;
+
+  @media (min-width: ${theme.media.laptop}) {
+    margin-top: 17px;
   }
 `;
 
@@ -188,8 +192,8 @@ const buttonWrapper = css`
 `;
 
 const addButton = theme => css`
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 6px;
   background-color: ${theme.colors.accent};
@@ -201,15 +205,20 @@ const addButton = theme => css`
     width: 20px;
     height: 20px;
   }
-  @media (max-width: ${theme.media.tablet}) {
-    width: 44px;
-    height: 44px;
+
+  @media (min-width: ${theme.media.laptop}) {
+    width: 48px;
+    height: 48px;
   }
 `;
 
 const addToFavorite = theme => css`
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
   border: 1px solid ${theme.colors.stroke};
   border-radius: 6px;
   display: flex;
@@ -217,16 +226,13 @@ const addToFavorite = theme => css`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  svg {
-    width: 24px;
-    height: 24px;
-  }
-  @media (max-width: ${theme.media.tablet}) {
-    width: 44px;
-    height: 44px;
+
+  @media (min-width: ${theme.media.laptop}) {
+    width: 48px;
+    height: 48px;
     svg {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
     }
   }
 `;

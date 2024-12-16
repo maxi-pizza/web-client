@@ -14,11 +14,11 @@ const ThankYou = () => {
         <CheckedSvg css={checkedSvg} />
         <div
           css={css`
-            margin-top: 32px;
-            margin-bottom: 24px;
-            @media (min-width: ${theme.media.mobile}) {
-              margin-top: 25px;
-              margin-bottom: 15px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            @media (min-width: ${theme.media.laptop}) {
+              margin-top: 32px;
+              margin-bottom: 24px;
             }
           `}>
           <Text type={'h1'}>Дякуємо Вам!</Text>
@@ -34,8 +34,9 @@ const ThankYou = () => {
             width: 100%;
             justify-content: space-between;
             position: relative;
-            @media (min-width: ${theme.media.mobile}) {
-              margin-top: 40px;
+            margin-top: 40px;
+            @media (min-width: ${theme.media.laptop}) {
+              margin-top: 0;
             }
           `}>
           <div css={circleWrapper}>
@@ -51,11 +52,11 @@ const ThankYou = () => {
               horizontalBar,
               css`
                 position: absolute;
-                top: 25px;
-                left: 110px;
-                @media (min-width: ${theme.media.mobile}) {
-                  top: 16px;
-                  left: 79px;
+                top: 16px;
+                left: 79px;
+                @media (min-width: ${theme.media.laptop}) {
+                  top: 25px;
+                  left: 110px;
                 }
               `,
             ]}
@@ -73,11 +74,11 @@ const ThankYou = () => {
               horizontalBar,
               css`
                 position: absolute;
-                top: 25px;
-                right: 124px;
+                top: 16px;
+                right: 92px;
                 @media (min-width: ${theme.media.mobile}) {
-                  top: 16px;
-                  right: 92px;
+                  top: 25px;
+                  right: 124px;
                 }
               `,
             ]}
@@ -115,42 +116,43 @@ const wrapper = theme => css`
   z-index: 1;
   display: flex;
   flex-direction: column;
-  width: 536px;
+  width: 343px;
   align-items: center;
   text-align: center;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 343px;
+  height: 100%;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 536px;
   }
 `;
 
 const circle = theme => css`
-  width: 50px;
-  height: 50px;
+  margin-bottom: 15px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 1px solid ${theme.colors.stroke};
   background-color: ${theme.colors.background};
   display: flex;
   align-items: center;
   justify-content: center;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 15px;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 50px;
+    height: 50px;
   }
 `;
 
 const activeCircle = theme => css`
-  width: 50px;
-  height: 50px;
+  margin-bottom: 15px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: ${theme.colors.accent};
   display: flex;
   align-items: center;
   justify-content: center;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 15px;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 50px;
+    height: 50px;
   }
 `;
 
@@ -161,10 +163,10 @@ const circleWrapper = css`
 `;
 const horizontalBar = theme => css`
   height: 1px;
-  width: 100px;
+  width: 54px;
   background-color: ${theme.colors.stroke};
-  @media (min-width: ${theme.media.mobile}) {
-    width: 54px;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 100px;
   }
 `;
 
@@ -174,19 +176,20 @@ const homeButton = theme => css`
   display: flex;
   border: none;
   border-radius: 8px;
-  margin-top: 80px;
+
+  margin-top: 60px;
   cursor: pointer;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-top: 60px;
+  @media (min-width: ${theme.media.laptop}) {
+    margin-top: 80px;
   }
 `;
 
 const checkedSvg = theme => css`
-  width: 120px;
-  height: 120px;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 60px;
-    height: 60px;
+  width: 60px;
+  height: 60px;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 120px;
+    height: 120px;
   }
 `;
 

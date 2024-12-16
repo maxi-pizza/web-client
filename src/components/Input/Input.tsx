@@ -16,7 +16,7 @@ const Input = ({
       placeholder={placeholder}
       css={css`
         width: 100%;
-        height: 53px;
+        height: 48px;
         outline: none;
         border: 1px solid ${theme.colors.stroke};
         border-radius: 8px;
@@ -24,6 +24,9 @@ const Input = ({
         font-family: ${theme.fontFamily};
         font-size: 16px;
         font-weight: ${theme.fontWeights.regular};
+        @media (min-width: ${theme.media.laptop}) {
+          height: 53px;
+        }
       `}
     />
   );

@@ -39,18 +39,22 @@ const wrapper =
   ({isOpen}) =>
   theme => css`
     width: 100%;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px;
     background-color: ${theme.colors.container};
     border-radius: 8px;
     border: 1px solid ${theme.colors.stroke};
     cursor: pointer;
     position: relative;
+    padding-left: 16px;
     ${isOpen
       ? '  border-bottom-left-radius: 0px;border-bottom-right-radius: 0px;'
-      : 'border-radius: 8px'}
+      : 'border-radius: 8px'};
+    @media (min-width: ${theme.media.laptop}) {
+      height: 53px;
+    }
   `;
 
 const svgStyle = ({isOpen}) => css`

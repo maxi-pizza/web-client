@@ -102,30 +102,27 @@ const Footer = () => {
 const container = theme => css`
   background-color: ${theme.colors.footer};
   display: flex;
-  padding-top: 32px;
   position: relative;
   z-index: 3;
   bottom: 0;
   flex-direction: column;
-  align-items: center;
-  @media (min-width: ${theme.media.mobile}) {
-    padding-top: 16px;
-    align-items: normal;
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
-  }
+  padding-top: 16px;
+  align-items: normal;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+
   @media (min-width: ${theme.media.laptop}) {
     border-top-left-radius: 80px;
     border-top-right-radius: 80px;
+    padding-top: 32px;
   }
 `;
 
 const contentWrapper = theme => css`
   display: flex;
-  @media (min-width: ${theme.media.mobile}) {
-    flex-direction: column;
-    margin-left: 16px;
-  }
+  flex-direction: column;
+  margin-left: 16px;
+
   @media (min-width: ${theme.media.tablet}) {
     flex-direction: row;
     flex-wrap: wrap;
@@ -138,10 +135,9 @@ const contentWrapper = theme => css`
 `;
 
 const logoStyles = theme => css`
-  @media (min-width: ${theme.media.mobile}) {
-    width: 68px;
-    height: 50px;
-  }
+  width: 68px;
+  height: 50px;
+
   @media (min-width: ${theme.media.tablet}) {
     width: 108px;
     height: 80px;
@@ -155,9 +151,8 @@ const logoStyles = theme => css`
 const marginWrapper = theme => css`
   display: flex;
   align-items: center;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-top: 10px;
-  }
+  margin-top: 10px;
+
   @media (min-width: ${theme.media.laptop}) {
     margin-top: 16px;
   }
@@ -168,11 +163,9 @@ const svgStyles = css`
 `;
 
 const contactInformationWrapper = theme => css`
-  margin-left: 312px;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-left: 0;
-    margin-top: 20px;
-  }
+  margin-left: 0;
+  margin-top: 20px;
+
   @media (min-width: ${theme.media.tablet}) {
     margin-right: 20px;
   }
@@ -183,11 +176,9 @@ const contactInformationWrapper = theme => css`
 `;
 
 const legalInformationWrapper = theme => css`
-  margin-left: 180px;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-left: 0;
-    margin-top: 20px;
-  }
+  margin-left: 0;
+  margin-top: 20px;
+
   @media (min-width: ${theme.media.tablet}) {
     margin-right: 20px;
   }
@@ -200,10 +191,9 @@ const legalInformationWrapper = theme => css`
 const socialInformationWrapper = theme => css`
   display: flex;
   flex-direction: column;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-left: 0;
-    margin-top: 20px;
-  }
+  margin-left: 0;
+  margin-top: 20px;
+
   @media (min-width: ${theme.media.pc}) {
     margin-left: 180px;
   }
@@ -231,9 +221,8 @@ const socialButton = css`
 `;
 
 const rightsWrapper = theme => css`
-  @media (min-width: ${theme.media.mobile}) {
-    margin-top: 20px;
-  }
+  margin-top: 20px;
+
   @media (min-width: ${theme.media.pc}) {
     margin-top: 32px;
     display: flex;
@@ -255,13 +244,12 @@ const textWrapper = theme => css`
   opacity: 50%;
   display: flex;
   justify-content: space-between;
-  margin-top: 24px;
-  @media (min-width: ${theme.media.mobile}) {
     margin: 0;
     padding: 16px;
   }
   @media (min-width: ${theme.media.pc}) {
     width: 1656px;
+    margin-top: 24px;
   }
 `;
 

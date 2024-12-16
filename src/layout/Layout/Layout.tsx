@@ -29,10 +29,13 @@ const main = css`
   margin-bottom: -92px;
 `;
 
-const stickyHeader = css`
+const stickyHeader = theme => css`
   height: 100%;
   position: sticky;
   top: 0;
   z-index: 5;
+  @media (min-width: ${theme.media.laptop}) {
+    position: unset;
+  }
 `;
 export default Layout;

@@ -26,10 +26,9 @@ const Error = () => {
       />
       <div
         css={css`
-          @media (min-width: ${theme.media.mobile}) {
-            width: 100%;
-            height: 400px;
-          }
+          width: 100%;
+          height: 400px;
+
           @media (min-width: ${theme.media.tablet}) {
             margin-left: 110px;
           }
@@ -68,8 +67,8 @@ const Error = () => {
 
 const backButton = theme => css`
   background-color: ${theme.colors.accent};
-  width: 201px;
-  height: 51px;
+  height: 48px;
+  width: 343px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,9 +82,9 @@ const backButton = theme => css`
     height: 18px;
     margin-left: 6px;
   }
-  @media (min-width: ${theme.media.mobile}) {
-    height: 48px;
-    width: 343px;
+  @media (min-width: ${theme.media.laptop}) {
+    width: 201px;
+    height: 51px;
   }
 `;
 

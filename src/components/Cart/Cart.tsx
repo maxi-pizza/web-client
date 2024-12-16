@@ -62,9 +62,8 @@ const cart =
     display: flex;
     flex-direction: column;
     align-items: center;
-    @media (min-width: ${theme.media.mobile}) {
-      width: 343px;
-    }
+    width: 343px;
+
     @media (min-width: ${theme.media.laptop}) {
       width: 396px;
     }
@@ -72,11 +71,9 @@ const cart =
 
 const dottedLine = theme => css`
   height: 1px;
-  width: 348px;
   border-top: 1px dashed ${theme.colors.stroke};
-  @media (min-width: ${theme.media.mobile}) {
-    width: 313px;
-  }
+  width: 313px;
+
   @media (min-width: ${theme.media.laptop}) {
     width: 348px;
   }
@@ -85,9 +82,8 @@ const dottedLine = theme => css`
 const horizontalLine = theme => css`
   height: 1px;
   background-color: ${theme.colors.stroke};
-  @media (min-width: ${theme.media.mobile}) {
-    width: 313px;
-  }
+  width: 313px;
+
   @media (min-width: ${theme.media.laptop}) {
     width: 348px;
   }
@@ -119,8 +115,7 @@ const orderButton = theme => css`
   border-radius: 8px;
   cursor: pointer;
   margin-top: 24px;
-  @media (max-width: ${theme.media.mobile}) {
-  }
+
   @media (min-width: ${theme.media.laptop}) {
     width: 348px;
     height: 53px;

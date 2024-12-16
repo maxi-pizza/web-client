@@ -31,9 +31,8 @@ const ProductInCart = () => {
 
 const cartItemWrapper = theme => css`
   margin-top: 32px;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 313px;
-  }
+  width: 313px;
+
   @media (min-width: ${theme.media.laptop}) {
     width: 348px;
   }

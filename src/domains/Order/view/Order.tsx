@@ -58,7 +58,16 @@ const Order = () => {
               <div css={inputsWrapper}>
                 <Input inputType={'text'} placeholder={'Вулиця*'} />
                 <div css={addressInformationWrapper}>
-                  <div css={halfInput}>
+                  <div
+                    css={[
+                      halfInput,
+                      css`
+                        margin-bottom: 8px;
+                        @media (min-width: ${theme.media.laptop}) {
+                          margin-bottom: 0;
+                        }
+                      `,
+                    ]}>
                     <Input inputType={'text'} placeholder={'Під’їзд*'} />
                   </div>
                   <div css={halfInput}>
@@ -75,7 +84,16 @@ const Order = () => {
               <div css={inputsWrapper}>
                 <Input inputType={'text'} placeholder={'Вулиця*'} />
                 <div css={addressInformationWrapper}>
-                  <div css={halfInput}>
+                  <div
+                    css={[
+                      halfInput,
+                      css`
+                        margin-bottom: 8px;
+                        @media (min-width: ${theme.media.laptop}) {
+                          margin-bottom: 0;
+                        }
+                      `,
+                    ]}>
                     <Input inputType={'text'} placeholder={'Під’їзд*'} />
                   </div>
                   <div css={halfInput}>
@@ -145,10 +163,8 @@ const container = theme => css`
   flex-direction: column;
   align-items: center;
   padding-top: 140px;
-  padding-bottom: 100px;
-  @media (min-width: ${theme.media.mobile}) {
-    padding-bottom: 120px;
-  }
+  padding-bottom: 120px;
+
   @media (min-width: ${theme.media.tablet}) {
     padding-bottom: 100px;
   }
@@ -157,9 +173,8 @@ const container = theme => css`
 const pathContainer = theme => css`
   display: flex;
   margin-bottom: 32px;
-  @media (min-width: ${theme.media.mobile}) {
-    width: 343px;
-  }
+  width: 343px;
+
   @media (min-width: ${theme.media.tablet}) {
     width: 740px;
   }
@@ -174,10 +189,9 @@ const pathContainer = theme => css`
 const cardWrapper = theme => css`
   display: flex;
   justify-content: space-between;
-  @media (min-width: ${theme.media.mobile}) {
-    flex-direction: column-reverse;
-    width: 343px;
-  }
+  flex-direction: column-reverse;
+  width: 343px;
+
   @media (min-width: ${theme.media.tablet}) {
     width: 740px;
     align-items: center;
@@ -192,15 +206,14 @@ const cardWrapper = theme => css`
   }
 `;
 const orderCard = theme => css`
-  @media (min-width: ${theme.media.mobile}) {
-    display: flex;
-    flex-direction: column;
-    border: none;
-    background-color: transparent;
-    width: 343px;
-    padding: 0;
-    margin-top: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  border: none;
+  background-color: transparent;
+  width: 343px;
+  padding: 0;
+  margin-top: 20px;
+
   @media (min-width: ${theme.media.tablet}) {
     border-radius: 12px;
     border: 1px solid ${theme.colors.stroke};
@@ -225,9 +238,8 @@ const contactInputWrapper = theme => css`
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
-  @media (min-width: ${theme.media.mobile}) {
-    flex-direction: column;
-  }
+  flex-direction: column;
+
   @media (min-width: ${theme.media.tablet}) {
     width: 100%;
   }
@@ -241,10 +253,9 @@ const contactInputWrapper = theme => css`
 `;
 
 const contactInput = theme => css`
-  @media (min-width: ${theme.media.mobile}) {
-    width: 100%;
-    margin-bottom: 8px;
-  }
+  width: 100%;
+  margin-bottom: 8px;
+
   @media (min-width: ${theme.media.tablet}) {
     width: 100%;
   }
@@ -268,9 +279,8 @@ const radioWrapper = css`
 
 const addressInputWrapper = theme => css`
   display: flex;
-  @media (min-width: ${theme.media.mobile}) {
-    flex-direction: column;
-  }
+  flex-direction: column;
+
   @media (min-width: ${theme.media.pc}) {
     flex-direction: row;
   }
@@ -281,21 +291,17 @@ const addressInformationWrapper = theme => css`
   justify-content: space-between;
   margin-top: 8px;
   margin-bottom: 8px;
-  @media (min-width: ${theme.media.mobile}) {
-    flex-direction: column;
-  }
+  flex-direction: column;
+
   @media (min-width: ${theme.media.laptop}) {
     flex-direction: row;
     margin-bottom: 0;
   }
 `;
 
-const mobileMargin = theme => css`
-  margin-bottom: 0;
+const mobileMargin = css`
+  margin-bottom: 8px;
   width: 100%;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-bottom: 8px;
-  }
 `;
 
 const halfInput = theme => css`
@@ -308,10 +314,8 @@ const halfInput = theme => css`
 const inputsWrapper = theme => css`
   display: flex;
   flex-direction: column;
-  margin-right: 8px;
-  @media (min-width: ${theme.media.mobile}) {
-    margin-right: 0;
-  }
+  margin-right: 0;
+
   @media (min-width: ${theme.media.pc}) {
     margin-right: 8px;
   }
