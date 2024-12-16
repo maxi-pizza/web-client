@@ -7,8 +7,17 @@ import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 import TumbleweedImg from 'src/assets/icons/tumbleweed.png';
 import VectorSvg from 'src/assets/icons/Vector.svg';
 import FavoriteEmptyBackground from 'src/assets/FavoriteEmpty.png';
+import {useQuery} from '@tanstack/react-query';
+import {productsQuery} from 'src/domains/Home/products.query.ts';
+import {Category} from 'src/domains/Home/view/Home.tsx';
 
 const Favorite = () => {
+  const {data: productsData} = useQuery(productsQuery);
+
+  const items: Category[] = (productsData || []).map(
+    categoryWithProducts => categoryWithProducts,
+  );
+
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={container}>
@@ -71,6 +80,7 @@ const Favorite = () => {
               align-items: center;
               justify-content: center;
               margin-top: 10px;
+              position: relative;
               @media (min-width: ${theme.media.laptop}) {
                 margin-top: 0;
               }
@@ -84,22 +94,22 @@ const Favorite = () => {
             <button css={deleteButton} />
           </div>
         </div>
-        <div css={productsGrid}>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-        </div>
+        {items.map(item => (
+          <div key={item.id}>
+            {!item.products || item.products.length > 0 ? (
+              <>
+                <div css={headingWrapper} key={item.name}>
+                  <Text type={'h2'}>{item.name}</Text>
+                </div>
+                <div css={productsGrid} key={item.slug}>
+                  {item.products?.map(product => (
+                    <ProductCard product={product} key={product.name} />
+                  ))}
+                </div>
+              </>
+            ) : null}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -126,10 +136,10 @@ const contentWrapper = theme => css`
   width: 343px;
 
   @media (min-width: ${theme.media.tablet}) {
-    width: 652px;
+    width: 702px;
   }
   @media (min-width: ${theme.media.laptop}) {
-    width: 1304px;
+    width: 1312px;
   }
   @media (min-width: ${theme.media.pc}) {
     width: 1654px;

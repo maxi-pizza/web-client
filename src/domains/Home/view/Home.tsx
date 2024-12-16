@@ -10,7 +10,7 @@ import Cart from 'src/components/Cart/Cart.tsx';
 import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
 
-type Category = {
+export type Category = {
   id: string;
   name: string;
   slug: string;
@@ -179,14 +179,24 @@ const searchWrapper = theme => css`
 
 const stickyCategories = theme => css`
   position: sticky;
-  top: 0;
+  top: 78px;
   z-index: 1;
   margin-right: 8px;
-
+  background-color: ${theme.colors.background};
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 65px;
   @media (min-width: ${theme.media.laptop}) {
+    display: block;
     margin-right: 24px;
     overflow-y: scroll;
     height: 95vh;
+    top: 0;
+    width: unset;
+    align-items: unset;
+    justify-content: unset;
   }
 `;
 
