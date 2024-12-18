@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef, Fragment, useEffect, useRef, useState} from 'react';
 import Banner from 'src/layout/Banner/Banner.tsx';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
@@ -9,6 +9,10 @@ import ProductCard, {Product} from 'src/components/ProductCard/ProductCard.tsx';
 import Cart from 'src/components/Cart/Cart.tsx';
 import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
+import {InView} from 'react-intersection-observer';
+import {observer} from 'mobx-react-lite';
+import categoryStore from 'src/stores/categoryStore.ts';
+import {useParams} from 'react-router-dom';
 
 export type Category = {
   id: string;
@@ -17,8 +21,70 @@ export type Category = {
   products: Product[] | null;
 };
 
-const Home = () => {
+const ProductsByCategory = observer(({item}: {item: any}) => {
+  const setInView = (inView, entry) => {
+    if (inView) {
+      window.history.replaceState({}, '', `${entry.target.id}`);
+      categoryStore.changeCategory(entry.target.id);
+    }
+  };
+
+  return (
+    <div>
+      <InView onChange={setInView} threshold={1}>
+        {({ref}) => {
+          return <div ref={ref} id={item.slug}></div>;
+        }}
+      </InView>
+      <div key={item.id}>
+        {!item.products || item.products.length > 0 ? (
+          <>
+            <div css={headingWrapper}>
+              <Text type={'h2'}>{item.name}</Text>
+            </div>
+            <div css={productsGrid} id={item.slug}>
+              {item.products?.map(product => (
+                <div
+                  key={product.id}
+                  css={css`
+                    position: relative;
+                  `}>
+                  <ProductCard product={product} key={product.name} />
+                  <InView onChange={setInView} threshold={1}>
+                    {({ref}) => {
+                      return (
+                        <div
+                          ref={ref}
+                          id={item.slug}
+                          css={css`
+                            position: absolute;
+                          `}
+                        />
+                      );
+                    }}
+                  </InView>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : null}
+      </div>
+    </div>
+  );
+});
+
+const Home = observer(() => {
   const {data: productsData} = useQuery(productsQuery);
+
+  const categoryRefs = useRef({});
+  const p = useParams();
+
+  useEffect(() => {
+    const category = categoryRefs.current[categoryStore.categorySlug];
+    if (category) {
+      category.scrollIntoView({block: 'start'});
+    }
+  }, [p]);
 
   const items: Category[] = (productsData || []).map(
     categoryWithProducts => categoryWithProducts,
@@ -47,19 +113,10 @@ const Home = () => {
             {/*  <Text type={'h2'}>Акційні пропозиції</Text>*/}
             {/*</div>*/}
             {items.map(item => (
-              <div key={item.id}>
-                {!item.products || item.products.length > 0 ? (
-                  <>
-                    <div css={headingWrapper} key={item.name}>
-                      <Text type={'h2'}>{item.name}</Text>
-                    </div>
-                    <div css={productsGrid} key={item.slug}>
-                      {item.products?.map(product => (
-                        <ProductCard product={product} key={product.name} />
-                      ))}
-                    </div>
-                  </>
-                ) : null}
+              <div
+                ref={el => (categoryRefs.current[item.slug] = el)}
+                key={item.slug}>
+                <ProductsByCategory item={item} key={item.slug} />
               </div>
             ))}
           </div>
@@ -70,7 +127,7 @@ const Home = () => {
       </div>
     </div>
   );
-};
+});
 
 const container = theme => css`
   background-color: ${theme.colors.background};

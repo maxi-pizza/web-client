@@ -1,33 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {css} from '@emotion/react';
 import DiscountSvg from 'src/assets/icons/discount.svg';
-import MakiImg from 'src/assets/icons/maki.png';
 import PizzaImg from 'src/assets/icons/pizza.png';
-import BurritoImg from 'src/assets/icons/burritos.png';
-import SushiImg from 'src/assets/icons/sushi.png';
-import ChukaImg from 'src/assets/icons/chuka-wakame.png';
-import NigiriImg from 'src/assets/icons/nigiri.png';
-import NoodlesImg from 'src/assets/icons/noodles.png';
-import FriedImg from 'src/assets/icons/fried-potatoes.png';
-import SodaImg from 'src/assets/icons/soda.png';
-import GravyImg from 'src/assets/icons/gravy.png';
 import DiscountCircleImg from 'src/assets/icons/discount.png';
 import CategoryCard from 'src/components/CategoryCard/CategoryCard.tsx';
 import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
+import categoryStore from 'src/stores/categoryStore.ts';
+import {observer} from 'mobx-react-lite';
 
-const MenuLayout = () => {
+const MenuLayout = observer(() => {
   const {data: categoryData} = useQuery(productsQuery);
   const categories = (categoryData || []).map(category => ({
     id: category.id,
     name: category.name,
     slug: category.slug,
+    products: category.products,
   }));
 
-  const [activeCategory, setActiveCategory] = useState();
-
   const handleSetActive = (slug: string) => {
-    setActiveCategory(slug);
+    if (slug) {
+      categoryStore.changeCategory(slug);
+    }
   };
 
   return (
@@ -39,23 +33,25 @@ const MenuLayout = () => {
           svg={<DiscountSvg />}
           category={{id: 0, name: 'Акційні пропозиції', slug: 'promotions'}}
           setActive={handleSetActive}
-          activeCategory={activeCategory}
+          activeCategory={categoryStore.categorySlug}
         />
       </div>
-      {categories.map(category => (
-        <div css={categoryWrapper} key={category.name}>
-          <CategoryCard
-            backgroundImg={PizzaImg}
-            text={category.name}
-            category={category}
-            setActive={handleSetActive}
-            activeCategory={activeCategory}
-          />
-        </div>
-      ))}
+      {categories.map(category =>
+        category.products.length > 0 ? (
+          <div css={categoryWrapper} key={category.name}>
+            <CategoryCard
+              backgroundImg={PizzaImg}
+              text={category.name}
+              category={category}
+              setActive={handleSetActive}
+              activeCategory={categoryStore.categorySlug}
+            />
+          </div>
+        ) : null,
+      )}
     </div>
   );
-};
+});
 
 const container = theme => css`
   display: flex;

@@ -30,6 +30,12 @@ export const router = createBrowserRouter([
       {
         path: homeRoute,
         element: <Home />,
+        children: [
+          {
+            path: ':categorySlug',
+            element: null,
+          },
+        ],
       },
       {
         path: favoriteRoute,

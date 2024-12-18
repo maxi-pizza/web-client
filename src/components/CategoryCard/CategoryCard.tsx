@@ -2,6 +2,8 @@ import React from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
+import {Link} from 'react-router-dom';
+import {homeRoute} from 'src/routes.ts';
 
 type Category = {
   id: number;
@@ -28,9 +30,10 @@ const CategoryCard = ({
 }) => {
   const theme = useTheme() as WhiteTheme;
   return (
-    <div
+    <Link
       css={categoryCard({isActive: activeCategory === category.slug})}
-      onClick={() => setActive(category.slug)}>
+      onClick={() => setActive(category.slug)}
+      to={category.slug}>
       <div css={redRectangle} />
       <img src={String(backgroundImg)} alt={'discount'} css={imgWrapper} />
       {svg && (
@@ -58,7 +61,7 @@ const CategoryCard = ({
           {text}
         </Text>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -74,6 +77,7 @@ const categoryCard =
     align-items: center;
     position: relative;
     cursor: pointer;
+    user-select: none;
 
     height: 48px;
     padding-right: 50px;
