@@ -207,7 +207,7 @@ const leftArrowBtn = theme => css`
     justify-content: center;
     position: absolute;
     top: 50%;
-    margin-left: 132px;
+    left: 132px;
     cursor: pointer;
     z-index: 2;
     :hover {
@@ -233,11 +233,12 @@ const rightArrowBtn = theme => css`
     justify-content: center;
     position: absolute;
     top: 50%;
-    margin-left: 132px;
+    right: 132px;
     cursor: pointer;
     z-index: 2;
-    :hover {
-      svg {
+    svg {
+      transform: rotate(180deg);
+      :hover {
         color: ${theme.colors.accent};
       }
     }
