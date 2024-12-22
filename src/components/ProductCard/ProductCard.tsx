@@ -6,6 +6,12 @@ import VariantImg from 'src/assets/icons/radio_button_partial.svg';
 import PlusSvg from 'src/assets/icons/plus.svg';
 import FavoriteSvg from 'src/assets/icons/favorite.svg';
 import BgDiscountSvg from 'src/assets/icons/bgdiscount.svg';
+import {
+  CART_QUERY_KEY,
+  cartQuery,
+  setItem,
+} from 'src/domains/Cart/cart.query.ts';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 export type Product = {
   id: number;
@@ -19,7 +25,25 @@ export type Product = {
 };
 
 const ProductCard = ({product}: {product: Product}) => {
+  const queryClient = useQueryClient();
   const theme = useTheme() as WhiteTheme;
+  const {data: cartData} = useQuery(cartQuery);
+  const count: number = cartData?.[product.id]?.count || 0;
+  const {mutate: cartMutation} = useMutation({
+    mutationFn: ({price, count}: {price: number; count: number}) =>
+      setItem(product.id, price, count),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [CART_QUERY_KEY],
+      }),
+  });
+  console.log(cartData);
+
+  const price: number = parseInt(product.price);
+  const onHandleAdd = () => {
+    cartMutation({price, count: count + 1});
+  };
+
   return (
     <div css={container}>
       <div css={discountWrapper}>
@@ -69,7 +93,7 @@ const ProductCard = ({product}: {product: Product}) => {
         </div>
         <div css={priceAndButtonsWrapper}>
           <div css={pricesWrapper}>
-            <div css={price}>
+            <div css={priceStyles}>
               <Text type={'h5'}>399 грн</Text>
             </div>
             <Text type={'h4'}>{product.price} грн</Text>
@@ -78,7 +102,7 @@ const ProductCard = ({product}: {product: Product}) => {
             <button css={addToFavorite}>
               <FavoriteSvg color={theme.colors.accent} />
             </button>
-            <button css={addButton}>
+            <button css={addButton} onClick={onHandleAdd}>
               <PlusSvg color={theme.colors.textWhite} />
             </button>
           </div>
@@ -180,7 +204,7 @@ const pricesWrapper = css`
   flex-direction: column;
 `;
 
-const price = css`
+const priceStyles = css`
   opacity: 30%;
   text-decoration: line-through;
 `;

@@ -13,6 +13,7 @@ import {InView} from 'react-intersection-observer';
 import {observer} from 'mobx-react-lite';
 import categoryStore from 'src/stores/categoryStore.ts';
 import {useParams} from 'react-router-dom';
+import {getItems} from 'src/domains/Cart/cart.query.ts';
 
 export type Category = {
   id: string;
