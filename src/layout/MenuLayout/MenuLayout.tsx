@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {css} from '@emotion/react';
 import DiscountSvg from 'src/assets/icons/discount.svg';
 import PizzaImg from 'src/assets/icons/pizza.png';

@@ -4,19 +4,30 @@ import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import DeleteSvg from 'src/assets/icons/close.svg';
 import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
-import TumbleweedImg from 'src/assets/icons/tumbleweed.png';
-import VectorSvg from 'src/assets/icons/Vector.svg';
 import FavoriteEmptyBackground from 'src/assets/FavoriteEmpty.png';
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
-import {Category} from 'src/domains/Home/view/Home.tsx';
+import {
+  removeAllItemsFromWishlist,
+  WISHLIST_QUERY_KEY,
+  wishlistQuery,
+} from 'src/domains/Favorite/wishlist.query.ts';
 
 const Favorite = () => {
   const {data: productsData} = useQuery(productsQuery);
+  const {data: wishlistData} = useQuery(wishlistQuery);
+  const queryClient = useQueryClient();
 
-  const items: Category[] = (productsData || []).map(
-    categoryWithProducts => categoryWithProducts,
+  const products = (productsData || []).flatMap(category => category.products);
+  const productsInWishlist = (wishlistData || []).flatMap(id =>
+    products.filter(product => product.id === id),
   );
+
+  const {mutate: wishlistMutation} = useMutation({
+    mutationFn: () => removeAllItemsFromWishlist(),
+    onSuccess: () =>
+      queryClient.invalidateQueries({queryKey: [WISHLIST_QUERY_KEY]}),
+  });
 
   const theme = useTheme() as WhiteTheme;
   return (
@@ -53,64 +64,57 @@ const Favorite = () => {
             / Улюблені страви
           </Text>
         </div>
-        {/*<div css={mobileWrapper}>*/}
-        {/*  <Text type={'h1'}>Хм... тут поки пусто</Text>*/}
-        {/*  <div*/}
-        {/*    css={css`*/}
-        {/*      margin-top: 24px;*/}
-        {/*      width: 343px;*/}
-        {/*      @media (min-width: ${theme.media.laptop}) {*/}
-        {/*        width: 536px;*/}
-        {/*      }*/}
-        {/*    `}>*/}
-        {/*    <Text type={'bigBody'} opacity={'60%'}>*/}
-        {/*      Ви ще не додали жодної страви до улюблених, але це легко виправити*/}
-        {/*      — просто виберіть свої фаворити на головній, і вони з'являться*/}
-        {/*      тут!*/}
-        {/*    </Text>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-      </div>
-      <div css={contentWrapper}>
-        <div css={headingWrapper}>
-          <Text type={'h1'}>Те, що вам подобається</Text>
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-top: 10px;
-              position: relative;
-              @media (min-width: ${theme.media.laptop}) {
-                margin-top: 0;
-              }
-            `}>
-            <div css={deleteButtonWrapper}>
-              <DeleteSvg color={theme.colors.accent} />
-              <Text type={'h5'} color={theme.colors.accent}>
-                Очистити все
+        {productsInWishlist.length < 1 ? (
+          <div css={mobileWrapper}>
+            <Text type={'h1'}>Хм... тут поки пусто</Text>
+            <div
+              css={css`
+                margin-top: 24px;
+                width: 343px;
+                @media (min-width: ${theme.media.laptop}) {
+                  width: 536px;
+                }
+              `}>
+              <Text type={'bigBody'} opacity={'60%'}>
+                Ви ще не додали жодної страви до улюблених, але це легко
+                виправити — просто виберіть свої фаворити на головній, і вони
+                з'являться тут!
               </Text>
             </div>
-            <button css={deleteButton} />
+          </div>
+        ) : null}
+      </div>
+      {productsInWishlist.length > 0 ? (
+        <div css={contentWrapper}>
+          <div css={headingWrapper}>
+            <Text type={'h1'}>Те, що вам подобається</Text>
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 10px;
+                position: relative;
+                @media (min-width: ${theme.media.laptop}) {
+                  margin-top: 0;
+                }
+              `}>
+              <div css={deleteButtonWrapper}>
+                <DeleteSvg color={theme.colors.accent} />
+                <Text type={'h5'} color={theme.colors.accent}>
+                  Очистити все
+                </Text>
+              </div>
+              <button css={deleteButton} onClick={() => wishlistMutation()} />
+            </div>
+          </div>
+          <div css={productsGrid}>
+            {productsInWishlist.map(product => (
+              <ProductCard product={product} key={product.name} />
+            ))}
           </div>
         </div>
-        {items.map(item => (
-          <div key={item.id}>
-            {!item.products || item.products.length > 0 ? (
-              <>
-                <div css={headingWrapper} key={item.name}>
-                  <Text type={'h2'}>{item.name}</Text>
-                </div>
-                <div css={productsGrid} key={item.slug}>
-                  {item.products?.map(product => (
-                    <ProductCard product={product} key={product.name} />
-                  ))}
-                </div>
-              </>
-            ) : null}
-          </div>
-        ))}
-      </div>
+      ) : null}
     </div>
   );
 };

@@ -14,6 +14,7 @@ import {observer} from 'mobx-react-lite';
 import categoryStore from 'src/stores/categoryStore.ts';
 import {useParams} from 'react-router-dom';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
+import {wishlistQuery} from 'src/domains/Favorite/wishlist.query.ts';
 
 export type Category = {
   id: string;
@@ -77,6 +78,7 @@ const ProductsByCategory = observer(({item}: {item: Category}) => {
 const Home = observer(() => {
   const {data: productsData} = useQuery(productsQuery);
   const {data: cartData} = useQuery(cartQuery);
+  const {data: wishlistData} = useQuery(wishlistQuery);
   const categoryRefs = useRef({});
   const p = useParams();
 
@@ -249,7 +251,7 @@ const stickyCategories = theme => css`
   @media (min-width: ${theme.media.laptop}) {
     display: block;
     margin-right: 24px;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 95vh;
     top: 10px;
     width: unset;

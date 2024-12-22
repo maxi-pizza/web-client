@@ -22,7 +22,6 @@ const Cart = ({
 
   const ids = Object.keys(cartData || {});
 
-  console.log(productsData);
   const productsArray = (productsData || []).flatMap(c => c.products);
   const productsInCart = productsArray.filter(product =>
     ids.includes(String(product.id)),

@@ -5,6 +5,7 @@ import Text from 'src/components/Text.tsx';
 import VariantImg from 'src/assets/icons/radio_button_partial.svg';
 import PlusSvg from 'src/assets/icons/plus.svg';
 import FavoriteSvg from 'src/assets/icons/favorite.svg';
+import FavoriteFilledSvg from 'src/assets/icons/favoriteFilled.svg';
 import BgDiscountSvg from 'src/assets/icons/bgdiscount.svg';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {
@@ -12,6 +13,11 @@ import {
   cartQuery,
   setItem,
 } from 'src/domains/Cart/cart.query.ts';
+import {
+  setItemToWishlist,
+  WISHLIST_QUERY_KEY,
+  wishlistQuery,
+} from 'src/domains/Favorite/wishlist.query.ts';
 
 export type Product = {
   id: number;
@@ -31,6 +37,11 @@ const ProductCard = ({product}: {product: Product}) => {
     ...cartQuery,
     select: data => data[product.id],
   });
+  const {data: wishlistData} = useQuery({
+    ...wishlistQuery,
+    select: data => data.find(item => item === product.id),
+  });
+
   const {mutate: cartMutation} = useMutation({
     mutationFn: ({price, count}: {price: number; count: number}) =>
       setItem(product.id, price, count),
@@ -39,12 +50,22 @@ const ProductCard = ({product}: {product: Product}) => {
         queryKey: [CART_QUERY_KEY],
       }),
   });
+  const {mutate: wishlistMutation} = useMutation({
+    mutationFn: ({id}) => setItemToWishlist(id),
+    onSuccess: () =>
+      queryClient.invalidateQueries({queryKey: [WISHLIST_QUERY_KEY]}),
+  });
+  const addToWishlist = () => {
+    wishlistMutation({id: product.id});
+  };
 
   const count = cartData?.count || 0;
   const formattedPrice = parseInt(product.price);
   const addToCart = () => {
     cartMutation({price: formattedPrice, count: count + 1});
   };
+
+  const favorite = Number(wishlistData) === Number(product.id);
 
   return (
     <div css={container}>
@@ -98,11 +119,21 @@ const ProductCard = ({product}: {product: Product}) => {
             <div css={priceStyles}>
               <Text type={'h5'}>399 грн</Text>
             </div>
-            <Text type={'h4'}>{product.price} грн</Text>
+            <Text type={'h4'}>{formattedPrice} грн</Text>
           </div>
           <div css={buttonWrapper}>
-            <button css={addToFavorite}>
-              <FavoriteSvg color={theme.colors.accent} />
+            <button css={addToFavorite} onClick={() => addToWishlist()}>
+              {favorite ? (
+                <FavoriteFilledSvg
+                  color={theme.colors.accent}
+                  fill={theme.colors.accent}
+                />
+              ) : (
+                <FavoriteSvg
+                  color={theme.colors.accent}
+                  fill={theme.colors.accent}
+                />
+              )}
             </button>
             <button css={addButton} onClick={addToCart}>
               <PlusSvg color={theme.colors.textWhite} />
