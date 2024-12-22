@@ -1,4 +1,4 @@
-import React, {forwardRef, Fragment, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Banner from 'src/layout/Banner/Banner.tsx';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
@@ -13,7 +13,6 @@ import {InView} from 'react-intersection-observer';
 import {observer} from 'mobx-react-lite';
 import categoryStore from 'src/stores/categoryStore.ts';
 import {useParams} from 'react-router-dom';
-import {getItems} from 'src/domains/Cart/cart.query.ts';
 
 export type Category = {
   id: string;
@@ -22,7 +21,7 @@ export type Category = {
   products: Product[] | null;
 };
 
-const ProductsByCategory = observer(({item}: {item: any}) => {
+const ProductsByCategory = observer(({item}: {item: Category}) => {
   const setInView = (inView, entry) => {
     if (inView) {
       window.history.replaceState({}, '', `${entry.target.id}`);
@@ -50,7 +49,7 @@ const ProductsByCategory = observer(({item}: {item: any}) => {
                   css={css`
                     position: relative;
                   `}>
-                  <ProductCard product={product} key={product.name} />
+                  <ProductCard product={product} />
                   <InView onChange={setInView} threshold={1}>
                     {({ref}) => {
                       return (

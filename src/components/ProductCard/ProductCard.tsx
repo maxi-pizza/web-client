@@ -6,12 +6,13 @@ import VariantImg from 'src/assets/icons/radio_button_partial.svg';
 import PlusSvg from 'src/assets/icons/plus.svg';
 import FavoriteSvg from 'src/assets/icons/favorite.svg';
 import BgDiscountSvg from 'src/assets/icons/bgdiscount.svg';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {
   CART_QUERY_KEY,
   cartQuery,
   setItem,
 } from 'src/domains/Cart/cart.query.ts';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import cart from 'src/components/Cart/Cart.tsx';
 
 export type Product = {
   id: number;
@@ -25,10 +26,12 @@ export type Product = {
 };
 
 const ProductCard = ({product}: {product: Product}) => {
-  const queryClient = useQueryClient();
   const theme = useTheme() as WhiteTheme;
-  const {data: cartData} = useQuery(cartQuery);
-  const count: number = cartData?.[product.id]?.count || 0;
+  const queryClient = useQueryClient();
+  const {data: cartData} = useQuery({
+    ...cartQuery,
+    select: data => data[product.id],
+  });
   const {mutate: cartMutation} = useMutation({
     mutationFn: ({price, count}: {price: number; count: number}) =>
       setItem(product.id, price, count),
@@ -37,11 +40,10 @@ const ProductCard = ({product}: {product: Product}) => {
         queryKey: [CART_QUERY_KEY],
       }),
   });
-  console.log(cartData);
-
-  const price: number = parseInt(product.price);
-  const onHandleAdd = () => {
-    cartMutation({price, count: count + 1});
+  const count = cartData?.[product.id]?.count || 0;
+  const formattedPrice = parseInt(product.price);
+  const addToCart = () => {
+    cartMutation({price: formattedPrice, count: count + 1});
   };
 
   return (
@@ -102,7 +104,7 @@ const ProductCard = ({product}: {product: Product}) => {
             <button css={addToFavorite}>
               <FavoriteSvg color={theme.colors.accent} />
             </button>
-            <button css={addButton} onClick={onHandleAdd}>
+            <button css={addButton} onClick={addToCart}>
               <PlusSvg color={theme.colors.textWhite} />
             </button>
           </div>
@@ -111,7 +113,6 @@ const ProductCard = ({product}: {product: Product}) => {
     </div>
   );
 };
-
 const imgStyles = theme => css`
   width: 343px;
   height: 188px;
