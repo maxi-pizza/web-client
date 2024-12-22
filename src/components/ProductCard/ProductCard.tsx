@@ -40,7 +40,8 @@ const ProductCard = ({product}: {product: Product}) => {
         queryKey: [CART_QUERY_KEY],
       }),
   });
-  const count = cartData?.[product.id]?.count || 0;
+
+  const count = cartData?.count || 0;
   const formattedPrice = parseInt(product.price);
   const addToCart = () => {
     cartMutation({price: formattedPrice, count: count + 1});

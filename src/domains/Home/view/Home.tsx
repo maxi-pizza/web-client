@@ -13,6 +13,7 @@ import {InView} from 'react-intersection-observer';
 import {observer} from 'mobx-react-lite';
 import categoryStore from 'src/stores/categoryStore.ts';
 import {useParams} from 'react-router-dom';
+import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 
 export type Category = {
   id: string;
@@ -75,7 +76,8 @@ const ProductsByCategory = observer(({item}: {item: Category}) => {
 
 const Home = observer(() => {
   const {data: productsData} = useQuery(productsQuery);
-
+  const {data: cartData} = useQuery(cartQuery);
+  console.log(cartData);
   const categoryRefs = useRef({});
   const p = useParams();
 
@@ -121,7 +123,7 @@ const Home = observer(() => {
             ))}
           </div>
           <div css={cartWrapper}>
-            <Cart />
+            <Cart cart={cartData} />
           </div>
         </div>
       </div>
