@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import ProductInCart from 'src/components/ProductInCart/ProductInCart.tsx';
 import {Link} from 'react-router-dom';
 import {orderRoute} from 'src/routes.ts';
+import {useQuery} from '@tanstack/react-query';
+import {cartQuery} from 'src/domains/Cart/cart.query.ts';
+import {productsQuery} from 'src/domains/Home/products.query.ts';
 
 const Cart = ({
   withOrderButton = true,
@@ -14,6 +17,20 @@ const Cart = ({
   modal?: boolean;
 }) => {
   const theme = useTheme() as WhiteTheme;
+  const {data: cartData} = useQuery(cartQuery);
+  const {data: productsData} = useQuery(productsQuery);
+
+  const ids = Object.keys(cartData || {});
+
+  console.log(productsData);
+  const productsArray = (productsData || []).flatMap(c => c.products);
+  const productsInCart = productsArray.filter(product =>
+    ids.includes(String(product.id)),
+  );
+  const sum = ids.reduce((acc, id) => {
+    return acc + cartData[id]?.count * cartData[id]?.price;
+  }, 0);
+
   return (
     <div css={cart({isModal: modal})}>
       <div
@@ -23,15 +40,18 @@ const Cart = ({
         <Text type={'h3'}>Ваше замовлення</Text>
       </div>
       <div css={cartWrapper}>
-        <ProductInCart />
-        <div css={dottedLine} />
-        <ProductInCart />
+        {productsInCart.map(p => (
+          <Fragment key={p.id}>
+            <ProductInCart product={p} />
+            <div css={dottedLine} />
+          </Fragment>
+        ))}
       </div>
       <div css={cartFooter}>
         <div css={horizontalLine} />
         <div css={sumWrapper}>
           <Text type={'h4'}>Всього:</Text>
-          <Text type={'h4'}>1399 грн</Text>
+          <Text type={'h4'}>{String(sum)} грн</Text>
         </div>
         {withOrderButton && (
           <Link css={orderButton} to={orderRoute}>
@@ -49,6 +69,9 @@ const cartWrapper = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 500px;
+  overflow-y: auto;
+  padding-right: 4px;
 `;
 
 const cart =

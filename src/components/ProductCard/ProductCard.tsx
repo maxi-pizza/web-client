@@ -12,7 +12,6 @@ import {
   cartQuery,
   setItem,
 } from 'src/domains/Cart/cart.query.ts';
-import cart from 'src/components/Cart/Cart.tsx';
 
 export type Product = {
   id: number;

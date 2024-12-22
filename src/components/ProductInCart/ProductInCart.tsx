@@ -4,26 +4,67 @@ import Counter from 'src/components/Counter/Counter.tsx';
 import TrashSvg from 'src/assets/icons/trash.svg';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/styles/theme.ts';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {
+  CART_QUERY_KEY,
+  cartQuery,
+  setItem,
+} from 'src/domains/Cart/cart.query.ts';
 
-const ProductInCart = () => {
+type ProductInCartProp = {
+  id: number;
+  name: string;
+  price: string;
+};
+
+const ProductInCart = ({product}: {product: ProductInCartProp}) => {
   const theme = useTheme() as WhiteTheme;
+  const queryClient = useQueryClient();
+  const {data: cartData} = useQuery(cartQuery);
+  const {mutate: cartMutation} = useMutation({
+    mutationKey: [CART_QUERY_KEY],
+    mutationFn: ({price, count}: {price: number; count: number}) =>
+      setItem(product.id, price, count),
+    onSuccess: () =>
+      queryClient.invalidateQueries({queryKey: [CART_QUERY_KEY]}),
+  });
+  const formattedPrice = parseInt(product.price);
+  const count = cartData?.[product.id]?.count || 0;
+
+  const onHandlePlus = () => {
+    cartMutation({price: formattedPrice, count: count + 1});
+  };
+
+  const onHandleMinus = () => {
+    cartMutation({price: formattedPrice, count: Math.max(count - 1, 0)});
+  };
+
+  const onHandleRemove = () => {
+    cartMutation({price: formattedPrice, count: 0});
+  };
+
   return (
     <div css={cartItemWrapper}>
       <div css={cartItemTextWrapper}>
-        <Text type={'h5'}>Піца "Прошутто</Text>
-        <Text type={'h5'}>399 грн</Text>
+        <Text type={'h5'}>{product.name}</Text>
+        <Text type={'h5'}>{String(formattedPrice)} грн</Text>
       </div>
       <div css={buttonsWrapper}>
-        <Counter />
-        <div css={deleteButtonWrapper}>
-          <button css={deleteButton} />
+        <Counter
+          onHandlePlus={onHandlePlus}
+          count={count}
+          onHandleMinus={onHandleMinus}
+        />
+        <button onClick={onHandleRemove} css={deleteButtonWrapper}>
+          <div css={deleteButton} />
           <TrashSvg
             css={css`
               position: absolute;
+              cursor: pointer;
             `}
             color={theme.colors.accent}
           />
-        </div>
+        </button>
       </div>
     </div>
   );
@@ -67,6 +108,8 @@ const deleteButtonWrapper = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
+  background-color: transparent;
 `;
 
 export default ProductInCart;

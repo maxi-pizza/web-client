@@ -77,7 +77,6 @@ const ProductsByCategory = observer(({item}: {item: Category}) => {
 const Home = observer(() => {
   const {data: productsData} = useQuery(productsQuery);
   const {data: cartData} = useQuery(cartQuery);
-  console.log(cartData);
   const categoryRefs = useRef({});
   const p = useParams();
 
@@ -123,7 +122,7 @@ const Home = observer(() => {
             ))}
           </div>
           <div css={cartWrapper}>
-            <Cart cart={cartData} />
+            <Cart />
           </div>
         </div>
       </div>
@@ -223,7 +222,7 @@ const cartWrapper = theme => css`
     margin-left: 24px;
     height: 100%;
     position: sticky;
-    top: 0;
+    top: 10px;
   }
 `;
 
@@ -252,7 +251,7 @@ const stickyCategories = theme => css`
     margin-right: 24px;
     overflow-y: scroll;
     height: 95vh;
-    top: 0;
+    top: 10px;
     width: unset;
     align-items: unset;
     justify-content: unset;

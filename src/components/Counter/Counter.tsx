@@ -5,15 +5,23 @@ import PlusSvg from 'src/assets/icons/plus.svg';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 
-const Counter = () => {
+const Counter = ({
+  count,
+  onHandlePlus,
+  onHandleMinus,
+}: {
+  count?: number;
+  onHandlePlus?: () => void;
+  onHandleMinus?: () => void;
+}) => {
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={counterWrapper}>
-      <button css={counterButton}>
+      <button css={counterButton} onClick={onHandleMinus}>
         <MinusSvg color={theme.colors.accent} />
       </button>
-      <Text type={'h5'}>2</Text>
-      <button css={counterButton}>
+      <Text type={'h5'}>{String(count) || '0'}</Text>
+      <button css={counterButton} onClick={onHandlePlus}>
         <PlusSvg color={theme.colors.accent} />
       </button>
     </div>
