@@ -119,7 +119,7 @@ const ProductCard = ({product}: {product: Product}) => {
             <div css={priceStyles}>
               <Text type={'h5'}>399 грн</Text>
             </div>
-            <Text type={'h4'}>{formattedPrice} грн</Text>
+            <Text type={'h4'}>{String(formattedPrice)} грн</Text>
           </div>
           <div css={buttonWrapper}>
             <button css={addToFavorite} onClick={() => addToWishlist()}>

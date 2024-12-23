@@ -8,6 +8,7 @@ import {orderRoute} from 'src/routes.ts';
 import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
+import EmptyCartSvg from 'src/assets/icons/emtyCart.svg';
 
 const Cart = ({
   withOrderButton = true,
@@ -38,39 +39,70 @@ const Cart = ({
         `}>
         <Text type={'h3'}>Ваше замовлення</Text>
       </div>
-      <div css={cartWrapper}>
-        {productsInCart.map(p => (
-          <Fragment key={p.id}>
-            <ProductInCart product={p} />
-            <div css={dottedLine} />
-          </Fragment>
-        ))}
-      </div>
-      <div css={cartFooter}>
-        <div css={horizontalLine} />
-        <div css={sumWrapper}>
-          <Text type={'h4'}>Всього:</Text>
-          <Text type={'h4'}>{String(sum)} грн</Text>
+      {productsInCart.length > 0 ? (
+        <>
+          <div css={cartWrapper}>
+            {productsInCart.map(p => (
+              <Fragment key={p.id}>
+                <ProductInCart product={p} />
+                <div css={dottedLine} />
+              </Fragment>
+            ))}
+          </div>
+          <div css={cartFooter}>
+            <div css={horizontalLine} />
+            <div css={sumWrapper}>
+              <Text type={'h4'}>Всього:</Text>
+              <Text type={'h4'}>{String(sum)} грн</Text>
+            </div>
+            {withOrderButton && (
+              <Link css={orderButton} to={orderRoute}>
+                <Text type={'h5'} color={theme.colors.textWhite}>
+                  Замовити
+                </Text>
+              </Link>
+            )}
+          </div>
+        </>
+      ) : (
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 52vh;
+
+            @media (min-width: ${theme.media.laptop}) {
+              height: 500px;
+            }
+            @media (min-width: ${theme.media.pc}) {
+              height: 650px;
+            }
+          `}>
+          <div
+            css={css`
+              margin-bottom: 40px;
+            `}>
+            <EmptyCartSvg color={theme.colors.pageIndicator} />
+          </div>
+          <Text type={'bigBody'}>Ви ще не додали жодного товару.</Text>
         </div>
-        {withOrderButton && (
-          <Link css={orderButton} to={orderRoute}>
-            <Text type={'h5'} color={theme.colors.textWhite}>
-              Замовити
-            </Text>
-          </Link>
-        )}
-      </div>
+      )}
     </div>
   );
 };
 
-const cartWrapper = css`
+const cartWrapper = theme => css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 500px;
   overflow-y: auto;
   padding-right: 4px;
+  height: 52vh;
+  @media (min-width: ${theme.media.laptop}) {
+    height: 500px;
+  }
 `;
 
 const cart =
