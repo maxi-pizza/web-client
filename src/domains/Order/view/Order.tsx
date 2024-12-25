@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
@@ -8,8 +8,15 @@ import RadioButton from 'src/components/RadionButton/RadioButton.tsx';
 import SwitchButton from 'src/components/SwitchButton/SwitchButton.tsx';
 import Input from 'src/components/Input/Input.tsx';
 import Dropdown from 'src/components/Dropdown/Dropdown.tsx';
+import {useNavigate} from 'react-router-dom';
+import {useQuery} from '@tanstack/react-query';
+import {cartQuery} from 'src/domains/Cart/cart.query.ts';
+import {homeRoute} from 'src/routes.ts';
 
 const Order = () => {
+  const navigate = useNavigate();
+  const {data: cartData} = useQuery({...cartQuery});
+  console.log(cartData);
   const theme = useTheme() as WhiteTheme;
   const deliveryMethods = [{name: 'Доставка'}, {name: 'Самовивіз'}];
   const paymentMethods = [{name: 'Готівка'}, {name: 'Картка'}];
@@ -19,6 +26,12 @@ const Order = () => {
     {name: 'Сьоме небо'},
     {name: 'Селище Котовського'},
   ];
+
+  useEffect(() => {
+    if (cartData && JSON.stringify(cartData) === '{}') {
+      navigate(homeRoute);
+    }
+  }, [cartData]);
   return (
     <div css={container}>
       <div css={pathContainer}>
