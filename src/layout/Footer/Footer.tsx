@@ -12,6 +12,7 @@ import TelegramSvg from 'src/assets/icons/telegram.svg';
 
 const Footer = () => {
   const theme = useTheme() as WhiteTheme;
+
   return (
     <div css={container}>
       <div css={contentWrapper}>
@@ -72,9 +73,11 @@ const Footer = () => {
             Ми в соціальних мережах:
           </Text>
           <div css={socialWrapper}>
-            <button css={socialButton}>
+            <a
+              css={socialButton}
+              href={'https://www.instagram.com/maxipizza.art/'}>
               <InstagramSvg color={theme.colors.accent} />
-            </button>
+            </a>
             <button css={socialButton}>
               <TelegramSvg color={theme.colors.accent} />
             </button>

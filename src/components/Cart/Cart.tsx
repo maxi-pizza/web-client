@@ -9,6 +9,8 @@ import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
 import EmptyCartSvg from 'src/assets/icons/emtyCart.svg';
+import modalsStore from 'src/stores/modalsStore.ts';
+import {useIsMobile, useIsTablet} from 'src/common/hooks/useMedia.ts';
 
 const Cart = ({
   withOrderButton = true,
@@ -30,6 +32,9 @@ const Cart = ({
   const sum = ids.reduce((acc, id) => {
     return acc + cartData[id]?.count * cartData[id]?.price;
   }, 0);
+
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
 
   return (
     <div css={cart({isModal: modal})}>
@@ -56,7 +61,14 @@ const Cart = ({
               <Text type={'h4'}>{String(sum)} грн</Text>
             </div>
             {withOrderButton && (
-              <Link css={orderButton} to={orderRoute}>
+              <Link
+                css={orderButton}
+                to={orderRoute}
+                onClick={() => {
+                  return isMobile || isTablet
+                    ? modalsStore.handleCartModal(!modalsStore.cartModal)
+                    : null;
+                }}>
                 <Text type={'h5'} color={theme.colors.textWhite}>
                   Замовити
                 </Text>

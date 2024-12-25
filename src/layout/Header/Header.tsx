@@ -58,7 +58,14 @@ const Header = () => {
           }
           icon={<DistanceSvg />}
         />
-        <HeaderButton icon={<FavouriteSvg />} />
+        <Link to={favoriteRoute}>
+          <HeaderButton
+            icon={<FavouriteSvg />}
+            handleButton={() => {
+              return;
+            }}
+          />
+        </Link>
         <HeaderButton
           handleButton={() =>
             modalsStore.handleCartModal(!modalsStore.cartModal)
