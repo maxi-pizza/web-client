@@ -35,6 +35,10 @@ export const router = createBrowserRouter([
             path: ':categorySlug',
             element: null,
           },
+          {
+            path: ':q',
+            element: 'null',
+          },
         ],
       },
       {

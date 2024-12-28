@@ -3,12 +3,18 @@ import SearchSvg from 'src/assets/icons/search.svg';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 
-const Search = () => {
+const Search = ({onSearch, value}: {onSearch: (e) => void; value: string}) => {
   const theme = useTheme() as WhiteTheme;
   return (
     <div css={container}>
       <SearchSvg css={svgWrapper} color={theme.colors.accent} />
-      <input css={inputStyles} inputMode={'text'} placeholder={'Пошук'} />
+      <input
+        css={inputStyles}
+        inputMode={'text'}
+        placeholder={'Пошук'}
+        onChange={e => onSearch(e.target.value)}
+        value={value}
+      />
     </div>
   );
 };

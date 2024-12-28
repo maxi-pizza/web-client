@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Banner from 'src/layout/Banner/Banner.tsx';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
@@ -12,9 +12,10 @@ import {productsQuery} from 'src/domains/Home/products.query.ts';
 import {InView} from 'react-intersection-observer';
 import {observer} from 'mobx-react-lite';
 import categoryStore from 'src/stores/categoryStore.ts';
-import {useParams} from 'react-router-dom';
+import {useParams, useSearchParams} from 'react-router-dom';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 import {wishlistQuery} from 'src/domains/Favorite/wishlist.query.ts';
+import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
 
 export type Category = {
   id: string;
@@ -80,18 +81,41 @@ const Home = observer(() => {
   const {data: cartData} = useQuery(cartQuery);
   const {data: wishlistData} = useQuery(wishlistQuery);
   const categoryRefs = useRef({});
-  const p = useParams();
+  const {categorySlug} = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get('q') || '');
+
+  const onSearch = s => {
+    setSearch(s);
+    setSearchParams({q: search});
+  };
 
   useEffect(() => {
     const category = categoryRefs.current[categoryStore.categorySlug];
     if (category) {
       category.scrollIntoView({block: 'start'});
     }
-  }, [p]);
+  }, [categorySlug]);
 
   const items: Category[] = (productsData || []).map(
     categoryWithProducts => categoryWithProducts,
   );
+  const searchedItems =
+    search.length > 2
+      ? items.map(c => ({
+          id: c.id,
+          name: c.name,
+          slug: c.slug,
+          products: fuzzySearch(
+            c.products || [],
+            search,
+            product => product.name,
+            {
+              maxAllowedModifications: 1,
+            },
+          ),
+        }))
+      : items;
 
   return (
     <div>
@@ -103,19 +127,19 @@ const Home = observer(() => {
           </div>
           <div css={searchAndProductsWrapper}>
             <div css={searchWrapper}>
-              <Search />
+              <Search onSearch={onSearch} value={search} />
             </div>
-            {/*<div css={headingWrapper}>*/}
-            {/*  <DiscountSvg*/}
-            {/*    css={css`*/}
-            {/*      height: 36px;*/}
-            {/*      width: 36px;*/}
-            {/*      margin-right: 16px;*/}
-            {/*    `}*/}
-            {/*  />*/}
-            {/*  <Text type={'h2'}>Акційні пропозиції</Text>*/}
-            {/*</div>*/}
-            {items.map(item => (
+            <div css={headingWrapper}>
+              <DiscountSvg
+                css={css`
+                  height: 36px;
+                  width: 36px;
+                  margin-right: 16px;
+                `}
+              />
+              <Text type={'h2'}>Акційні пропозиції</Text>
+            </div>
+            {searchedItems.map(item => (
               <div
                 ref={el => (categoryRefs.current[item.slug] = el)}
                 key={item.slug}>
