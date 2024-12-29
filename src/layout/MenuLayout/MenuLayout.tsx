@@ -26,16 +26,16 @@ const MenuLayout = observer(() => {
 
   return (
     <div css={container}>
-      <div css={categoryWrapper}>
-        <CategoryCard
-          backgroundImg={DiscountCircleImg}
-          text={'Акційні пропозиції'}
-          svg={<DiscountSvg />}
-          category={{id: 0, name: 'Акційні пропозиції', slug: 'promotions'}}
-          setActive={handleSetActive}
-          activeCategory={categoryStore.categorySlug}
-        />
-      </div>
+      {/*<div css={categoryWrapper}>*/}
+      {/*  <CategoryCard*/}
+      {/*    backgroundImg={DiscountCircleImg}*/}
+      {/*    text={'Акційні пропозиції'}*/}
+      {/*    svg={<DiscountSvg />}*/}
+      {/*    category={{id: 0, name: 'Акційні пропозиції', slug: 'promotions'}}*/}
+      {/*    setActive={handleSetActive}*/}
+      {/*    activeCategory={categoryStore.categorySlug}*/}
+      {/*  />*/}
+      {/*</div>*/}
       {categories.map(category =>
         category.products.length > 0 ? (
           <div css={categoryWrapper} key={category.name}>

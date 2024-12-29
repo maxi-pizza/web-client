@@ -129,19 +129,21 @@ const Home = observer(() => {
             <div css={searchWrapper}>
               <Search onSearch={onSearch} value={search} />
             </div>
-            <div css={headingWrapper}>
-              <DiscountSvg
-                css={css`
-                  height: 36px;
-                  width: 36px;
-                  margin-right: 16px;
-                `}
-              />
-              <Text type={'h2'}>Акційні пропозиції</Text>
-            </div>
+            {/*<div css={headingWrapper}>*/}
+            {/*  <DiscountSvg*/}
+            {/*    css={css`*/}
+            {/*      height: 36px;*/}
+            {/*      width: 36px;*/}
+            {/*      margin-right: 16px;*/}
+            {/*    `}*/}
+            {/*  />*/}
+            {/*  <Text type={'h2'}>Акційні пропозиції</Text>*/}
+            {/*</div>*/}
             {searchedItems.map(item => (
               <div
-                ref={el => (categoryRefs.current[item.slug] = el)}
+                ref={el => {
+                  categoryRefs.current[item.slug] = el;
+                }}
                 key={item.slug}>
                 <ProductsByCategory item={item} key={item.slug} />
               </div>

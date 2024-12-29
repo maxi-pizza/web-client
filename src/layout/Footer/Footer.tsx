@@ -9,6 +9,8 @@ import {theme, WhiteTheme} from 'src/styles/theme.ts';
 import InstagramSvg from 'src/assets/icons/instagram.svg';
 import FacebookSvg from 'src/assets/icons/facebook.svg';
 import TelegramSvg from 'src/assets/icons/telegram.svg';
+import {Link} from 'react-router-dom';
+import {deliveryAndPaymentRoute, orderRoute} from 'src/routes.ts';
 
 const Footer = () => {
   const theme = useTheme() as WhiteTheme;
@@ -53,9 +55,11 @@ const Footer = () => {
             </Text>
           </div>
           <div css={marginWrapper}>
-            <Text type={'bigBody'} color={theme.colors.textWhite}>
-              Доставка і оплата
-            </Text>
+            <Link to={deliveryAndPaymentRoute}>
+              <Text type={'bigBody'} color={theme.colors.textWhite}>
+                Доставка і оплата
+              </Text>
+            </Link>
           </div>
           <div css={marginWrapper}>
             <Text type={'bigBody'} color={theme.colors.textWhite}>
@@ -247,9 +251,8 @@ const textWrapper = theme => css`
   opacity: 50%;
   display: flex;
   justify-content: space-between;
-    margin: 0;
-    padding: 16px;
-  }
+  margin: 0;
+  padding: 16px;
   @media (min-width: ${theme.media.pc}) {
     width: 1656px;
     margin-top: 24px;
