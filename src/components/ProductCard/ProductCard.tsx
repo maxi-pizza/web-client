@@ -69,15 +69,15 @@ const ProductCard = ({product}: {product: Product}) => {
 
   return (
     <div css={container}>
-      <div css={discountWrapper}>
-        <div
-          css={css`
-            position: absolute;
-          `}>
-          <Text type={'subscribe'}>20 %</Text>
-        </div>
-        <BgDiscountSvg />
-      </div>
+      {/*<div css={discountWrapper}>*/}
+      {/*  <div*/}
+      {/*    css={css`*/}
+      {/*      position: absolute;*/}
+      {/*    `}>*/}
+      {/*    <Text type={'subscribe'}>20 %</Text>*/}
+      {/*  </div>*/}
+      {/*  <BgDiscountSvg />*/}
+      {/*</div>*/}
       <div css={imgBackground}>
         <img src={product.image} alt={'product'} css={imgStyles} />
       </div>
@@ -92,7 +92,7 @@ const ProductCard = ({product}: {product: Product}) => {
           css={css`
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
           `}>
           <div css={variantWrapper}>
             <div css={variantStyle({isActive: true})}>
@@ -116,9 +116,9 @@ const ProductCard = ({product}: {product: Product}) => {
         </div>
         <div css={priceAndButtonsWrapper}>
           <div css={pricesWrapper}>
-            <div css={priceStyles}>
-              <Text type={'h5'}>399 грн</Text>
-            </div>
+            {/*<div css={priceStyles}>*/}
+            {/*  <Text type={'h5'}>399 грн</Text>*/}
+            {/*</div>*/}
             <Text type={'h4'}>{String(formattedPrice)} грн</Text>
           </div>
           <div css={buttonWrapper}>
@@ -192,7 +192,7 @@ const textWrapper = theme => css`
 `;
 
 const variantWrapper = css`
-  display: flex;
+  display: none;
 `;
 const variantStyle =
   ({isActive}) =>
@@ -219,21 +219,27 @@ const variantStyle =
 
 const weightWrapper = css`
   opacity: 30%;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const priceAndButtonsWrapper = theme => css`
   display: flex;
   justify-content: space-between;
-  margin-top: 12px;
+
+  //margin-top: 12px; 12px with modificators and 24px without
+  margin-top: 24px;
 
   @media (min-width: ${theme.media.laptop}) {
-    margin-top: 17px;
+    //margin-top: 17px; 17px with modificators and 34px without
+    margin-top: 34px;
   }
 `;
 
 const pricesWrapper = css`
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
 `;
 
 const priceStyles = css`

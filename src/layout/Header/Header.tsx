@@ -49,7 +49,12 @@ const Header = () => {
         <Text type={'subscribe'}>Улюблені страви</Text>
       </Link>
       <div css={mobileHeaderMenu}>
-        <HeaderButton icon={<SearchSvg />} />
+        <HeaderButton
+          icon={<SearchSvg />}
+          handleButton={() => {
+            modalsStore.handleSearchModal(!modalsStore.searchModal);
+          }}
+        />
         <HeaderButton
           handleButton={() =>
             modalsStore.handleContactInformationModal(

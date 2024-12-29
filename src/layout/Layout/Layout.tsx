@@ -6,6 +6,7 @@ import RestaurantCloseModal from 'src/components/modals/RestaurantClosedModal/Re
 import {Outlet} from 'react-router-dom';
 import CartModal from 'src/components/modals/CartModal/CartModal.tsx';
 import ContactInformationModal from 'src/components/modals/ContactInformationModal/ContactInformationModal.tsx';
+import SearchModal from 'src/components/modals/SearchModal/SearchModal.tsx';
 
 const Layout = () => {
   return (
@@ -17,6 +18,7 @@ const Layout = () => {
         <RestaurantCloseModal />
         <CartModal />
         <ContactInformationModal />
+        <SearchModal />
         <Outlet />
       </div>
       <Footer />

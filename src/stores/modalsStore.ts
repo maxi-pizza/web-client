@@ -4,6 +4,7 @@ class ModalsStore {
   restaurantClosedModal = true;
   cartModal = false;
   contactInformationModal = false;
+  searchModal = false;
   constructor() {
     makeAutoObservable(this);
   }
@@ -15,6 +16,9 @@ class ModalsStore {
   }
   handleContactInformationModal(isVisible: boolean) {
     this.contactInformationModal = isVisible;
+  }
+  handleSearchModal(isVisible: boolean) {
+    this.searchModal = isVisible;
   }
 }
 
