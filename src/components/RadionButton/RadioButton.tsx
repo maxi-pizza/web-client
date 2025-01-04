@@ -1,6 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-const RadioButton = ({options}: {options: {name: string}[]}) => {
+const RadioButton = ({
+  options,
+  value,
+  onChangeType,
+}: {
+  options: {name: string; id: number}[];
+  value: string;
+  onChangeType: (id: number) => void;
+}) => {
   return (
     <RadioGroup.Root
       css={css`
@@ -8,7 +16,11 @@ const RadioButton = ({options}: {options: {name: string}[]}) => {
       `}>
       {options.map(option => (
         <label css={labelStyles} key={option.name}>
-          <RadioGroup.Item value={option.name} css={item}>
+          <RadioGroup.Item
+            value={String(option.id)}
+            css={item}
+            onClick={() => onChangeType(option.id)}
+            checked={value == option.id}>
             <RadioGroup.Indicator css={indicator} />
           </RadioGroup.Item>
           <Text type={'bigBody'}>{option.name}</Text>

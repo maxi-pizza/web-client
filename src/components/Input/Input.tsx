@@ -5,15 +5,22 @@ import {WhiteTheme} from 'src/styles/theme.ts';
 const Input = ({
   inputType,
   placeholder,
+  value,
+  onChangeText,
 }: {
   inputType: 'text' | 'tel' | 'number' | 'email';
   placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
 }) => {
   const theme = useTheme() as WhiteTheme;
+
   return (
     <input
       type={inputType}
       placeholder={placeholder}
+      value={value}
+      onChange={e => onChangeText(e.target.value)}
       css={css`
         width: 100%;
         height: 48px;

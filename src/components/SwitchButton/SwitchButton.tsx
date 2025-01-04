@@ -2,9 +2,18 @@ import React from 'react';
 import {css} from '@emotion/react';
 import * as Switch from '@radix-ui/react-switch';
 
-const SwitchButton = () => {
+const SwitchButton = ({
+  checked,
+  onChange,
+}: {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+}) => {
   return (
-    <Switch.Root css={container}>
+    <Switch.Root
+      css={container}
+      onClick={() => onChange(!checked)}
+      checked={checked}>
       <Switch.Thumb css={thumb} />
     </Switch.Root>
   );

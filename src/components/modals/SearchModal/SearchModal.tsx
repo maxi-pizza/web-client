@@ -39,7 +39,6 @@ const SearchModal = observer(() => {
           maxAllowedModifications: 1,
         })
       : [];
-  console.log(searchedItems);
   const onSearch = s => {
     setSearch(s);
     setSearchParams({q: search});

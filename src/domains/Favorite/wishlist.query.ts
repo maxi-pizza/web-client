@@ -27,7 +27,5 @@ export const setItemToWishlist = id => {
 export const removeAllItemsFromWishlist = () => {
   const wishlist = [];
   localStorage.setItem(WISHLIST_QUERY_KEY, JSON.stringify(wishlist));
-  const f = getWishlist();
-  console.log(f);
   return getWishlist();
 };
