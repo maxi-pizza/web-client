@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
@@ -13,6 +13,9 @@ import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 import {homeRoute} from 'src/routes.ts';
 import {checkoutQuery} from 'src/domains/Order/checkout.query.ts';
 import {Controller, useForm, useWatch} from 'react-hook-form';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {isValidUkrainianNumber} from 'src/domains/Order/utils.ts';
 
 enum PaymentMethodEnum {
   Card = 1,
@@ -65,8 +68,8 @@ const Order = () => {
     street: '',
     floor: '',
     change: '',
-    deliveryMethod: DeliveryMethodEnum.Takeaway,
-    isHouse: true,
+    deliveryMethod: DeliveryMethodEnum.Delivery,
+    isHouse: false,
     paymentMethod: PaymentMethodEnum.Card,
     peopleCount: 0,
   };
@@ -83,18 +86,123 @@ const Order = () => {
       window.scrollTo(0, 0);
     }
   }, [pathname]);
-  const {handleSubmit, control} = useForm({
+
+  const validationRequired = 'Заповніть це поле';
+
+  const takeawaySchema = yup.object({
+    name: yup.string(),
+    email: yup.string(),
+    phone: yup
+      .string()
+      .required(validationRequired)
+      .test(
+        'is possible number',
+        'Телефон повинен бути у форматі +380xxxxxxxxx',
+        value => isValidUkrainianNumber(value),
+      ),
+    comment: yup.string(),
+  });
+  const deliverySchema = yup.object({
+    name: yup.string(),
+    email: yup.string(),
+    phone: yup
+      .string()
+      .required(validationRequired)
+      .test(
+        'is possible number',
+        'Телефон повинен бути у форматі +380xxxxxxxxx',
+        value => isValidUkrainianNumber(value),
+      ),
+    comment: yup.string(),
+    house: yup.string().required(validationRequired),
+    street: yup.string().required(validationRequired),
+  });
+  const deliveryHighRiseBuildingSchema = yup.object({
+    name: yup.string(),
+    email: yup.string(),
+    phone: yup
+      .string()
+      .required(validationRequired)
+      .test(
+        'is possible number',
+        'Телефон повинен бути у форматі +380xxxxxxxxx',
+        value => isValidUkrainianNumber(value),
+      ),
+    comment: yup.string(),
+    house: yup.string().required(validationRequired),
+    apartment: yup.string().required(validationRequired),
+    street: yup.string().required(validationRequired),
+    entrance: yup.string().required(validationRequired),
+    floor: yup.string().required(validationRequired),
+    intercomCode: yup.string(),
+  });
+  const getValidationSchema = (value: FormValues) => {
+    if (
+      !value.isHouse &&
+      value.deliveryMethod === DeliveryMethodEnum.Delivery
+    ) {
+      return deliveryHighRiseBuildingSchema;
+    }
+    if (value.deliveryMethod === DeliveryMethodEnum.Delivery) {
+      return deliverySchema;
+    }
+    return takeawaySchema;
+  };
+  const [validationSchema, setValidationSchema] = useState<
+    | typeof takeawaySchema
+    | typeof deliverySchema
+    | typeof deliveryHighRiseBuildingSchema
+  >(getValidationSchema(initialValues));
+  const {
+    handleSubmit,
+    control,
+    formState: {errors},
+  } = useForm({
     defaultValues: initialValues,
+    resolver: yupResolver(validationSchema),
   });
 
   const isCardPayment =
-    useWatch({control, name: ['paymentMethod']}) == PaymentMethodEnum.Card;
+    useWatch({control, name: ['paymentMethod']})[0] == PaymentMethodEnum.Card;
   const isDelivery =
-    useWatch({control, name: ['deliveryMethod']}) ==
+    useWatch({control, name: ['deliveryMethod']})[0] ==
     DeliveryMethodEnum.Delivery;
   const isHouse = useWatch({control, name: ['isHouse']})[0];
+  const onChangeDeliveryMethodScheme = (value: number) => {
+    setValidationSchema(
+      getValidationSchema({
+        ...initialValues,
+        deliveryMethod:
+          DeliveryMethodEnum.Delivery == value
+            ? DeliveryMethodEnum.Delivery
+            : DeliveryMethodEnum.Takeaway,
+      }),
+    );
+  };
+  const onChangeHouseScheme = (value: boolean) => {
+    setValidationSchema(
+      getValidationSchema({
+        ...initialValues,
+        isHouse: value,
+      }),
+    );
+  };
 
   const onSubmit = data => {
+    const {
+      name,
+      email,
+      phone,
+      street,
+      comment,
+      house,
+      apartment,
+      isHouse,
+      deliveryMethod,
+      paymentMethod,
+      intercomCode,
+      peopleCount,
+    } = data;
     console.log(data, 'data');
   };
   return (
@@ -139,6 +247,7 @@ const Order = () => {
                       inputType={'text'}
                       onChangeText={onChange}
                       value={value}
+                      error={errors.phone?.message}
                     />
                   )}
                   name="phone"
@@ -168,7 +277,10 @@ const Order = () => {
                 render={({field: {onChange, value}}) => (
                   <RadioButton
                     options={deliveryMethods}
-                    onChangeType={onChange}
+                    onChangeType={value => {
+                      onChange(value);
+                      onChangeDeliveryMethodScheme(value);
+                    }}
                     value={value}
                   />
                 )}
@@ -187,12 +299,13 @@ const Order = () => {
                           placeholder={'Вулиця*'}
                           onChangeText={onChange}
                           value={value}
+                          error={errors.street?.message}
                         />
                       )}
                       name="street"
                     />
                     <div css={addressInformationWrapper}>
-                      {isHouse && (
+                      {!isHouse && (
                         <>
                           <div
                             css={[
@@ -212,6 +325,7 @@ const Order = () => {
                                   placeholder={'Під’їзд*'}
                                   onChangeText={onChange}
                                   value={value}
+                                  error={errors.entrance?.message}
                                 />
                               )}
                               name="entrance"
@@ -226,6 +340,7 @@ const Order = () => {
                                   placeholder={'Квартира*'}
                                   onChangeText={onChange}
                                   value={value}
+                                  error={errors.apartment?.message}
                                 />
                               )}
                               name="apartment"
@@ -244,12 +359,13 @@ const Order = () => {
                           placeholder={'Будинок*'}
                           onChangeText={onChange}
                           value={value}
+                          error={errors.house?.message}
                         />
                       )}
                       name="house"
                     />
                     <div css={addressInformationWrapper}>
-                      {isHouse && (
+                      {!isHouse && (
                         <>
                           <div
                             css={[
@@ -269,6 +385,7 @@ const Order = () => {
                                   placeholder={'Поверх*'}
                                   onChangeText={onChange}
                                   value={value}
+                                  error={errors.floor?.message}
                                 />
                               )}
                               name="floor"
@@ -298,7 +415,10 @@ const Order = () => {
                     control={control}
                     render={({field: {onChange, value}}) => (
                       <SwitchButton
-                        onChange={value => onChange(value)}
+                        onChange={value => {
+                          onChange(value);
+                          onChangeHouseScheme(value);
+                        }}
                         checked={value}
                       />
                     )}
