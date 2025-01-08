@@ -1,8 +1,21 @@
-import {css, Global, ThemeProvider} from '@emotion/react';
+import {css, Global, ThemeProvider, useTheme} from '@emotion/react';
 import {theme} from 'src/styles/theme.ts';
-import {RouterProvider} from 'react-router-dom';
+import {RouterProvider, useParams, useSearchParams} from 'react-router-dom';
 import {router} from 'src/router.tsx';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query';
+import {useWindowVirtualizer} from '@tanstack/react-virtual';
+import React, {useEffect, useRef, useState} from 'react';
+import {productsQuery} from 'src/domains/Home/products.query.ts';
+import {cartQuery} from 'src/domains/Cart/cart.query.ts';
+import {wishlistQuery} from 'src/domains/Favorite/wishlist.query.ts';
+import categoryStore from 'src/stores/categoryStore.ts';
+import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
+import {Category, ProductsByCategory} from 'src/domains/Home/view/Home.tsx';
+import Header from 'src/layout/Header/Header.tsx';
 
 function App() {
   const queryClient = new QueryClient();
@@ -29,8 +42,6 @@ const globalStyles = css`
   body {
     height: 100%;
     font-size: 100%;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
   }
 
   img {
@@ -46,6 +57,7 @@ const globalStyles = css`
   table {
     border-collapse: collapse;
   }
+
   a {
     text-decoration: unset;
   }

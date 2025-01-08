@@ -123,10 +123,8 @@ const Order = () => {
     phone: yup
       .string()
       .required(validationRequired)
-      .test(
-        'is possible number',
-        'Телефон повинен бути у форматі +380xxxxxxxxx',
-        value => isValidUkrainianNumber(value),
+      .test('is possible number', 'Неправильний телефон', value =>
+        isValidUkrainianNumber(value),
       ),
     comment: yup.string(),
     house: yup.string().required(validationRequired),

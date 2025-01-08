@@ -8,6 +8,7 @@ import {
 } from 'src/routes.ts';
 import Error from 'src/domains/Error/view/Error.tsx';
 import {lazy} from 'react';
+import {Example} from 'src/App.tsx';
 
 const Layout = lazy(() => import('src/layout/Layout/Layout.tsx'));
 const ThankYou = lazy(() => import('src/domains/ThankYou/view/ThankYou.tsx'));

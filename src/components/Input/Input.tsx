@@ -46,6 +46,7 @@ const errorWrapper = css`
   bottom: 0;
   right: 4px;
   z-index: 1;
+  user-select: none;
 `;
 
 const inputStyles = error => theme => css`

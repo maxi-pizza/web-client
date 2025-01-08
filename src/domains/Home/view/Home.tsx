@@ -16,6 +16,7 @@ import {useParams, useSearchParams} from 'react-router-dom';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 import {wishlistQuery} from 'src/domains/Favorite/wishlist.query.ts';
 import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
+import {useWindowVirtualizer} from '@tanstack/react-virtual';
 
 export type Category = {
   id: string;
@@ -24,7 +25,7 @@ export type Category = {
   products: Product[] | null;
 };
 
-const ProductsByCategory = observer(({item}: {item: Category}) => {
+export const ProductsByCategory = observer(({item}: {item: Category}) => {
   const setInView = (inView, entry) => {
     if (inView) {
       window.history.replaceState({}, '', `${entry.target.id}`);
@@ -117,8 +118,31 @@ const Home = observer(() => {
         }))
       : items;
 
+  const parentRef = useRef<HTMLDivElement | null>(null);
+  const howMuchRows = (length: number, columns: number) => {
+    console.log(Math.ceil(length / columns));
+    return Math.ceil(length / columns);
+  };
+
+  const estSize = searchedItems.map(item =>
+    item.products?.length
+      ? howMuchRows(item.products?.length, 3) * 482 +
+        119 +
+        howMuchRows(item.products?.length, 3) * 16 -
+        16
+      : 0,
+  );
+
+  const categoryVirtualizer = useWindowVirtualizer({
+    count: searchedItems.length,
+    estimateSize: i => estSize[i],
+    scrollMargin: parentRef.current?.offsetTop ?? 0,
+  });
+
+  console.log(estSize);
+  console.log(searchedItems);
   return (
-    <div>
+    <>
       <Banner />
       <div css={container}>
         <div css={menuWrapper}>
@@ -129,6 +153,7 @@ const Home = observer(() => {
             <div css={searchWrapper}>
               <Search onSearch={onSearch} value={search} />
             </div>
+
             {/*<div css={headingWrapper}>*/}
             {/*  <DiscountSvg*/}
             {/*    css={css`*/}
@@ -139,22 +164,42 @@ const Home = observer(() => {
             {/*  />*/}
             {/*  <Text type={'h2'}>Акційні пропозиції</Text>*/}
             {/*</div>*/}
-            {searchedItems.map(item => (
+
+            <div ref={parentRef}>
               <div
-                ref={el => {
-                  categoryRefs.current[item.slug] = el;
-                }}
-                key={item.slug}>
-                <ProductsByCategory item={item} key={item.slug} />
+                css={css`
+                  height: ${categoryVirtualizer.getTotalSize()}px;
+                  position: relative;
+                `}>
+                {categoryVirtualizer.getVirtualItems().map(item => (
+                  <div
+                    ref={el => {
+                      categoryRefs.current[searchedItems[item.index].slug] = el;
+                    }}
+                    css={css`
+                      position: absolute;
+                      height: ${item.size}px;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      transform: translateY(
+                        ${item.start -
+                        categoryVirtualizer.options.scrollMargin}px
+                      );
+                    `}
+                    key={item.key}>
+                    <ProductsByCategory item={searchedItems[item.index]} />
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
           <div css={cartWrapper}>
             <Cart />
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 });
 
@@ -192,8 +237,6 @@ const searchAndProductsWrapper = theme => css`
   width: 343px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
   @media (min-width: ${theme.media.tablet}) {
     width: 653px;
@@ -210,7 +253,7 @@ const headingWrapper = theme => css`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 15px;
+  padding-top: 15px;
   margin-bottom: 15px;
   svg {
     height: 24px;
@@ -218,7 +261,7 @@ const headingWrapper = theme => css`
   }
   @media (min-width: ${theme.media.laptop}) {
     display: flex;
-    margin-top: 48px;
+    padding-top: 48px;
     margin-bottom: 32px;
     align-items: center;
     width: 100%;
