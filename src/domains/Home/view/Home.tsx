@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Banner from 'src/layout/Banner/Banner.tsx';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
@@ -12,9 +12,7 @@ import {productsQuery} from 'src/domains/Home/products.query.ts';
 import {InView} from 'react-intersection-observer';
 import {observer} from 'mobx-react-lite';
 import categoryStore from 'src/stores/categoryStore.ts';
-import {useParams, useSearchParams} from 'react-router-dom';
-import {cartQuery} from 'src/domains/Cart/cart.query.ts';
-import {wishlistQuery} from 'src/domains/Favorite/wishlist.query.ts';
+import {useSearchParams} from 'react-router-dom';
 import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
 import {useWindowVirtualizer} from '@tanstack/react-virtual';
 
@@ -79,10 +77,6 @@ export const ProductsByCategory = observer(({item}: {item: Category}) => {
 
 const Home = observer(() => {
   const {data: productsData} = useQuery(productsQuery);
-  const {data: cartData} = useQuery(cartQuery);
-  const {data: wishlistData} = useQuery(wishlistQuery);
-  const categoryRefs = useRef({});
-  const {categorySlug} = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get('q') || '');
 
@@ -90,13 +84,6 @@ const Home = observer(() => {
     setSearch(s);
     setSearchParams({q: search});
   };
-
-  useEffect(() => {
-    const category = categoryRefs.current[categoryStore.categorySlug];
-    if (category) {
-      category.scrollIntoView({block: 'start'});
-    }
-  }, [categorySlug]);
 
   const items: Category[] = (productsData || []).map(
     categoryWithProducts => categoryWithProducts,
@@ -118,9 +105,8 @@ const Home = observer(() => {
         }))
       : items;
 
-  const parentRef = useRef<HTMLDivElement | null>(null);
+  const heightRef = useRef<HTMLDivElement | null>(null);
   const howMuchRows = (length: number, columns: number) => {
-    console.log(Math.ceil(length / columns));
     return Math.ceil(length / columns);
   };
 
@@ -136,18 +122,24 @@ const Home = observer(() => {
   const categoryVirtualizer = useWindowVirtualizer({
     count: searchedItems.length,
     estimateSize: i => estSize[i],
-    scrollMargin: parentRef.current?.offsetTop ?? 0,
+    scrollMargin: heightRef?.current?.offsetHeight
+      ? heightRef.current?.offsetHeight + 80
+      : 0,
   });
 
-  console.log(estSize);
-  console.log(searchedItems);
   return (
-    <>
-      <Banner />
+    <div>
+      <div ref={heightRef}>
+        <Banner />
+      </div>
       <div css={container}>
         <div css={menuWrapper}>
           <div css={stickyCategories}>
-            <MenuLayout />
+            <MenuLayout
+              onScrollToCategory={i =>
+                categoryVirtualizer.scrollToIndex(i, {align: 'start'})
+              }
+            />
           </div>
           <div css={searchAndProductsWrapper}>
             <div css={searchWrapper}>
@@ -165,7 +157,7 @@ const Home = observer(() => {
             {/*  <Text type={'h2'}>Акційні пропозиції</Text>*/}
             {/*</div>*/}
 
-            <div ref={parentRef}>
+            <div>
               <div
                 css={css`
                   height: ${categoryVirtualizer.getTotalSize()}px;
@@ -173,9 +165,9 @@ const Home = observer(() => {
                 `}>
                 {categoryVirtualizer.getVirtualItems().map(item => (
                   <div
-                    ref={el => {
-                      categoryRefs.current[searchedItems[item.index].slug] = el;
-                    }}
+                    // ref={el => {
+                    //   categoryRefs.current[searchedItems[item.index].slug] = el;
+                    // }}
                     css={css`
                       position: absolute;
                       height: ${item.size}px;
@@ -199,7 +191,7 @@ const Home = observer(() => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 });
 
