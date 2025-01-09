@@ -15,6 +15,12 @@ import categoryStore from 'src/stores/categoryStore.ts';
 import {useSearchParams} from 'react-router-dom';
 import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
 import {useWindowVirtualizer} from '@tanstack/react-virtual';
+import {
+  useIsLaptop,
+  useIsMobile,
+  useIsPc,
+  useIsTablet,
+} from 'src/common/hooks/useMedia.ts';
 
 export type Category = {
   id: string;
@@ -79,6 +85,10 @@ const Home = observer(() => {
   const {data: productsData} = useQuery(productsQuery);
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get('q') || '');
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
+  const isLaptop = useIsLaptop();
+  const isPc = useIsPc();
 
   const onSearch = s => {
     setSearch(s);
@@ -109,21 +119,59 @@ const Home = observer(() => {
   const howMuchRows = (length: number, columns: number) => {
     return Math.ceil(length / columns);
   };
+  const pcAndLaptopProductCardHeight = 482;
+  const tabletAndMobileProductCardHeight = 382;
+  const pcColumns = 3;
+  const tabletAndLaptopColumns = 2;
+  const mobileColumns = 1;
+  const mobileAndTabletHeadingHeight = 69;
+  const pcAndLaptopHeadingHeight = 119;
+
+  const estSizeForResulotions = length => {
+    if (isMobile) {
+      return (
+        howMuchRows(length, mobileColumns) * tabletAndMobileProductCardHeight +
+        mobileAndTabletHeadingHeight +
+        howMuchRows(length, mobileColumns) * 16 -
+        16
+      );
+    }
+    if (isTablet) {
+      return (
+        howMuchRows(length, tabletAndLaptopColumns) *
+          tabletAndMobileProductCardHeight +
+        mobileAndTabletHeadingHeight +
+        howMuchRows(length, tabletAndLaptopColumns) * 16 -
+        16
+      );
+    }
+    if (isLaptop) {
+      return (
+        howMuchRows(length, tabletAndLaptopColumns) *
+          pcAndLaptopProductCardHeight +
+        pcAndLaptopHeadingHeight +
+        howMuchRows(length, tabletAndLaptopColumns) * 16 -
+        16
+      );
+    }
+    return (
+      howMuchRows(length, pcColumns) * pcAndLaptopProductCardHeight +
+      pcAndLaptopHeadingHeight +
+      howMuchRows(length, pcColumns) * 16 -
+      16
+    );
+  };
 
   const estSize = searchedItems.map(item =>
-    item.products?.length
-      ? howMuchRows(item.products?.length, 3) * 482 +
-        119 +
-        howMuchRows(item.products?.length, 3) * 16 -
-        16
-      : 0,
+    item.products?.length ? estSizeForResulotions(item.products.length) : 0,
   );
 
   const categoryVirtualizer = useWindowVirtualizer({
     count: searchedItems.length,
     estimateSize: i => estSize[i],
     scrollMargin: heightRef?.current?.offsetHeight
-      ? heightRef.current?.offsetHeight + 80
+      ? heightRef.current?.offsetHeight +
+        (isMobile ? -100 : isTablet ? -70 : 80)
       : 0,
   });
 
@@ -231,6 +279,9 @@ const searchAndProductsWrapper = theme => css`
   flex-direction: column;
 
   @media (min-width: ${theme.media.tablet}) {
+    width: 702px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
     width: 653px;
   }
   @media (min-width: ${theme.media.pc}) {

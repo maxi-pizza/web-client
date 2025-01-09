@@ -8,7 +8,6 @@ import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
 import categoryStore from 'src/stores/categoryStore.ts';
 import {observer} from 'mobx-react-lite';
-import {options} from 'axios';
 
 const MenuLayout = observer(
   ({onScrollToCategory}: {onScrollToCategory: (i: number) => void}) => {
@@ -64,6 +63,9 @@ const container = theme => css`
   overflow: scroll;
 
   @media (min-width: ${theme.media.tablet}) {
+    width: 702px;
+  }
+  @media (min-width: ${theme.media.laptop}) {
     width: 653px;
   }
   @media (min-width: ${theme.media.laptop}) {
