@@ -130,6 +130,7 @@ const bannerContainer = theme => css`
   position: relative;
   width: 100%;
   padding-top: calc(700 / 350 * 100%);
+  overflow-x: hidden;
   @media (min-width: ${theme.media.tablet}) {
     padding-top: calc(1000 / 1800 * 100%);
   }

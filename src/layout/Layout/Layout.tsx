@@ -3,7 +3,7 @@ import Header from 'src/layout/Header/Header.tsx';
 import Footer from 'src/layout/Footer/Footer.tsx';
 import {css} from '@emotion/react';
 import RestaurantCloseModal from 'src/components/modals/RestaurantClosedModal/RestaurantCloseModal.tsx';
-import {Outlet} from 'react-router-dom';
+import {Outlet, ScrollRestoration} from 'react-router-dom';
 import CartModal from 'src/components/modals/CartModal/CartModal.tsx';
 import ContactInformationModal from 'src/components/modals/ContactInformationModal/ContactInformationModal.tsx';
 import SearchModal from 'src/components/modals/SearchModal/SearchModal.tsx';
@@ -11,6 +11,11 @@ import SearchModal from 'src/components/modals/SearchModal/SearchModal.tsx';
 const Layout = () => {
   return (
     <div>
+      <ScrollRestoration
+        getKey={location => {
+          return location.key;
+        }}
+      />
       <div css={stickyHeader}>
         <Header />
       </div>

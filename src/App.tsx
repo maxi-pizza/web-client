@@ -1,21 +1,9 @@
-import {css, Global, ThemeProvider, useTheme} from '@emotion/react';
+import {css, Global, ThemeProvider} from '@emotion/react';
 import {theme} from 'src/styles/theme.ts';
-import {RouterProvider, useParams, useSearchParams} from 'react-router-dom';
+import {RouterProvider, ScrollRestoration} from 'react-router-dom';
 import {router} from 'src/router.tsx';
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from '@tanstack/react-query';
-import {useWindowVirtualizer} from '@tanstack/react-virtual';
-import React, {useEffect, useRef, useState} from 'react';
-import {productsQuery} from 'src/domains/Home/products.query.ts';
-import {cartQuery} from 'src/domains/Cart/cart.query.ts';
-import {wishlistQuery} from 'src/domains/Favorite/wishlist.query.ts';
-import categoryStore from 'src/stores/categoryStore.ts';
-import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
-import {Category, ProductsByCategory} from 'src/domains/Home/view/Home.tsx';
-import Header from 'src/layout/Header/Header.tsx';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import React from 'react';
 
 function App() {
   const queryClient = new QueryClient();

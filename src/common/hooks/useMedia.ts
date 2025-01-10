@@ -17,7 +17,7 @@ function useMedia(query) {
 }
 
 export const useIsMobile = () =>
-  useMedia('(min-width: 375px) and (max-width: 767px)');
+  useMedia('(min-width: 0px) and (max-width: 767px)');
 export const useIsTablet = () =>
   useMedia('(min-width: 768px) and (max-width: 1365px)');
 export const useIsLaptop = () =>

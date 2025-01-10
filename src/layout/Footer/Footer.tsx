@@ -10,7 +10,7 @@ import InstagramSvg from 'src/assets/icons/instagram.svg';
 import FacebookSvg from 'src/assets/icons/facebook.svg';
 import TelegramSvg from 'src/assets/icons/telegram.svg';
 import {Link} from 'react-router-dom';
-import {deliveryAndPaymentRoute, orderRoute} from 'src/routes.ts';
+import {deliveryAndPaymentRoute} from 'src/routes.ts';
 
 const Footer = () => {
   const theme = useTheme() as WhiteTheme;

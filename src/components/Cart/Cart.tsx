@@ -4,7 +4,7 @@ import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import ProductInCart from 'src/components/ProductInCart/ProductInCart.tsx';
 import {Link} from 'react-router-dom';
-import {orderRoute} from 'src/routes.ts';
+import {checkout, checkoutRoute} from 'src/routes.ts';
 import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
@@ -63,7 +63,7 @@ const Cart = ({
             {withOrderButton && (
               <Link
                 css={orderButton}
-                to={orderRoute}
+                to={checkoutRoute}
                 onClick={() => {
                   return isMobile || isTablet
                     ? modalsStore.handleCartModal(!modalsStore.cartModal)

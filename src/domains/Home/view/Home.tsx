@@ -88,7 +88,6 @@ const Home = observer(() => {
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
   const isLaptop = useIsLaptop();
-  const isPc = useIsPc();
 
   const onSearch = s => {
     setSearch(s);
@@ -127,7 +126,7 @@ const Home = observer(() => {
   const mobileAndTabletHeadingHeight = 69;
   const pcAndLaptopHeadingHeight = 119;
 
-  const estSizeForResulotions = length => {
+  const estSizeForResolutions = length => {
     if (isMobile) {
       return (
         howMuchRows(length, mobileColumns) * tabletAndMobileProductCardHeight +
@@ -163,15 +162,14 @@ const Home = observer(() => {
   };
 
   const estSize = searchedItems.map(item =>
-    item.products?.length ? estSizeForResulotions(item.products.length) : 0,
+    item.products?.length ? estSizeForResolutions(item.products.length) : 0,
   );
 
   const categoryVirtualizer = useWindowVirtualizer({
     count: searchedItems.length,
     estimateSize: i => estSize[i],
     scrollMargin: heightRef?.current?.offsetHeight
-      ? heightRef.current?.offsetHeight +
-        (isMobile ? -100 : isTablet ? -70 : 80)
+      ? heightRef.current?.offsetHeight + (isMobile ? -90 : isTablet ? -70 : 80)
       : 0,
   });
 
@@ -184,9 +182,7 @@ const Home = observer(() => {
         <div css={menuWrapper}>
           <div css={stickyCategories}>
             <MenuLayout
-              onScrollToCategory={i =>
-                categoryVirtualizer.scrollToIndex(i, {align: 'start'})
-              }
+              onScrollToCategory={i => categoryVirtualizer.scrollToIndex(i)}
             />
           </div>
           <div css={searchAndProductsWrapper}>
