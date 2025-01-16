@@ -29,6 +29,8 @@ const Cart = ({
   const productsInCart = productsArray.filter(product =>
     ids.includes(String(product.id)),
   );
+  // todo: delete old products
+
   const sum = ids.reduce((acc, id) => {
     return acc + cartData[id]?.count * cartData[id]?.price;
   }, 0);

@@ -18,6 +18,7 @@ import {
   WISHLIST_QUERY_KEY,
   wishlistQuery,
 } from 'src/domains/Favorite/wishlist.query.ts';
+import Logo from 'src/assets/logo.png';
 
 export type Product = {
   id: number;
@@ -79,14 +80,20 @@ const ProductCard = ({product}: {product: Product}) => {
       {/*  <BgDiscountSvg />*/}
       {/*</div>*/}
       <div css={imgBackground}>
-        <img src={product.image} alt={'product'} css={imgStyles} />
+        {product.image ? (
+          <img src={product.image} alt={'product'} css={imgStyles} />
+        ) : (
+          <div css={imgStyles}>
+            <img src={String(Logo)} alt={'product'} css={placeholderImg} />
+          </div>
+        )}
       </div>
       <div css={wrapper}>
-        <Text type={'h4'}>{product.name}</Text>
+        <div css={css``}>
+          <Text type={'h4'}>{product.name}</Text>
+        </div>
         <div css={textWrapper}>
-          <Text type={'caption'}>
-            Склад: прошутто, фета, моцарелла, каперси, орегано.
-          </Text>
+          <Text type={'caption'}>Склад: {product.description || ''}</Text>
         </div>
         <div
           css={css`
@@ -151,10 +158,25 @@ const imgStyles = theme => css`
   border-top-right-radius: 12px;
   object-fit: contain;
   background-color: ${theme.colors.backgroundImg};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (min-width: ${theme.media.laptop}) {
     width: 318px;
     height: 250px;
+  }
+`;
+
+const placeholderImg = theme => css`
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+
+  @media (min-width: ${theme.media.laptop}) {
+    width: 250px;
   }
 `;
 

@@ -5,9 +5,14 @@ import CheckedSvg from 'src/assets/icons/checked.svg';
 import Text from 'src/components/Text.tsx';
 import ArrowSvg from 'src/assets/icons/arrow-left.svg';
 import BackgroundLayout from 'src/layout/BackgroundLayout/BackgroundLayout.tsx';
+import {Link, useLocation} from 'react-router-dom';
+import {DeliveryMethodEnum} from 'src/domains/Order/view/Order.tsx';
+import {homeRoute} from 'src/routes.ts';
 
 const ThankYou = () => {
   const theme = useTheme() as WhiteTheme;
+  const location = useLocation();
+  console.log(location.state);
   return (
     <BackgroundLayout>
       <div css={wrapper}>
@@ -67,7 +72,11 @@ const ThankYou = () => {
                 2
               </Text>
             </div>
-            <Text type={'h5'}>Доставка</Text>
+            <Text type={'h5'}>
+              {location.state === DeliveryMethodEnum.Delivery
+                ? 'Доставка'
+                : 'Видача'}
+            </Text>
           </div>
           <div
             css={[
@@ -94,7 +103,7 @@ const ThankYou = () => {
             </Text>
           </div>
         </div>
-        <button css={homeButton}>
+        <Link css={homeButton} to={homeRoute}>
           <Text type={'h5'} color={theme.colors.textWhite}>
             На головну
           </Text>
@@ -105,7 +114,7 @@ const ThankYou = () => {
             `}
             color={theme.colors.textWhite}
           />
-        </button>
+        </Link>
       </div>
     </BackgroundLayout>
   );

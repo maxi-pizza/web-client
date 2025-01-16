@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react';
 import Banner from 'src/layout/Banner/Banner.tsx';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
-import DiscountSvg from 'src/assets/icons/discount.svg';
+// import DiscountSvg from 'src/assets/icons/discount.svg';
 import {css} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import ProductCard, {Product} from 'src/components/ProductCard/ProductCard.tsx';
@@ -18,9 +18,9 @@ import {useWindowVirtualizer} from '@tanstack/react-virtual';
 import {
   useIsLaptop,
   useIsMobile,
-  useIsPc,
   useIsTablet,
 } from 'src/common/hooks/useMedia.ts';
+import LoadingSpinner from 'src/layout/LoadingSpinner/LoadingSpinner.tsx';
 
 export type Category = {
   id: string;
@@ -82,7 +82,8 @@ export const ProductsByCategory = observer(({item}: {item: Category}) => {
 });
 
 const Home = observer(() => {
-  const {data: productsData} = useQuery(productsQuery);
+  const {data: productsData, isLoading: isProductsLoading} =
+    useQuery(productsQuery);
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get('q') || '');
   const isMobile = useIsMobile();
@@ -174,68 +175,76 @@ const Home = observer(() => {
   });
 
   return (
-    <div>
-      <div ref={heightRef}>
-        <Banner />
-      </div>
-      <div css={container}>
-        <div css={menuWrapper}>
-          <div css={stickyCategories}>
-            <MenuLayout
-              onScrollToCategory={i => categoryVirtualizer.scrollToIndex(i)}
-            />
+    <LoadingSpinner isLoading={isProductsLoading}>
+      <>
+        <div>
+          <div ref={heightRef}>
+            <Banner />
           </div>
-          <div css={searchAndProductsWrapper}>
-            <div css={searchWrapper}>
-              <Search onSearch={onSearch} value={search} />
-            </div>
+          <div css={container}>
+            <div css={menuWrapper}>
+              <div css={stickyCategories}>
+                <MenuLayout
+                  onScrollToCategory={i =>
+                    categoryVirtualizer.scrollToIndex(i, {
+                      align: 'start',
+                    })
+                  }
+                />
+              </div>
+              <div css={searchAndProductsWrapper}>
+                <div css={searchWrapper}>
+                  <Search onSearch={onSearch} value={search} />
+                </div>
 
-            {/*<div css={headingWrapper}>*/}
-            {/*  <DiscountSvg*/}
-            {/*    css={css`*/}
-            {/*      height: 36px;*/}
-            {/*      width: 36px;*/}
-            {/*      margin-right: 16px;*/}
-            {/*    `}*/}
-            {/*  />*/}
-            {/*  <Text type={'h2'}>Акційні пропозиції</Text>*/}
-            {/*</div>*/}
+                {/*<div css={headingWrapper}>*/}
+                {/*  <DiscountSvg*/}
+                {/*    css={css`*/}
+                {/*      height: 36px;*/}
+                {/*      width: 36px;*/}
+                {/*      margin-right: 16px;*/}
+                {/*    `}*/}
+                {/*  />*/}
+                {/*  <Text type={'h2'}>Акційні пропозиції</Text>*/}
+                {/*</div>*/}
 
-            <div>
-              <div
-                css={css`
-                  height: ${categoryVirtualizer.getTotalSize()}px;
-                  position: relative;
-                `}>
-                {categoryVirtualizer.getVirtualItems().map(item => (
+                <div>
                   <div
-                    // ref={el => {
-                    //   categoryRefs.current[searchedItems[item.index].slug] = el;
-                    // }}
                     css={css`
-                      position: absolute;
-                      height: ${item.size}px;
-                      top: 0;
-                      left: 0;
-                      width: 100%;
-                      transform: translateY(
-                        ${item.start -
-                        categoryVirtualizer.options.scrollMargin}px
-                      );
-                    `}
-                    key={item.key}>
-                    <ProductsByCategory item={searchedItems[item.index]} />
+                      height: ${categoryVirtualizer.getTotalSize()}px;
+                      position: relative;
+                    `}>
+                    {categoryVirtualizer.getVirtualItems().map(item => (
+                      <div
+                        // ref={el => {
+                        //   categoryRefs.current[searchedItems[item.index].slug] = el;
+                        // }}
+                        css={css`
+                          position: absolute;
+                          height: ${item.size}px;
+                          top: 0;
+                          left: 0;
+                          width: 100%;
+                          transform: translateY(
+                            ${item.start -
+                            categoryVirtualizer.options.scrollMargin}px
+                          );
+                        `}
+                        key={item.key}>
+                        <ProductsByCategory item={searchedItems[item.index]} />
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+              </div>
+              <div css={cartWrapper}>
+                <Cart />
               </div>
             </div>
           </div>
-          <div css={cartWrapper}>
-            <Cart />
-          </div>
         </div>
-      </div>
-    </div>
+      </>
+    </LoadingSpinner>
   );
 });
 
@@ -294,10 +303,12 @@ const headingWrapper = theme => css`
   justify-content: flex-start;
   padding-top: 15px;
   margin-bottom: 15px;
+
   svg {
     height: 24px;
     width: 24px;
   }
+
   @media (min-width: ${theme.media.laptop}) {
     display: flex;
     padding-top: 48px;

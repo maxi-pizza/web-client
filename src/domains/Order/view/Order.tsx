@@ -10,19 +10,21 @@ import Input from 'src/components/Input/Input.tsx';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
-import {homeRoute} from 'src/routes.ts';
+import {homeRoute, thankYouRoute} from 'src/routes.ts';
 import {checkoutQuery} from 'src/domains/Order/checkout.query.ts';
 import {Controller, useForm, useWatch} from 'react-hook-form';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {isValidUkrainianNumber} from 'src/domains/Order/utils.ts';
+import axios from 'axios';
+import LoadingSpinner from 'src/layout/LoadingSpinner/LoadingSpinner.tsx';
 
 enum PaymentMethodEnum {
   Card = 1,
   Cash = 2,
 }
 
-enum DeliveryMethodEnum {
+export enum DeliveryMethodEnum {
   Takeaway = 1,
   Delivery = 2,
 }
@@ -48,31 +50,39 @@ type FormValues = {
 const Order = () => {
   const {pathname} = useLocation();
   const navigate = useNavigate();
-  const {data: cartData} = useQuery(cartQuery);
-  const {data: checkoutData} = useQuery(checkoutQuery);
+  const {data: cartData, isLoading: isCartLoading} = useQuery(cartQuery);
+  const {data: checkoutData, isLoading: isCheckoutLoading} =
+    useQuery(checkoutQuery);
   const theme = useTheme() as WhiteTheme;
+  const [loading, setLoading] = useState<boolean>(false);
   const paymentMethods = checkoutData?.payment_methods ?? [];
   const filteredPaymentMethods = (paymentMethods || []).filter(
     method => method.name !== 'WayForPay',
   );
 
-  const initialValues: FormValues = {
-    name: '',
-    email: '',
-    phone: '',
-    comment: '',
-    house: '',
-    entrance: '',
-    apartment: '',
-    intercomCode: '',
-    street: '',
-    floor: '',
-    change: '',
-    deliveryMethod: DeliveryMethodEnum.Delivery,
-    isHouse: false,
-    paymentMethod: PaymentMethodEnum.Card,
-    peopleCount: 0,
-  };
+  const localStorageValues: FormValues = JSON.parse(
+    localStorage.getItem('formValues'),
+  );
+  const initialValues: FormValues =
+    localStorageValues !== null && Object.keys(localStorageValues).length > 0
+      ? localStorageValues
+      : {
+          name: '',
+          email: '',
+          phone: '',
+          comment: '',
+          house: '',
+          entrance: '',
+          apartment: '',
+          intercomCode: '',
+          street: '',
+          floor: '',
+          change: '',
+          deliveryMethod: DeliveryMethodEnum.Delivery,
+          isHouse: false,
+          paymentMethod: PaymentMethodEnum.Card,
+          peopleCount: 0,
+        };
 
   const deliveryMethods = checkoutData?.delivery_methods ?? [];
 
@@ -95,10 +105,8 @@ const Order = () => {
     phone: yup
       .string()
       .required(validationRequired)
-      .test(
-        'is possible number',
-        'Телефон повинен бути у форматі +380xxxxxxxxx',
-        value => isValidUkrainianNumber(value),
+      .test('is possible number', 'Неправильний телефон', value =>
+        isValidUkrainianNumber(value),
       ),
     comment: yup.string(),
   });
@@ -108,10 +116,8 @@ const Order = () => {
     phone: yup
       .string()
       .required(validationRequired)
-      .test(
-        'is possible number',
-        'Телефон повинен бути у форматі +380xxxxxxxxx',
-        value => isValidUkrainianNumber(value),
+      .test('is possible number', 'Неправильний телефон', value =>
+        isValidUkrainianNumber(value),
       ),
     comment: yup.string(),
     house: yup.string().required(validationRequired),
@@ -154,6 +160,8 @@ const Order = () => {
   const {
     handleSubmit,
     control,
+    watch,
+    getValues,
     formState: {errors},
   } = useForm({
     defaultValues: initialValues,
@@ -186,7 +194,8 @@ const Order = () => {
     );
   };
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
+    setLoading(true);
     const {
       name,
       email,
@@ -200,320 +209,373 @@ const Order = () => {
       paymentMethod,
       intercomCode,
       peopleCount,
+      floor,
+      change,
+      entrance,
     } = data;
-    console.log(data, 'data');
+    const [firstName, lastName = ''] = name.split(' ');
+    const address = [
+      ['Вулиця', street],
+      ['Будинок', house],
+      ['Квартира', apartment],
+      ["Під'їзд", entrance],
+      ['Поверх', floor],
+      ['код', intercomCode],
+    ]
+      .filter(([_, value]) => !!value)
+      .map(([label, value]) => `${label}: ${value}`)
+      .join(', ');
+    try {
+      const request = await axios.post('http://localhost:8080/api/placeOrder', {
+        firstName,
+        lastName,
+        address,
+        email,
+        phone,
+        isHouse,
+        deliveryMethod,
+        paymentMethod,
+        peopleCount,
+        cartData,
+        comment,
+        change,
+      });
+      if (request.data === 'success') {
+        navigate(thankYouRoute, {state: deliveryMethod});
+      }
+      setLoading(false);
+    } catch (e) {
+      throw new Error(e);
+    }
   };
+
+  React.useEffect(() => {
+    const subscription = watch((value, {name}) => {
+      const values = getValues();
+      localStorage.setItem(
+        'formValues',
+        JSON.stringify({
+          ...values,
+          [name]: value[name],
+        }),
+      );
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+  console.log(loading);
   return (
-    <div css={container}>
-      <div css={pathContainer}>
-        <Text type={'bigBody'}>Головна </Text>
-        <div
-          css={css`
-            margin-left: 8px;
-          `}>
-          <Text type={'bigBody'} color={theme.colors.accent}>
-            / Оформлення замовлення
-          </Text>
-        </div>
-      </div>
-      <div css={cardWrapper}>
-        <div css={orderCard}>
-          <Text type={'h1'}>Оформлення замовлення</Text>
-          <div css={contactInformationWrapper}>
-            <Text type={'h3'}>Контактні дані</Text>
-            <div css={contactInputWrapper}>
-              <div css={contactInput}>
-                <Controller
-                  control={control}
-                  render={({field: {onChange, value}}) => (
-                    <Input
-                      placeholder={"Ім'я"}
-                      inputType={'text'}
-                      onChangeText={onChange}
-                      value={value}
-                    />
-                  )}
-                  name="name"
-                />
-              </div>
-              <div css={contactInput}>
-                <Controller
-                  control={control}
-                  render={({field: {value, onChange}}) => (
-                    <Input
-                      placeholder={'Номер телефону*'}
-                      inputType={'text'}
-                      onChangeText={onChange}
-                      value={value}
-                      error={errors.phone?.message}
-                    />
-                  )}
-                  name="phone"
-                />
-              </div>
-              <div css={contactInput}>
-                <Controller
-                  control={control}
-                  render={({field: {onChange, value}}) => (
-                    <Input
-                      placeholder={'email'}
-                      inputType={'text'}
-                      value={value}
-                      onChangeText={onChange}
-                    />
-                  )}
-                  name="email"
-                />
-              </div>
-            </div>
+    <LoadingSpinner isLoading={isCheckoutLoading || isCartLoading || loading}>
+      <div css={container}>
+        <div css={pathContainer}>
+          <Text type={'bigBody'}>Головна </Text>
+          <div
+            css={css`
+              margin-left: 8px;
+            `}>
+            <Text type={'bigBody'} color={theme.colors.accent}>
+              / Оформлення замовлення
+            </Text>
           </div>
-          <div css={deliveryMethodAndAddressWrapper}>
-            <Text type={'h3'}>Оберіть метод та адресу доставки</Text>
-            <div css={radioWrapper}>
-              <Controller
-                control={control}
-                render={({field: {onChange, value}}) => (
-                  <RadioButton
-                    options={deliveryMethods}
-                    onChangeType={value => {
-                      onChange(value);
-                      onChangeDeliveryMethodScheme(value);
-                    }}
-                    value={value}
-                  />
-                )}
-                name="deliveryMethod"
-              />
-            </div>
-            {isDelivery && (
-              <>
-                <div css={addressInputWrapper}>
-                  <div css={inputsWrapper}>
-                    <Controller
-                      control={control}
-                      render={({field: {onChange, value}}) => (
-                        <Input
-                          inputType={'text'}
-                          placeholder={'Вулиця*'}
-                          onChangeText={onChange}
-                          value={value}
-                          error={errors.street?.message}
-                        />
-                      )}
-                      name="street"
-                    />
-                    <div css={addressInformationWrapper}>
-                      {!isHouse && (
-                        <>
-                          <div
-                            css={[
-                              halfInput,
-                              css`
-                                margin-bottom: 8px;
-                                @media (min-width: ${theme.media.laptop}) {
-                                  margin-bottom: 0;
-                                }
-                              `,
-                            ]}>
-                            <Controller
-                              control={control}
-                              render={({field: {onChange, value}}) => (
-                                <Input
-                                  inputType={'text'}
-                                  placeholder={'Під’їзд*'}
-                                  onChangeText={onChange}
-                                  value={value}
-                                  error={errors.entrance?.message}
-                                />
-                              )}
-                              name="entrance"
-                            />
-                          </div>
-                          <div css={halfInput}>
-                            <Controller
-                              control={control}
-                              render={({field: {onChange, value}}) => (
-                                <Input
-                                  inputType={'text'}
-                                  placeholder={'Квартира*'}
-                                  onChangeText={onChange}
-                                  value={value}
-                                  error={errors.apartment?.message}
-                                />
-                              )}
-                              name="apartment"
-                            />
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <div css={inputsWrapper}>
-                    <Controller
-                      control={control}
-                      render={({field: {onChange, value}}) => (
-                        <Input
-                          inputType={'text'}
-                          placeholder={'Будинок*'}
-                          onChangeText={onChange}
-                          value={value}
-                          error={errors.house?.message}
-                        />
-                      )}
-                      name="house"
-                    />
-                    <div css={addressInformationWrapper}>
-                      {!isHouse && (
-                        <>
-                          <div
-                            css={[
-                              halfInput,
-                              css`
-                                margin-bottom: 8px;
-                                @media (min-width: ${theme.media.laptop}) {
-                                  margin-bottom: 0;
-                                }
-                              `,
-                            ]}>
-                            <Controller
-                              control={control}
-                              render={({field: {onChange, value}}) => (
-                                <Input
-                                  inputType={'text'}
-                                  placeholder={'Поверх*'}
-                                  onChangeText={onChange}
-                                  value={value}
-                                  error={errors.floor?.message}
-                                />
-                              )}
-                              name="floor"
-                            />
-                          </div>
-                          <div css={halfInput}>
-                            <Controller
-                              control={control}
-                              render={({field: {onChange, value}}) => (
-                                <Input
-                                  inputType={'text'}
-                                  placeholder={'Код домофону'}
-                                  onChangeText={onChange}
-                                  value={value}
-                                />
-                              )}
-                              name="intercomCode"
-                            />
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div css={toggleContainer}>
-                  <Controller
-                    control={control}
-                    render={({field: {onChange, value}}) => (
-                      <SwitchButton
-                        onChange={value => {
-                          onChange(value);
-                          onChangeHouseScheme(value);
-                        }}
-                        checked={value}
-                      />
-                    )}
-                    name="isHouse"
-                  />
-
-                  <div
-                    css={css`
-                      margin-left: 8px;
-                    `}>
-                    <Text type={'bigBody'}>В мене приватний будинок</Text>
-                  </div>
-                </div>
-              </>
-            )}
-
-            <div css={paymentMethodsWrapper}>
-              <Text type={'h3'}>Методи оплати</Text>
-              <div css={radioWrapper}>
-                <Controller
-                  control={control}
-                  render={({field: {onChange, value}}) => (
-                    <RadioButton
-                      options={filteredPaymentMethods}
-                      value={value}
-                      onChangeType={onChange}
-                    />
-                  )}
-                  name="paymentMethod"
-                />
-              </div>
-              {!isCardPayment && (
+        </div>
+        <div css={cardWrapper}>
+          <div css={orderCard}>
+            <Text type={'h1'}>Оформлення замовлення</Text>
+            <div css={contactInformationWrapper}>
+              <Text type={'h3'}>Контактні дані</Text>
+              <div css={contactInputWrapper}>
                 <div css={contactInput}>
                   <Controller
                     control={control}
                     render={({field: {onChange, value}}) => (
                       <Input
-                        inputType={'number'}
-                        placeholder={'Решта з'}
+                        placeholder={"Ім'я"}
+                        inputType={'text'}
                         onChangeText={onChange}
                         value={value}
                       />
                     )}
-                    name="change"
+                    name="name"
                   />
                 </div>
-              )}
-            </div>
-            <div css={personCountNCommentWrapper}>
-              <Text type={'h3'}>Кількість осіб та коментарій</Text>
-              <div
-                css={css`
-                  margin-top: 24px;
-                  margin-bottom: 24px;
-                `}>
-                <Controller
-                  control={control}
-                  render={({field: {value, onChange}}) => (
-                    <Counter
-                      onHandleMinus={() =>
-                        onChange(Math.max(Number(value) - 1, 0))
-                      }
-                      count={Number(value)}
-                      onHandlePlus={() => onChange(Number(value) + 1)}
-                    />
-                  )}
-                  name="peopleCount"
-                />
+                <div css={contactInput}>
+                  <Controller
+                    control={control}
+                    render={({field: {value, onChange}}) => (
+                      <Input
+                        placeholder={'Номер телефону*'}
+                        inputType={'text'}
+                        onChangeText={onChange}
+                        value={value}
+                        error={errors.phone?.message}
+                      />
+                    )}
+                    name="phone"
+                  />
+                </div>
+                <div css={contactInput}>
+                  <Controller
+                    control={control}
+                    render={({field: {onChange, value}}) => (
+                      <Input
+                        placeholder={'email'}
+                        inputType={'text'}
+                        value={value}
+                        onChangeText={onChange}
+                      />
+                    )}
+                    name="email"
+                  />
+                </div>
               </div>
-              <div>
+            </div>
+            <div css={deliveryMethodAndAddressWrapper}>
+              <Text type={'h3'}>Оберіть метод та адресу доставки</Text>
+              <div css={radioWrapper}>
                 <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (
-                    <textarea
-                      placeholder={'Коментарій до замовлення'}
-                      rows={8}
-                      css={textareaStyles}
-                      onChange={e => onChange(e.target.value)}
+                    <RadioButton
+                      options={deliveryMethods}
+                      onChangeType={value => {
+                        onChange(value);
+                        onChangeDeliveryMethodScheme(value);
+                      }}
                       value={value}
                     />
                   )}
-                  name="comment"
+                  name="deliveryMethod"
                 />
               </div>
+              {isDelivery && (
+                <>
+                  <div css={addressInputWrapper}>
+                    <div css={inputsWrapper}>
+                      <Controller
+                        control={control}
+                        render={({field: {onChange, value}}) => (
+                          <Input
+                            inputType={'text'}
+                            placeholder={'Вулиця*'}
+                            onChangeText={onChange}
+                            value={value}
+                            error={errors.street?.message}
+                          />
+                        )}
+                        name="street"
+                      />
+                      <div css={addressInformationWrapper}>
+                        {!isHouse && (
+                          <>
+                            <div
+                              css={[
+                                halfInput,
+                                css`
+                                  margin-bottom: 8px;
+                                  @media (min-width: ${theme.media.laptop}) {
+                                    margin-bottom: 0;
+                                  }
+                                `,
+                              ]}>
+                              <Controller
+                                control={control}
+                                render={({field: {onChange, value}}) => (
+                                  <Input
+                                    inputType={'text'}
+                                    placeholder={'Під’їзд*'}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    error={errors.entrance?.message}
+                                  />
+                                )}
+                                name="entrance"
+                              />
+                            </div>
+                            <div css={halfInput}>
+                              <Controller
+                                control={control}
+                                render={({field: {onChange, value}}) => (
+                                  <Input
+                                    inputType={'text'}
+                                    placeholder={'Квартира*'}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    error={errors.apartment?.message}
+                                  />
+                                )}
+                                name="apartment"
+                              />
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <div css={inputsWrapper}>
+                      <Controller
+                        control={control}
+                        render={({field: {onChange, value}}) => (
+                          <Input
+                            inputType={'text'}
+                            placeholder={'Будинок*'}
+                            onChangeText={onChange}
+                            value={value}
+                            error={errors.house?.message}
+                          />
+                        )}
+                        name="house"
+                      />
+                      <div css={addressInformationWrapper}>
+                        {!isHouse && (
+                          <>
+                            <div
+                              css={[
+                                halfInput,
+                                css`
+                                  margin-bottom: 8px;
+                                  @media (min-width: ${theme.media.laptop}) {
+                                    margin-bottom: 0;
+                                  }
+                                `,
+                              ]}>
+                              <Controller
+                                control={control}
+                                render={({field: {onChange, value}}) => (
+                                  <Input
+                                    inputType={'text'}
+                                    placeholder={'Поверх*'}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    error={errors.floor?.message}
+                                  />
+                                )}
+                                name="floor"
+                              />
+                            </div>
+                            <div css={halfInput}>
+                              <Controller
+                                control={control}
+                                render={({field: {onChange, value}}) => (
+                                  <Input
+                                    inputType={'text'}
+                                    placeholder={'Код домофону'}
+                                    onChangeText={onChange}
+                                    value={value}
+                                  />
+                                )}
+                                name="intercomCode"
+                              />
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div css={toggleContainer}>
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, value}}) => (
+                        <SwitchButton
+                          onChange={value => {
+                            onChange(value);
+                            onChangeHouseScheme(value);
+                          }}
+                          checked={value}
+                        />
+                      )}
+                      name="isHouse"
+                    />
+
+                    <div
+                      css={css`
+                        margin-left: 8px;
+                      `}>
+                      <Text type={'bigBody'}>В мене приватний будинок</Text>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              <div css={paymentMethodsWrapper}>
+                <Text type={'h3'}>Методи оплати</Text>
+                <div css={radioWrapper}>
+                  <Controller
+                    control={control}
+                    render={({field: {onChange, value}}) => (
+                      <RadioButton
+                        options={filteredPaymentMethods}
+                        value={value}
+                        onChangeType={onChange}
+                      />
+                    )}
+                    name="paymentMethod"
+                  />
+                </div>
+                {!isCardPayment && (
+                  <div css={contactInput}>
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, value}}) => (
+                        <Input
+                          inputType={'number'}
+                          placeholder={'Решта з'}
+                          onChangeText={onChange}
+                          value={value}
+                        />
+                      )}
+                      name="change"
+                    />
+                  </div>
+                )}
+              </div>
+              <div css={personCountNCommentWrapper}>
+                <Text type={'h3'}>Кількість осіб та коментарій</Text>
+                <div
+                  css={css`
+                    margin-top: 24px;
+                    margin-bottom: 24px;
+                  `}>
+                  <Controller
+                    control={control}
+                    render={({field: {value, onChange}}) => (
+                      <Counter
+                        onHandleMinus={() =>
+                          onChange(Math.max(Number(value) - 1, 0))
+                        }
+                        count={Number(value)}
+                        onHandlePlus={() => onChange(Number(value) + 1)}
+                      />
+                    )}
+                    name="peopleCount"
+                  />
+                </div>
+                <div>
+                  <Controller
+                    control={control}
+                    render={({field: {onChange, value}}) => (
+                      <textarea
+                        placeholder={'Коментарій до замовлення'}
+                        rows={8}
+                        css={textareaStyles}
+                        onChange={e => onChange(e.target.value)}
+                        value={value}
+                      />
+                    )}
+                    name="comment"
+                  />
+                </div>
+              </div>
+              <button css={orderButton} onClick={handleSubmit(onSubmit)}>
+                <Text type={'h5'} color={theme.colors.textWhite}>
+                  Оформити замовлення
+                </Text>
+              </button>
             </div>
-            <button css={orderButton} onClick={handleSubmit(onSubmit)}>
-              <Text type={'h5'} color={theme.colors.textWhite}>
-                Оформити замовлення
-              </Text>
-            </button>
+          </div>
+          <div>
+            <Cart withOrderButton={false} />
           </div>
         </div>
-        <div>
-          <Cart withOrderButton={false} />
-        </div>
       </div>
-    </div>
+    </LoadingSpinner>
   );
 };
 
@@ -660,11 +722,6 @@ const addressInformationWrapper = theme => css`
   }
 `;
 
-const mobileMargin = css`
-  margin-bottom: 8px;
-  width: 100%;
-`;
-
 const halfInput = theme => css`
   @media (min-width: ${theme.media.laptop}) {
     width: 49%;
@@ -716,7 +773,6 @@ const orderButton = theme => css`
   background-color: ${theme.colors.accent};
   border: none;
   border-radius: 8px;
-  opacity: 50%;
   margin-top: 32px;
 `;
 

@@ -1,6 +1,6 @@
 import {css, Global, ThemeProvider} from '@emotion/react';
 import {theme} from 'src/styles/theme.ts';
-import {RouterProvider, ScrollRestoration} from 'react-router-dom';
+import {RouterProvider} from 'react-router-dom';
 import {router} from 'src/router.tsx';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import React from 'react';
