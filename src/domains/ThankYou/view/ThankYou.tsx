@@ -7,7 +7,7 @@ import ArrowSvg from 'src/assets/icons/arrow-left.svg';
 import BackgroundLayout from 'src/layout/BackgroundLayout/BackgroundLayout.tsx';
 import {Link, useLocation} from 'react-router-dom';
 import {DeliveryMethodEnum} from 'src/domains/Order/view/Order.tsx';
-import {homeRoute} from 'src/routes.ts';
+
 
 const ThankYou = () => {
   const theme = useTheme() as WhiteTheme;
@@ -103,7 +103,7 @@ const ThankYou = () => {
             </Text>
           </div>
         </div>
-        <Link css={homeButton} to={homeRoute}>
+        <Link css={homeButton} to={'/'}>
           <Text type={'h5'} color={theme.colors.textWhite}>
             На головну
           </Text>

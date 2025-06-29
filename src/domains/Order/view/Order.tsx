@@ -10,7 +10,7 @@ import Input from 'src/components/Input/Input.tsx';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
-import {homeRoute, thankYouRoute} from 'src/routes.ts';
+import { thankYouRoute} from 'src/routes.ts';
 import {checkoutQuery} from 'src/domains/Order/checkout.query.ts';
 import {Controller, useForm, useWatch} from 'react-hook-form';
 import * as yup from 'yup';
@@ -88,9 +88,9 @@ const Order = () => {
 
   useEffect(() => {
     if (cartData && Object.keys(cartData).length < 1) {
-      navigate(homeRoute);
+      navigate('/');
     }
-  }, [cartData]);
+  }, [cartData, navigate]);
   useEffect(() => {
     if (checkoutData) {
       window.scrollTo(0, 0);

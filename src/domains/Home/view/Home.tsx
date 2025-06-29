@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import Banner from 'src/layout/Banner/Banner.tsx';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
@@ -11,8 +11,7 @@ import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
 import {InView} from 'react-intersection-observer';
 import {observer} from 'mobx-react-lite';
-import categoryStore from 'src/stores/categoryStore.ts';
-import {useSearchParams} from 'react-router-dom';
+import {useParams, useSearchParams} from 'react-router-dom';
 import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
 import {useWindowVirtualizer} from '@tanstack/react-virtual';
 import {
@@ -21,6 +20,8 @@ import {
   useIsTablet,
 } from 'src/common/hooks/useMedia.ts';
 import LoadingSpinner from 'src/layout/LoadingSpinner/LoadingSpinner.tsx';
+import {router} from 'src/router.tsx';
+
 
 export type Category = {
   id: string;
@@ -29,82 +30,92 @@ export type Category = {
   products: Product[] | null;
 };
 
-export const ProductsByCategory = observer(({item}: {item: Category}) => {
+export const ProductsByCategory = observer(({item, onCategoryInView}: {item: Category, onCategoryInView: (slug: string) => void;}) => {
   const setInView = (inView, entry) => {
     if (inView) {
-      const categorySlug = entry.target.id;
-      const previousCategorySlug = categoryStore.categorySlug;
-      if(previousCategorySlug !== categorySlug) {
-        window.history.replaceState({}, '', `${categorySlug}`);
-        categoryStore.changeCategory(categorySlug);
-      }
+      onCategoryInView(entry.target.id);
     }
   };
 
+  if ((item.products || []).length === 0) {
+    return null;
+  }
   return (
     <div>
-      <InView onChange={setInView} threshold={1}>
-        {({ref}) => {
-          return <div ref={ref} id={item.slug}></div>;
-        }}
-      </InView>
+
       <div key={item.id}>
-        {!item.products || item.products.length > 0 ? (
-          <>
-            <div css={headingWrapper}>
-              <Text type={'h2'}>{item.name}</Text>
+        <div css={headingWrapper}>
+          <Text type={'h2'}>{item.name}</Text>
+        </div>
+        <div css={productsGrid} id={item.slug}>
+          {item.products?.map(product => (
+            <div
+              key={product.id}
+              css={css`
+                position: relative;
+              `}>
+              <ProductCard product={product} />
+              <InView onChange={setInView} threshold={1}>
+                {({ref}) => {
+                  return <div style={{
+                    position: 'absolute',
+                    inset: 0
+                  }} ref={ref} id={item.slug}></div>;
+                }}
+              </InView>
             </div>
-            <div css={productsGrid} id={item.slug}>
-              {item.products?.map(product => (
-                <div
-                  key={product.id}
-                  css={css`
-                    position: relative;
-                  `}>
-                  <ProductCard product={product} />
-                  <InView onChange={setInView} threshold={1}>
-                    {({ref}) => {
-                      return (
-                        <div
-                          ref={ref}
-                          id={item.slug}
-                          css={css`
-                            position: absolute;
-                          `}
-                        />
-                      );
-                    }}
-                  </InView>
-                </div>
-              ))}
-            </div>
-          </>
-        ) : null}
+          ))}
+        </div>
       </div>
     </div>
   );
 });
 
+const PC_COLUMNS = 3;
+const TABLET_COLUMNS = 2;
+const LAPTOP_COLUMNS = 2;
+const MOBILE_COLUMNS = 1;
+
+const PC_PRODUCT_CARD_HEIGHT = 482;
+const LAPTOP_PRODUCT_CARD_HEIGHT = 482;
+
+const TABLET_PRODUCT_CARD_HEIGHT = 382;
+const MOBILE_PRODUCT_CARD_HEIGHT = 382;
+
+const MOBILE_CATEGORY_HEADING_HEIGHT = 69;
+const TABLET_CATEGORY_HEADING_HEIGHT = 69;
+
+const PC_CATEGORY_HEADING_HEIGHT = 119;
+const LAPTOP_CATEGORY_HEADING_HEIGHT = 119;
+
+const PC_GRID_GAP = 16;
+const LAPTOP_GRID_GAP = 16;
+const TABLET_GRID_GAP = 16;
+const MOBILE_GRID_GAP = 16;
+
+const CATALOG_TOP_PADDING = 80;
+
 const Home = observer(() => {
-  const {data: productsData, isLoading: isProductsLoading} =
+  const {data: productsData, isLoading: isProductsLoading, isFetched} =
     useQuery(productsQuery);
+  const {slug: categorySlug} = useParams() as {slug: string};
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get('q') || '');
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
   const isLaptop = useIsLaptop();
+  const stickyMenuContainer = useRef<HTMLDivElement>(null);
 
   const onSearch = s => {
     setSearch(s);
     setSearchParams({q: search});
   };
 
-  const items: Category[] = (productsData || []).map(
-    categoryWithProducts => categoryWithProducts,
-  );
+  const nonEmptyCategories: Category[] = useMemo(() => (productsData || []).filter(category => !!category.products.length), [productsData]);
+
   const searchedItems =
     search.length > 2
-      ? items.map(c => ({
+      ? nonEmptyCategories.map(c => ({
           id: c.id,
           name: c.name,
           slug: c.slug,
@@ -117,85 +128,108 @@ const Home = observer(() => {
             },
           ),
         }))
-      : items;
+      : nonEmptyCategories;
 
-  const heightRef = useRef<HTMLDivElement | null>(null);
-  const howMuchRows = (length: number, columns: number) => {
+  const bannerContainerRef = useRef<HTMLDivElement | null>(null);
+  const getRowsAmount = (length: number, columns: number) => {
     return Math.ceil(length / columns);
   };
-  const pcAndLaptopProductCardHeight = 482;
-  const tabletAndMobileProductCardHeight = 382;
-  const pcColumns = 3;
-  const tabletAndLaptopColumns = 2;
-  const mobileColumns = 1;
-  const mobileAndTabletHeadingHeight = 69;
-  const pcAndLaptopHeadingHeight = 119;
 
-  const estSizeForResolutions = length => {
+  const estSizeForResolutions = useCallback((length: number) => {
     if (isMobile) {
       return (
-        howMuchRows(length, mobileColumns) * tabletAndMobileProductCardHeight +
-        mobileAndTabletHeadingHeight +
-        howMuchRows(length, mobileColumns) * 16 -
-        16
+        MOBILE_CATEGORY_HEADING_HEIGHT +
+        getRowsAmount(length, MOBILE_COLUMNS) * MOBILE_PRODUCT_CARD_HEIGHT +
+        (getRowsAmount(length, MOBILE_COLUMNS) - 1) * MOBILE_GRID_GAP
       );
     }
     if (isTablet) {
       return (
-        howMuchRows(length, tabletAndLaptopColumns) *
-          tabletAndMobileProductCardHeight +
-        mobileAndTabletHeadingHeight +
-        howMuchRows(length, tabletAndLaptopColumns) * 16 -
-        16
+        TABLET_CATEGORY_HEADING_HEIGHT +
+        getRowsAmount(length, LAPTOP_COLUMNS) *
+        TABLET_PRODUCT_CARD_HEIGHT +
+        (getRowsAmount(length, LAPTOP_COLUMNS) - 1) * TABLET_GRID_GAP
       );
     }
     if (isLaptop) {
       return (
-        howMuchRows(length, tabletAndLaptopColumns) *
-          pcAndLaptopProductCardHeight +
-        pcAndLaptopHeadingHeight +
-        howMuchRows(length, tabletAndLaptopColumns) * 16 -
-        16
+        LAPTOP_CATEGORY_HEADING_HEIGHT +
+        getRowsAmount(length, TABLET_COLUMNS) *
+        LAPTOP_PRODUCT_CARD_HEIGHT +
+        (getRowsAmount(length, TABLET_COLUMNS) - 1) * LAPTOP_GRID_GAP
       );
     }
     return (
-      howMuchRows(length, pcColumns) * pcAndLaptopProductCardHeight +
-      pcAndLaptopHeadingHeight +
-      howMuchRows(length, pcColumns) * 16 -
-      16
+      PC_CATEGORY_HEADING_HEIGHT +
+      getRowsAmount(length, PC_COLUMNS) * PC_PRODUCT_CARD_HEIGHT +
+      (getRowsAmount(length, PC_COLUMNS) -1) * PC_GRID_GAP
     );
-  };
+  }, [isLaptop, isTablet, isMobile]);
 
   const estSize = searchedItems.map(item =>
     item.products?.length ? estSizeForResolutions(item.products.length) : 0,
   );
 
+  const scrollMargin = bannerContainerRef?.current?.offsetHeight
+    ? bannerContainerRef.current?.offsetHeight + (isMobile ? -90 : isTablet ? -70 : CATALOG_TOP_PADDING)
+    : 0
+
   const categoryVirtualizer = useWindowVirtualizer({
     count: searchedItems.length,
     estimateSize: i => estSize[i],
-    scrollMargin: heightRef?.current?.offsetHeight
-      ? heightRef.current?.offsetHeight + (isMobile ? -90 : isTablet ? -70 : 80)
-      : 0,
+    scrollMargin: scrollMargin,
   });
 
-  const handleScrollToCategory = useCallback((i: number) =>
-    categoryVirtualizer.scrollToIndex(i, {
-      align: 'start',
-    }), [categoryVirtualizer])
+  const initiallyScrolled = useRef(false);
+
+  useEffect(() => {
+    if(initiallyScrolled.current) {
+      return;
+    }
+    if(!isFetched) {
+      return;
+    }
+    const index = nonEmptyCategories.findIndex(category => category.slug === categorySlug);
+     if(index !== -1) {
+       categoryVirtualizer.scrollToIndex(index, {
+         align: 'start'
+       });
+     }
+    initiallyScrolled.current = true;
+  }, [
+    categorySlug,
+    isFetched,
+    nonEmptyCategories,
+    categoryVirtualizer
+  ]);
+  const handleCategoryInView = useCallback((nextCategorySlug: string) => {
+    if (nextCategorySlug !== categorySlug) {
+      router.navigate(`/category/${nextCategorySlug}`);
+    }
+  }, [categorySlug]);
+
+  const handleChangeCategory = useCallback((nextCategorySlug: string) => {
+    if (nextCategorySlug !== categorySlug) {
+      const index = nonEmptyCategories.findIndex(category => category.slug === nextCategorySlug);
+      if(index !== -1) {
+        categoryVirtualizer.scrollToIndex(index, {
+          align: 'start'
+        });
+      }
+
+    }
+  }, [categorySlug, categoryVirtualizer, nonEmptyCategories]);
 
   return (
     <LoadingSpinner isLoading={isProductsLoading}>
-      <>
         <div>
-          <div ref={heightRef}>
+          <div ref={bannerContainerRef}>
             <Banner />
           </div>
           <div css={container}>
             <div css={menuWrapper}>
-              <div css={stickyCategories}>
-                <MenuLayout
-                  onScrollToCategory={handleScrollToCategory}
-                />
+              <div ref={stickyMenuContainer} css={stickyCategories}>
+                <MenuLayout  onChangeCategory={handleChangeCategory} />
               </div>
               <div css={searchAndProductsWrapper}>
                 <div css={searchWrapper}>
@@ -236,7 +270,7 @@ const Home = observer(() => {
                           );
                         `}
                         key={item.key}>
-                        <ProductsByCategory item={searchedItems[item.index]} />
+                        <ProductsByCategory onCategoryInView={handleCategoryInView} item={searchedItems[item.index]} />
                       </div>
                     ))}
                   </div>
@@ -248,7 +282,7 @@ const Home = observer(() => {
             </div>
           </div>
         </div>
-      </>
+
     </LoadingSpinner>
   );
 });
@@ -365,9 +399,8 @@ const stickyCategories = theme => css`
   position: sticky;
   top: 78px;
   z-index: 1;
-  margin-right: 8px;
+
   background-color: ${theme.colors.background};
-  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;

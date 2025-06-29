@@ -1,13 +1,14 @@
-import {createBrowserRouter} from 'react-router-dom';
+import {createBrowserRouter, redirect} from 'react-router-dom';
 import {
   deliveryAndPaymentRoute,
   favoriteRoute,
-  homeRoute,
   checkoutRoute,
   thankYouRoute,
 } from 'src/routes.ts';
 import Error from 'src/domains/Error/view/Error.tsx';
 import {lazy} from 'react';
+import {queryClient} from 'src/queryClient.ts';
+import {productsQuery} from 'src/domains/Home/products.query.ts';
 
 const Layout = lazy(() => import('src/layout/Layout/Layout.tsx'));
 const ThankYou = lazy(() => import('src/domains/ThankYou/view/ThankYou.tsx'));
@@ -25,22 +26,28 @@ export const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
+       index: true,
+        loader: async () => {
+          const data = await queryClient.ensureQueryData(productsQuery) as {
+            id: string;
+            name: string;
+            slug: string;
+            products: {
+              id: string;
+            }[];
+          }[];
+          const categories = data.filter(category => !!category.products.length)
+          return redirect(`/category/${categories[0].slug}`)
+        },
+      },
+      {
         path: deliveryAndPaymentRoute,
         element: <DeliveryAndPayment />,
       },
       {
-        path: homeRoute,
+
+        path: '/category/:slug',
         element: <Home />,
-        children: [
-          {
-            path: ':categorySlug',
-            element: null,
-          },
-          {
-            path: ':q',
-            element: 'null',
-          },
-        ],
       },
       {
         path: favoriteRoute,

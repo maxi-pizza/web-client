@@ -7,23 +7,19 @@ import {
   Navigate,
   Outlet,
   ScrollRestoration,
-  useLocation,
 } from 'react-router-dom';
 import CartModal from 'src/components/modals/CartModal/CartModal.tsx';
 import ContactInformationModal from 'src/components/modals/ContactInformationModal/ContactInformationModal.tsx';
 import SearchModal from 'src/components/modals/SearchModal/SearchModal.tsx';
-import {homeRoute} from 'src/routes.ts';
+
 
 const Layout = () => {
-  const location = useLocation();
-  if (location.pathname === '/') {
-    return <Navigate to={homeRoute} replace />;
-  }
+
   return (
     <div>
       <ScrollRestoration
         getKey={location => {
-          if (location.pathname.startsWith(homeRoute)) {
+          if (location.pathname.startsWith('/category')) {
             return 'category';
           }
           return location.key;

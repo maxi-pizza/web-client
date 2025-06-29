@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef} from 'react';
 import {css} from '@emotion/react';
 import PizzaImg from 'src/assets/icons/pizza.png';
 import CategoryCard from 'src/components/CategoryCard/CategoryCard.tsx';
 import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
-import categoryStore from 'src/stores/categoryStore.ts';
+
 import {observer} from 'mobx-react-lite';
+import {useParams} from 'react-router-dom';
+import {scrollIntoViewHorizontally} from 'src/utils/scrollIntoViewHorizontally.ts';
 
 const MenuLayout = observer(
-  ({onScrollToCategory}: {onScrollToCategory: (i: number) => void}) => {
+  ({onChangeCategory }: {onChangeCategory: (slug: string) => void}) => {
     const {data: categoryData} = useQuery(productsQuery);
+    const {slug: categorySlug} = useParams() as {slug: string};
     const categories = (categoryData || []).map(category => ({
       id: category.id,
       name: category.name,
@@ -17,34 +20,34 @@ const MenuLayout = observer(
       products: category.products,
     }));
 
-    const handleSetActive = (slug: string, index: number) => {
-      if (slug) {
-        categoryStore.changeCategory(slug);
-        onScrollToCategory(index);
+    const childRefs = useRef<Record<string, HTMLAnchorElement>>(null);
+
+    const scrollContainer = useRef(null);
+
+    useEffect(() => {
+      const containerElement = scrollContainer.current;
+      const childElement = childRefs[categorySlug];
+      if(containerElement && childElement) {
+        scrollIntoViewHorizontally(containerElement, childElement)
       }
-    };
+    }, [categorySlug]);
 
     return (
-      <div css={container}>
-        {/*<div css={categoryWrapper}>*/}
-        {/*  <CategoryCard*/}
-        {/*    backgroundImg={DiscountCircleImg}*/}
-        {/*    text={'Акційні пропозиції'}*/}
-        {/*    svg={<DiscountSvg />}*/}
-        {/*    category={{id: 0, name: 'Акційні пропозиції', slug: 'promotions'}}*/}
-        {/*    setActive={handleSetActive}*/}
-        {/*    activeCategory={categoryStore.categorySlug}*/}
-        {/*  />*/}
-        {/*</div>*/}
-        {categories.map((category, index) =>
+      <div ref={scrollContainer} css={container}>
+        {categories.map((category) =>
           category.products.length > 0 ? (
             <div css={categoryWrapper} key={category.name}>
               <CategoryCard
+                ref={(node) => {
+                  childRefs[category.slug] = node;
+                }}
                 backgroundImg={PizzaImg}
                 text={category.name}
                 category={category}
-                setActive={() => handleSetActive(category.slug, index)}
-                activeCategory={categoryStore.categorySlug}
+                onClick={() => {
+                  onChangeCategory(category.slug);
+                }}
+                activeCategory={categorySlug}
               />
             </div>
           ) : null,
@@ -57,15 +60,12 @@ const MenuLayout = observer(
 const container = theme => css`
   display: flex;
   flex-direction: row;
-  width: 341px;
+ 
   overflow: scroll;
+    width: 100vw;
+    padding-left: 8px;
 
-  @media (min-width: ${theme.media.tablet}) {
-    width: 702px;
-  }
-  @media (min-width: ${theme.media.laptop}) {
-    width: 653px;
-  }
+
   @media (min-width: ${theme.media.laptop}) {
     flex-direction: column;
     width: auto;
