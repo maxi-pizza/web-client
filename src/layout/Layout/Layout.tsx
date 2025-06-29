@@ -11,6 +11,7 @@ import {
 import CartModal from 'src/components/modals/CartModal/CartModal.tsx';
 import ContactInformationModal from 'src/components/modals/ContactInformationModal/ContactInformationModal.tsx';
 import SearchModal from 'src/components/modals/SearchModal/SearchModal.tsx';
+import {categoryRoute} from 'src/routes.ts';
 
 
 const Layout = () => {
@@ -19,7 +20,7 @@ const Layout = () => {
     <div>
       <ScrollRestoration
         getKey={location => {
-          if (location.pathname.startsWith('/category')) {
+          if (location.pathname.startsWith(categoryRoute.replace(":slug", ""))) {
             return 'category';
           }
           return location.key;

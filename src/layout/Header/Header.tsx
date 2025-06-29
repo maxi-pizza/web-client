@@ -11,7 +11,7 @@ import CartSvg from 'src/assets/icons/cart.svg';
 import SearchSvg from 'src/assets/icons/search.svg';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
-import {favoriteRoute} from 'src/routes.ts';
+import {favoriteRoute, rootRoute} from 'src/routes.ts';
 import modalsStore from 'src/stores/modalsStore.ts';
 
 const Header = () => {
@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <div css={headerContainer}>
       <div css={wrapper}>
-        <Link to={'/'}>
+        <Link to={rootRoute}>
           <img css={logoStyles} src={String(logo)} alt={'logo'} />
         </Link>
         <div css={contentWrapper}>

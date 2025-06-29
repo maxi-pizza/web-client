@@ -6,6 +6,7 @@ import NoRouteSvg from '/src/assets/icons/404.svg';
 import Arrow from 'src/assets/icons/arrow-left.svg';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
+import {rootRoute} from 'src/routes.ts';
 
 
 const Error = () => {
@@ -56,7 +57,7 @@ const Error = () => {
             відомого маршруту!
           </Text>
         </div>
-        <Link to={'/'} css={backButton}>
+        <Link to={rootRoute} css={backButton}>
           <Text type={'h5'} color={theme.colors.textWhite}>
             На головну
           </Text>

@@ -21,6 +21,7 @@ import {
 } from 'src/common/hooks/useMedia.ts';
 import LoadingSpinner from 'src/layout/LoadingSpinner/LoadingSpinner.tsx';
 import {router} from 'src/router.tsx';
+import {categoryRoute} from 'src/routes.ts';
 
 
 export type Category = {
@@ -204,7 +205,7 @@ const Home = observer(() => {
   ]);
   const handleCategoryInView = useCallback((nextCategorySlug: string) => {
     if (nextCategorySlug !== categorySlug) {
-      router.navigate(`/category/${nextCategorySlug}`);
+      router.navigate(categoryRoute.replace(":slug", nextCategorySlug));
     }
   }, [categorySlug]);
 

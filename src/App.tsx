@@ -11,7 +11,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Global styles={globalStyles} />
-        <RouterProvider router={router} />
+        <RouterProvider  router={router} />
       </QueryClientProvider>
     </ThemeProvider>
   );

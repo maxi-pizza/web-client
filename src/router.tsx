@@ -3,7 +3,7 @@ import {
   deliveryAndPaymentRoute,
   favoriteRoute,
   checkoutRoute,
-  thankYouRoute,
+  thankYouRoute, categoryRoute, rootRoute,
 } from 'src/routes.ts';
 import Error from 'src/domains/Error/view/Error.tsx';
 import {lazy} from 'react';
@@ -21,7 +21,7 @@ const Favorite = lazy(() => import('src/domains/Favorite/view/Favorite.tsx'));
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: rootRoute,
     element: <Layout />,
     errorElement: <Error />,
     children: [
@@ -37,7 +37,9 @@ export const router = createBrowserRouter([
             }[];
           }[];
           const categories = data.filter(category => !!category.products.length)
-          return redirect(`/category/${categories[0].slug}`)
+          return redirect(
+            categoryRoute.replace(":slug", categories[0].slug)
+          )
         },
       },
       {
@@ -46,7 +48,7 @@ export const router = createBrowserRouter([
       },
       {
 
-        path: '/category/:slug',
+        path: categoryRoute,
         element: <Home />,
       },
       {

@@ -4,6 +4,7 @@ import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
 import {composeRefs} from 'src/utils/ref.ts';
+import {categoryRoute} from 'src/routes.ts';
 
 
 type Category = {
@@ -41,7 +42,7 @@ const CategoryCard = forwardRef(({
       ref={composeRefs(ref, innerRef)}
       css={categoryCard({isActive: activeCategory === category.slug})}
       onClick={onClick}
-      to={`/category/${category.slug}`}>
+      to={categoryRoute.replace(":slug", category.slug)}>
       <div css={redRectangle} />
       <img src={String(backgroundImg)} alt={'discount'} css={imgWrapper} />
       {svg && (
