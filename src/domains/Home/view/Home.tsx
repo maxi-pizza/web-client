@@ -54,7 +54,6 @@ export const ProductsByCategory = observer(({item, onCategoryInView}: {item: Cat
               css={css`
                 position: relative;
               `}>
-              <ProductCard product={product} />
               <InView onChange={setInView} threshold={1}>
                 {({ref}) => {
                   return <div style={{
@@ -63,6 +62,7 @@ export const ProductsByCategory = observer(({item, onCategoryInView}: {item: Cat
                   }} ref={ref} id={item.slug}></div>;
                 }}
               </InView>
+              <ProductCard product={product} />
             </div>
           ))}
         </div>
