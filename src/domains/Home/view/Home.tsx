@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import Banner from 'src/layout/Banner/Banner.tsx';
 import MenuLayout from 'src/layout/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
@@ -32,8 +32,12 @@ export type Category = {
 export const ProductsByCategory = observer(({item}: {item: Category}) => {
   const setInView = (inView, entry) => {
     if (inView) {
-      window.history.replaceState({}, '', `${entry.target.id}`);
-      categoryStore.changeCategory(entry.target.id);
+      const categorySlug = entry.target.id;
+      const previousCategorySlug = categoryStore.categorySlug;
+      if(previousCategorySlug !== categorySlug) {
+        window.history.replaceState({}, '', `${categorySlug}`);
+        categoryStore.changeCategory(categorySlug);
+      }
     }
   };
 
@@ -174,6 +178,11 @@ const Home = observer(() => {
       : 0,
   });
 
+  const handleScrollToCategory = useCallback((i: number) =>
+    categoryVirtualizer.scrollToIndex(i, {
+      align: 'start',
+    }), [categoryVirtualizer])
+
   return (
     <LoadingSpinner isLoading={isProductsLoading}>
       <>
@@ -185,11 +194,7 @@ const Home = observer(() => {
             <div css={menuWrapper}>
               <div css={stickyCategories}>
                 <MenuLayout
-                  onScrollToCategory={i =>
-                    categoryVirtualizer.scrollToIndex(i, {
-                      align: 'start',
-                    })
-                  }
+                  onScrollToCategory={handleScrollToCategory}
                 />
               </div>
               <div css={searchAndProductsWrapper}>
