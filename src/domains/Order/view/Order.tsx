@@ -226,7 +226,7 @@ const Order = () => {
       .map(([label, value]) => `${label}: ${value}`)
       .join(', ');
     try {
-      const request = await axios.post('http://localhost:8080/api/placeOrder', {
+      const request = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/placeOrder`, {
         firstName,
         lastName,
         address,
