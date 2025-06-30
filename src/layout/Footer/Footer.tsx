@@ -61,16 +61,16 @@ const Footer = () => {
               </Text>
             </Link>
           </div>
-          <div css={marginWrapper}>
-            <Text type={'bigBody'} color={theme.colors.textWhite}>
-              Політика конфіденційності
-            </Text>
-          </div>
-          <div css={marginWrapper}>
-            <Text type={'bigBody'} color={theme.colors.textWhite}>
-              Угода користувача
-            </Text>
-          </div>
+          {/*<div css={marginWrapper}>*/}
+          {/*  <Text type={'bigBody'} color={theme.colors.textWhite}>*/}
+          {/*    Політика конфіденційності*/}
+          {/*  </Text>*/}
+          {/*</div>*/}
+          {/*<div css={marginWrapper}>*/}
+          {/*  <Text type={'bigBody'} color={theme.colors.textWhite}>*/}
+          {/*    Угода користувача*/}
+          {/*  </Text>*/}
+          {/*</div>*/}
         </div>
         <div css={socialInformationWrapper}>
           <Text type={'h5'} color={theme.colors.textWhite}>
@@ -82,12 +82,12 @@ const Footer = () => {
               href={'https://www.instagram.com/maxipizza.art/'}>
               <InstagramSvg color={theme.colors.accent} />
             </a>
-            <button css={socialButton}>
-              <TelegramSvg color={theme.colors.accent} />
-            </button>
-            <button css={socialButton}>
-              <FacebookSvg color={theme.colors.accent} />
-            </button>
+            {/*<button css={socialButton}>*/}
+            {/*  <TelegramSvg color={theme.colors.accent} />*/}
+            {/*</button>*/}
+            {/*<button css={socialButton}>*/}
+            {/*  <FacebookSvg color={theme.colors.accent} />*/}
+            {/*</button>*/}
           </div>
         </div>
       </div>

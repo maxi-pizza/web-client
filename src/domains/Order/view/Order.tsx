@@ -7,7 +7,7 @@ import Counter from 'src/components/Counter/Counter.tsx';
 import RadioButton from 'src/components/RadionButton/RadioButton.tsx';
 import SwitchButton from 'src/components/SwitchButton/SwitchButton.tsx';
 import Input from 'src/components/Input/Input.tsx';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 import {rootRoute, thankYouRoute} from 'src/routes.ts';
@@ -261,13 +261,15 @@ const Order = () => {
       );
     });
     return () => subscription.unsubscribe();
-  }, [watch]);
-  console.log(loading);
+  }, [watch, getValues]);
+
   return (
     <LoadingSpinner isLoading={isCheckoutLoading || isCartLoading || loading}>
       <div css={container}>
         <div css={pathContainer}>
+          <Link  to={rootRoute}>
           <Text type={'bigBody'}>Головна </Text>
+          </Link>
           <div
             css={css`
               margin-left: 8px;
@@ -775,5 +777,7 @@ const orderButton = theme => css`
   border-radius: 8px;
   margin-top: 32px;
 `;
+
+
 
 export default Order;

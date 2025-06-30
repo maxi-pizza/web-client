@@ -8,6 +8,8 @@ import AcuteSvg from 'src/assets/icons/acute.svg';
 import CashSvg from 'src/assets/icons/cash.svg';
 import CardSvg from 'src/assets/icons/credit-card.svg';
 import MokMapImg from 'src/assets/mokmap.png';
+import {rootRoute} from 'src/routes.ts';
+import {Link} from 'react-router-dom';
 
 const DeliveryAndPayment = () => {
   const theme = useTheme() as WhiteTheme;
@@ -30,7 +32,9 @@ const DeliveryAndPayment = () => {
               width: 1656px;
             }
           `}>
+          <Link  to={rootRoute}>
           <Text type={'bigBody'}>Головна</Text>
+          </Link>
           <div
             css={css`
               margin-left: 8px;

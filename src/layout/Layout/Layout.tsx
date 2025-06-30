@@ -4,7 +4,6 @@ import Footer from 'src/layout/Footer/Footer.tsx';
 import {css} from '@emotion/react';
 import RestaurantCloseModal from 'src/components/modals/RestaurantClosedModal/RestaurantCloseModal.tsx';
 import {
-  Navigate,
   Outlet,
   ScrollRestoration,
 } from 'react-router-dom';
