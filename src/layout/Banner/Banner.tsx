@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {css} from '@emotion/react';
 import ArrowSvg from 'src/assets/icons/arrow-left.svg?react';
-import {useIsMobile, useIsTablet} from 'src/common/hooks/useMedia.ts';
+import {useIsMobile} from 'src/common/hooks/useMedia.ts';
 
 import {motion, AnimatePresence} from 'framer-motion';
 import {wrap} from 'motion';
@@ -11,12 +11,14 @@ import Banner2 from 'src/assets/banner2.png';
 import Banner3 from 'src/assets/banner3.png';
 import Banner4 from 'src/assets/banner4.png';
 import Banner5 from 'src/assets/banner5.png';
+// import Banner6 from 'src/assets/banner6.png';
 
 import BannerMobile1 from 'src/assets/banner-mobile.png';
 import BannerMobile2 from 'src/assets/banner-mobile2.png';
 import BannerMobile3 from 'src/assets/banner-mobile3.png';
 import BannerMobile4 from 'src/assets/banner-mobile4.png';
 import BannerMobile5 from 'src/assets/banner-mobile5.png';
+// import BannerMobile6 from 'src/assets/banner-mobile6.png';
 
 const variants = {
   enter: (direction: number) => {
@@ -49,13 +51,21 @@ const Banner = () => {
     img.src = src;
   };
 
-  const images = [Banner1, Banner2, Banner3, Banner4, Banner5];
+  const images = [
+    Banner1,
+    Banner2,
+    Banner3,
+    Banner4,
+    Banner5,
+    // Banner6
+  ];
   const mobileImages = [
     BannerMobile1,
     BannerMobile2,
     BannerMobile3,
     BannerMobile4,
     BannerMobile5,
+    // BannerMobile6,
   ];
 
   useEffect(() => {
@@ -64,7 +74,6 @@ const Banner = () => {
 
   const [[page, direction], setPage] = useState([0, 0]);
   const mobile = useIsMobile();
-  const tablet = useIsTablet();
 
   const imageIndex = wrap(0, images.length, page);
 

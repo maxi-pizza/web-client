@@ -7,7 +7,6 @@ import WalletSvg from 'src/assets/icons/wallet.svg?react';
 import AcuteSvg from 'src/assets/icons/acute.svg?react';
 import CashSvg from 'src/assets/icons/cash.svg?react';
 import CardSvg from 'src/assets/icons/credit-card.svg?react';
-import MokMapImg from 'src/assets/mokmap.png';
 import {rootRoute} from 'src/routes.ts';
 import {Link} from 'react-router-dom';
 
@@ -118,16 +117,16 @@ const DeliveryAndPayment = () => {
               </div>
             </div>
           </div>
-          <div css={card}>
-            <Text type={'h3'}>Зона доставки</Text>
-            <img
-              src={String(MokMapImg)}
-              alt={'map'}
-              css={css`
-                margin-top: 16px;
-              `}
-            />
-          </div>
+          {/*<div css={card}>*/}
+          {/*  <Text type={'h3'}>Зона доставки</Text>*/}
+          {/*  <img*/}
+          {/*    src={String(MokMapImg)}*/}
+          {/*    alt={'map'}*/}
+          {/*    css={css`*/}
+          {/*      margin-top: 16px;*/}
+          {/*    `}*/}
+          {/*  />*/}
+          {/*</div>*/}
         </div>
       </div>
     </div>

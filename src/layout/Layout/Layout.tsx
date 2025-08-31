@@ -82,7 +82,7 @@ const Layout = () => {
         end: [22, 0],
       });
 
-      if (closed) {
+      if (closed && import.meta.env.PROD) {
         modalsStore.handleRestaurantClosedModal(true);
       }
     };

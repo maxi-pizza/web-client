@@ -5,7 +5,6 @@ import {WhiteTheme} from 'src/styles/theme.ts';
 import Cart from 'src/components/Cart/Cart.tsx';
 import Counter from 'src/components/Counter/Counter.tsx';
 import RadioButton from 'src/components/RadionButton/RadioButton.tsx';
-import SwitchButton from 'src/components/SwitchButton/SwitchButton.tsx';
 import Input from 'src/components/Input/Input.tsx';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {useQuery} from '@tanstack/react-query';
@@ -21,21 +20,23 @@ import LoadingSpinner from 'src/layout/LoadingSpinner/LoadingSpinner.tsx';
 import {DeliveryMethodEnum, PaymentMethodEnum} from 'src/types.ts';
 
 type FormValues = {
-  isHouse: boolean;
+  //isHouse: boolean;
+  // street: string;
+  // entrance: string;
+  // floor: string;
+  // apartment: string;
+  // house: string;
+
   deliveryMethod: number;
   change: string;
-  house: string;
   intercomCode: string;
   phone: string;
-  street: string;
+  address: string;
   peopleCount: number;
   name: string;
   paymentMethod: number;
   comment: string;
-  entrance: string;
-  floor: string;
   email: string;
-  apartment: string;
 };
 
 const Order = () => {
@@ -62,15 +63,18 @@ const Order = () => {
           email: '',
           phone: '',
           comment: '',
-          house: '',
-          entrance: '',
-          apartment: '',
+          // house: '',
+          // street: '',
+          // floor: '',
+          // isHouse: false,
+          //   entrance: '',
+          //   apartment: '',
+          address: '',
           intercomCode: '',
-          street: '',
-          floor: '',
+
           change: '',
           deliveryMethod: DeliveryMethodEnum.Delivery,
-          isHouse: false,
+
           paymentMethod: PaymentMethodEnum.Card,
           peopleCount: 0,
         };
@@ -86,7 +90,7 @@ const Order = () => {
     if (checkoutData) {
       window.scrollTo(0, 0);
     }
-  }, [pathname]);
+  }, [pathname, checkoutData]);
 
   const validationRequired = 'Заповніть це поле';
 
@@ -111,42 +115,17 @@ const Order = () => {
         isValidUkrainianNumber(value),
       ),
     comment: yup.string(),
-    house: yup.string().required(validationRequired),
-    street: yup.string().required(validationRequired),
+    address: yup.string().required(validationRequired),
   });
-  const deliveryHighRiseBuildingSchema = yup.object({
-    name: yup.string(),
-    email: yup.string(),
-    phone: yup
-      .string()
-      .required(validationRequired)
-      .test('is possible number', 'Неправильний телефон', value =>
-        isValidUkrainianNumber(value),
-      ),
-    comment: yup.string(),
-    house: yup.string().required(validationRequired),
-    apartment: yup.string().required(validationRequired),
-    street: yup.string().required(validationRequired),
-    entrance: yup.string().required(validationRequired),
-    floor: yup.string().required(validationRequired),
-    intercomCode: yup.string(),
-  });
+
   const getValidationSchema = (value: FormValues) => {
-    if (
-      !value.isHouse &&
-      value.deliveryMethod === DeliveryMethodEnum.Delivery
-    ) {
-      return deliveryHighRiseBuildingSchema;
-    }
     if (value.deliveryMethod === DeliveryMethodEnum.Delivery) {
       return deliverySchema;
     }
     return takeawaySchema;
   };
   const [validationSchema, setValidationSchema] = useState<
-    | typeof takeawaySchema
-    | typeof deliverySchema
-    | typeof deliveryHighRiseBuildingSchema
+    typeof takeawaySchema | typeof deliverySchema
   >(getValidationSchema(initialValues));
   const {
     handleSubmit,
@@ -162,7 +141,7 @@ const Order = () => {
 
   const paymentMethod = useWatch({control, name: 'paymentMethod'});
   const deliveryMethod = useWatch({control, name: 'deliveryMethod'});
-  const isHouse = useWatch({control, name: 'isHouse'});
+
   const isCardPayment = paymentMethod == PaymentMethodEnum.Card;
   const isDelivery = deliveryMethod == DeliveryMethodEnum.Delivery;
 
@@ -174,14 +153,6 @@ const Order = () => {
           DeliveryMethodEnum.Delivery == value
             ? DeliveryMethodEnum.Delivery
             : DeliveryMethodEnum.Takeaway,
-      }),
-    );
-  };
-  const onChangeHouseScheme = (value: boolean) => {
-    setValidationSchema(
-      getValidationSchema({
-        ...initialValues,
-        isHouse: value,
       }),
     );
   };
@@ -309,7 +280,7 @@ const Order = () => {
                     control={control}
                     render={({field: {onChange, value}}) => (
                       <Input
-                        placeholder={'email'}
+                        placeholder={'Email'}
                         inputType={'text'}
                         value={value}
                         onChangeText={onChange}
@@ -341,28 +312,6 @@ const Order = () => {
               </div>
               {isDelivery && (
                 <>
-                  <div css={toggleContainer}>
-                    <Controller
-                      control={control}
-                      render={({field: {onChange, value}}) => (
-                        <SwitchButton
-                          onChange={value => {
-                            onChange(value);
-                            onChangeHouseScheme(value);
-                          }}
-                          checked={value}
-                        />
-                      )}
-                      name="isHouse"
-                    />
-
-                    <div
-                      css={css`
-                        margin-left: 8px;
-                      `}>
-                      <Text type={'bigBody'}>В мене приватний будинок</Text>
-                    </div>
-                  </div>
                   <div css={addressInputWrapper}>
                     <div css={inputsWrapper}>
                       <Controller
@@ -370,118 +319,14 @@ const Order = () => {
                         render={({field: {onChange, value}}) => (
                           <Input
                             inputType={'text'}
-                            placeholder={'Вулиця*'}
+                            placeholder={'Адреса*'}
                             onChangeText={onChange}
                             value={value}
-                            error={errors.street?.message}
+                            error={errors.address?.message}
                           />
                         )}
-                        name="street"
+                        name="address"
                       />
-                      <div css={addressInformationWrapper}>
-                        {!isHouse && (
-                          <>
-                            <div
-                              css={[
-                                halfInput,
-                                css`
-                                  margin-bottom: 8px;
-                                  @media (min-width: ${theme.media.laptop}) {
-                                    margin-bottom: 0;
-                                  }
-                                `,
-                              ]}>
-                              <Controller
-                                control={control}
-                                render={({field: {onChange, value}}) => (
-                                  <Input
-                                    inputType={'text'}
-                                    placeholder={'Під’їзд*'}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    error={errors.entrance?.message}
-                                  />
-                                )}
-                                name="entrance"
-                              />
-                            </div>
-                            <div css={halfInput}>
-                              <Controller
-                                control={control}
-                                render={({field: {onChange, value}}) => (
-                                  <Input
-                                    inputType={'text'}
-                                    placeholder={'Квартира*'}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    error={errors.apartment?.message}
-                                  />
-                                )}
-                                name="apartment"
-                              />
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <div css={inputsWrapper}>
-                      <Controller
-                        control={control}
-                        render={({field: {onChange, value}}) => (
-                          <Input
-                            inputType={'text'}
-                            placeholder={'Будинок*'}
-                            onChangeText={onChange}
-                            value={value}
-                            error={errors.house?.message}
-                          />
-                        )}
-                        name="house"
-                      />
-                      <div css={addressInformationWrapper}>
-                        {!isHouse && (
-                          <>
-                            <div
-                              css={[
-                                halfInput,
-                                css`
-                                  margin-bottom: 8px;
-                                  @media (min-width: ${theme.media.laptop}) {
-                                    margin-bottom: 0;
-                                  }
-                                `,
-                              ]}>
-                              <Controller
-                                control={control}
-                                render={({field: {onChange, value}}) => (
-                                  <Input
-                                    inputType={'text'}
-                                    placeholder={'Поверх*'}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    error={errors.floor?.message}
-                                  />
-                                )}
-                                name="floor"
-                              />
-                            </div>
-                            <div css={halfInput}>
-                              <Controller
-                                control={control}
-                                render={({field: {onChange, value}}) => (
-                                  <Input
-                                    inputType={'text'}
-                                    placeholder={'Код домофону'}
-                                    onChangeText={onChange}
-                                    value={value}
-                                  />
-                                )}
-                                name="intercomCode"
-                              />
-                            </div>
-                          </>
-                        )}
-                      </div>
                     </div>
                   </div>
                 </>
@@ -675,19 +520,9 @@ const contactInputWrapper = theme => css`
   }
 `;
 
-const contactInput = theme => css`
+const contactInput = css`
   width: 100%;
   margin-bottom: 8px;
-
-  @media (min-width: ${theme.media.tablet}) {
-    width: 100%;
-  }
-  @media (min-width: ${theme.media.laptop}) {
-    width: 49%;
-  }
-  @media (min-width: ${theme.media.pc}) {
-    margin-right: 8px;
-  }
 `;
 
 const deliveryMethodAndAddressWrapper = css`
@@ -700,33 +535,9 @@ const radioWrapper = css`
   margin-bottom: 26px;
 `;
 
-const addressInputWrapper = theme => css`
+const addressInputWrapper = css`
   display: flex;
   flex-direction: column;
-
-  @media (min-width: ${theme.media.pc}) {
-    flex-direction: row;
-  }
-`;
-
-const addressInformationWrapper = theme => css`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  flex-direction: column;
-
-  @media (min-width: ${theme.media.laptop}) {
-    flex-direction: row;
-    margin-bottom: 0;
-  }
-`;
-
-const halfInput = theme => css`
-  @media (min-width: ${theme.media.laptop}) {
-    width: 49%;
-    margin-bottom: 8px;
-  }
 `;
 
 const inputsWrapper = theme => css`
@@ -737,13 +548,6 @@ const inputsWrapper = theme => css`
   @media (min-width: ${theme.media.pc}) {
     margin-right: 8px;
   }
-`;
-
-const toggleContainer = css`
-  margin-top: 26px;
-  margin-bottom: 34px;
-  display: flex;
-  align-items: center;
 `;
 
 const paymentMethodsWrapper = css``;
