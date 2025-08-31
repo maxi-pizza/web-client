@@ -1,7 +1,7 @@
 import React from 'react';
-import MinusSvg from 'src/assets/icons/minus.svg';
+import MinusSvg from 'src/assets/icons/minus.svg?react';
 import Text from 'src/components/Text.tsx';
-import PlusSvg from 'src/assets/icons/plus.svg';
+import PlusSvg from 'src/assets/icons/plus.svg?react';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 

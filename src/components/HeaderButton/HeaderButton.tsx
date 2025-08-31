@@ -9,7 +9,7 @@ const HeaderButton = ({
   handleButton?: (a: React.MouseEvent<HTMLButtonElement>) => void;
 }) => {
   return (
-    <button onClick={a => handleButton(a)} css={container}>
+    <button onClick={handleButton} css={container}>
       {icon}
     </button>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchSvg from 'src/assets/icons/search.svg';
+import SearchSvg from 'src/assets/icons/search.svg?react';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 

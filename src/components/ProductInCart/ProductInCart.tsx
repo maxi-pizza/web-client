@@ -1,7 +1,7 @@
 import React from 'react';
 import Text from 'src/components/Text.tsx';
 import Counter from 'src/components/Counter/Counter.tsx';
-import TrashSvg from 'src/assets/icons/trash.svg';
+import TrashSvg from 'src/assets/icons/trash.svg?react';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
@@ -57,10 +57,7 @@ const ProductInCart = ({product}: {product: ProductInCartProp}) => {
         />
         <button onClick={onHandleRemove} css={deleteButtonWrapper}>
           <div css={deleteButton} />
-          <TrashSvg
-            css={deleteButtonIcon}
-            color={theme.colors.accent}
-          />
+          <TrashSvg css={deleteButtonIcon} color={theme.colors.accent} />
         </button>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {css} from '@emotion/react';
-import ArrowSvg from 'src/assets/icons/arrow-left.svg';
+import ArrowSvg from 'src/assets/icons/arrow-left.svg?react';
 import Text from 'src/components/Text.tsx';
 
 const Dropdown = ({

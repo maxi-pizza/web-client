@@ -1,14 +1,14 @@
 import React from 'react';
 import {css, useTheme} from '@emotion/react';
 import logo from 'src/assets/logo.png';
-import DistanceSvg from 'src/assets/icons/distance.svg';
-import PaceSvg from 'src/assets/icons/pace.svg';
-import PhoneSvg from 'src/assets/icons/phone.svg';
-import FavouriteSvg from 'src/assets/icons/favorite.svg';
+import DistanceSvg from 'src/assets/icons/distance.svg?react';
+import PaceSvg from 'src/assets/icons/pace.svg?react';
+import PhoneSvg from 'src/assets/icons/phone.svg?react';
+import FavouriteSvg from 'src/assets/icons/favorite.svg?react';
 import Text from 'src/components/Text.tsx';
 import HeaderButton from 'src/components/HeaderButton/HeaderButton.tsx';
-import CartSvg from 'src/assets/icons/cart.svg';
-import SearchSvg from 'src/assets/icons/search.svg';
+import CartSvg from 'src/assets/icons/cart.svg?react';
+import SearchSvg from 'src/assets/icons/search.svg?react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
 import {favoriteRoute, rootRoute} from 'src/routes.ts';
@@ -21,7 +21,10 @@ const Header = () => {
   const {data: cartData} = useQuery({
     ...cartQuery,
   });
-  const totalCount = Object.keys(cartData || {}).reduce((acc, key) => acc + cartData[key].count,  0)
+  const totalCount = Object.keys(cartData || {}).reduce(
+    (acc, key) => acc + cartData[key].count,
+    0,
+  );
   return (
     <div css={headerContainer}>
       <div css={wrapper}>
@@ -81,21 +84,25 @@ const Header = () => {
           handleButton={() =>
             modalsStore.handleCartModal(!modalsStore.cartModal)
           }
-          icon={<div style={{position: 'relative'}}>
-            <CartSvg />
-            <div style={{
-              position: 'absolute',
-              minWidth: 25,
-              height: 25,
-              top: -22,
-              right: -22,
-              borderRadius: '25px',
-              backgroundColor: 'red',
-              color: 'white',
-              padding: 5
-
-            }}>{totalCount}</div>
-        </div>}
+          icon={
+            <div style={{position: 'relative'}}>
+              <CartSvg />
+              <div
+                style={{
+                  position: 'absolute',
+                  minWidth: 25,
+                  height: 25,
+                  top: -22,
+                  right: -22,
+                  borderRadius: '25px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                  padding: 5,
+                }}>
+                {totalCount}
+              </div>
+            </div>
+          }
         />
       </div>
     </div>

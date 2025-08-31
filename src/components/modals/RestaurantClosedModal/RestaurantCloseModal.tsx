@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'src/components/Modal/Modal.tsx';
-import ErrorSvg from 'src/assets/icons/error.svg';
+import ErrorSvg from 'src/assets/icons/error.svg?react';
 import Text from 'src/components/Text.tsx';
 import {observer} from 'mobx-react-lite';
 import modalsStore from 'src/stores/modalsStore.ts';

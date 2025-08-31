@@ -1,4 +1,4 @@
-import React, {ForwardedRef, forwardRef, useEffect, useRef} from 'react';
+import React, {ForwardedRef, forwardRef, useRef} from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
@@ -6,73 +6,74 @@ import {Link} from 'react-router-dom';
 import {composeRefs} from 'src/utils/ref.ts';
 import {categoryRoute} from 'src/routes.ts';
 
-
 type Category = {
   id: number;
   name: string;
   slug: string;
 };
-const CategoryCard = forwardRef(({
-  backgroundImg,
-  text,
-  category,
-  svg,
-  onClick,
-  activeCategory,
-}: {
-  backgroundImg: React.DetailedHTMLProps<
-    React.ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  >;
-  text: string;
-  category: Category;
-  svg?: React.ReactNode;
-  onClick: () => void;
-  activeCategory: string;
-}, ref: ForwardedRef<HTMLAnchorElement>) => {
-  const theme = useTheme() as WhiteTheme;
-  const innerRef = useRef<HTMLAnchorElement>(null);
-  // useEffect(() => {
-  //   if(category.slug === activeCategory) {
-  //     innerRef.current?.scrollIntoView({behavior: 'smooth', });
-  //   }
-  // }, [activeCategory, category]);
-  return (
-    <Link
-      ref={composeRefs(ref, innerRef)}
-      css={categoryCard({isActive: activeCategory === category.slug})}
-      onClick={onClick}
-      to={categoryRoute.replace(":slug", category.slug)}>
-      <div css={redRectangle} />
-      <img src={String(backgroundImg)} alt={'discount'} css={imgWrapper} />
-      {svg && (
+const CategoryCard = forwardRef(
+  (
+    {
+      backgroundImg,
+      text,
+      category,
+      svg,
+      onClick,
+      activeCategory,
+    }: {
+      backgroundImg: string;
+      text: string;
+      category: Category;
+      svg?: React.ReactNode;
+      onClick: () => void;
+      activeCategory: string;
+    },
+    ref: ForwardedRef<HTMLAnchorElement>,
+  ) => {
+    const theme = useTheme() as WhiteTheme;
+    const innerRef = useRef<HTMLAnchorElement>(null);
+    // useEffect(() => {
+    //   if(category.slug === activeCategory) {
+    //     innerRef.current?.scrollIntoView({behavior: 'smooth', });
+    //   }
+    // }, [activeCategory, category]);
+    return (
+      <Link
+        ref={composeRefs(ref, innerRef)}
+        css={categoryCard({isActive: activeCategory === category.slug})}
+        onClick={onClick}
+        to={categoryRoute.replace(':slug', category.slug)}>
+        <div css={redRectangle} />
+        <img src={backgroundImg} alt={'discount'} css={imgWrapper} />
+        {svg && (
+          <div
+            css={css`
+              height: 18px;
+              width: 18px;
+              margin-left: 12px;
+            `}>
+            {svg}
+          </div>
+        )}
         <div
           css={css`
-            height: 18px;
-            width: 18px;
             margin-left: 12px;
+            white-space: nowrap;
           `}>
-          {svg}
+          <Text
+            type={'h5'}
+            color={
+              activeCategory === category.slug
+                ? theme.colors.textWhite
+                : theme.colors.textPrimary
+            }>
+            {text}
+          </Text>
         </div>
-      )}
-      <div
-        css={css`
-          margin-left: 12px;
-          white-space: nowrap;
-        `}>
-        <Text
-          type={'h5'}
-          color={
-            activeCategory === category.slug
-              ? theme.colors.textWhite
-              : theme.colors.textPrimary
-          }>
-          {text}
-        </Text>
-      </div>
-    </Link>
-  );
-});
+      </Link>
+    );
+  },
+);
 
 const categoryCard =
   ({isActive}) =>

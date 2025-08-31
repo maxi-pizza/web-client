@@ -2,7 +2,7 @@ import React from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
-import DeleteSvg from 'src/assets/icons/close.svg';
+import DeleteSvg from 'src/assets/icons/close.svg?react';
 import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 import FavoriteEmptyBackground from 'src/assets/FavoriteEmpty.png';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';

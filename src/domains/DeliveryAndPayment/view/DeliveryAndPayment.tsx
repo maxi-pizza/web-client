@@ -2,11 +2,11 @@ import React from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
-import MotorcycleSvg from 'src/assets/icons/motorcycle.svg';
-import WalletSvg from 'src/assets/icons/wallet.svg';
-import AcuteSvg from 'src/assets/icons/acute.svg';
-import CashSvg from 'src/assets/icons/cash.svg';
-import CardSvg from 'src/assets/icons/credit-card.svg';
+import MotorcycleSvg from 'src/assets/icons/motorcycle.svg?react';
+import WalletSvg from 'src/assets/icons/wallet.svg?react';
+import AcuteSvg from 'src/assets/icons/acute.svg?react';
+import CashSvg from 'src/assets/icons/cash.svg?react';
+import CardSvg from 'src/assets/icons/credit-card.svg?react';
 import MokMapImg from 'src/assets/mokmap.png';
 import {rootRoute} from 'src/routes.ts';
 import {Link} from 'react-router-dom';
@@ -32,8 +32,8 @@ const DeliveryAndPayment = () => {
               width: 1656px;
             }
           `}>
-          <Link  to={rootRoute}>
-          <Text type={'bigBody'}>Головна</Text>
+          <Link to={rootRoute}>
+            <Text type={'bigBody'}>Головна</Text>
           </Link>
           <div
             css={css`

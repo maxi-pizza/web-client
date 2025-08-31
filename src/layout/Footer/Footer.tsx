@@ -1,14 +1,14 @@
 import React from 'react';
 import {css, useTheme} from '@emotion/react';
 import logo from 'src/assets/logo.png';
-import DistanceSvg from 'src/assets/icons/distance.svg';
-import PaceSvg from 'src/assets/icons/pace.svg';
-import PhoneSvg from 'src/assets/icons/phone.svg';
+import DistanceSvg from 'src/assets/icons/distance.svg?react';
+import PaceSvg from 'src/assets/icons/pace.svg?react';
+import PhoneSvg from 'src/assets/icons/phone.svg?react';
 import Text from 'src/components/Text.tsx';
 import {theme, WhiteTheme} from 'src/styles/theme.ts';
-import InstagramSvg from 'src/assets/icons/instagram.svg';
-import FacebookSvg from 'src/assets/icons/facebook.svg';
-import TelegramSvg from 'src/assets/icons/telegram.svg';
+import InstagramSvg from 'src/assets/icons/instagram.svg?react';
+import FacebookSvg from 'src/assets/icons/facebook.svg?react';
+import TelegramSvg from 'src/assets/icons/telegram.svg?react';
 import {Link} from 'react-router-dom';
 import {deliveryAndPaymentRoute} from 'src/routes.ts';
 

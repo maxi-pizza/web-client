@@ -11,15 +11,7 @@ export default defineConfig({
         plugins: ['@emotion/babel-plugin'],
       },
     }),
-    svgr({
-      svgrOptions: {
-        exportType: 'default',
-        ref: true,
-        svgo: false,
-        titleProp: true,
-      },
-      include: '**/*.svg',
-    }),
+    svgr(),
   ],
   base: '/',
   resolve: {

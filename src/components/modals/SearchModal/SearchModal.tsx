@@ -10,7 +10,7 @@ import {productsQuery} from 'src/domains/Home/products.query.ts';
 import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
 import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 import Text from 'src/components/Text.tsx';
-import EmptyCartSvg from 'src/assets/icons/emtyCart.svg';
+import EmptyCartSvg from 'src/assets/icons/emtyCart.svg?react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 
 type Product = {

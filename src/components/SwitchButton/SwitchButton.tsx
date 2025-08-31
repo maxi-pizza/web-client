@@ -23,6 +23,7 @@ const container = theme => css`
   width: 48px;
   height: 24px;
   border-radius: 20px;
+  cursor: pointer;
   border: none;
   background-color: ${theme.colors.stroke};
 `;

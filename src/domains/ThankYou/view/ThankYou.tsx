@@ -1,14 +1,14 @@
 import React from 'react';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/styles/theme.ts';
-import CheckedSvg from 'src/assets/icons/checked.svg';
+import CheckedSvg from 'src/assets/icons/checked.svg?react';
 import Text from 'src/components/Text.tsx';
-import ArrowSvg from 'src/assets/icons/arrow-left.svg';
+import ArrowSvg from 'src/assets/icons/arrow-left.svg?react';
 import BackgroundLayout from 'src/layout/BackgroundLayout/BackgroundLayout.tsx';
 import {Link, useLocation} from 'react-router-dom';
-import {DeliveryMethodEnum} from 'src/domains/Order/view/Order.tsx';
-import {rootRoute} from 'src/routes.ts';
 
+import {rootRoute} from 'src/routes.ts';
+import {DeliveryMethodEnum} from 'src/types.ts';
 
 const ThankYou = () => {
   const theme = useTheme() as WhiteTheme;

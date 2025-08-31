@@ -18,20 +18,11 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {isValidUkrainianNumber} from 'src/domains/Order/utils.ts';
 import axios from 'axios';
 import LoadingSpinner from 'src/layout/LoadingSpinner/LoadingSpinner.tsx';
-
-enum PaymentMethodEnum {
-  Card = 1,
-  Cash = 2,
-}
-
-export enum DeliveryMethodEnum {
-  Takeaway = 1,
-  Delivery = 2,
-}
+import {DeliveryMethodEnum, PaymentMethodEnum} from 'src/types.ts';
 
 type FormValues = {
   isHouse: boolean;
-  deliveryMethod: DeliveryMethodEnum;
+  deliveryMethod: number;
   change: string;
   house: string;
   intercomCode: string;
@@ -39,7 +30,7 @@ type FormValues = {
   street: string;
   peopleCount: number;
   name: string;
-  paymentMethod: PaymentMethodEnum;
+  paymentMethod: number;
   comment: string;
   entrance: string;
   floor: string;
@@ -61,7 +52,7 @@ const Order = () => {
   );
 
   const localStorageValues: FormValues = JSON.parse(
-    localStorage.getItem('formValues'),
+    localStorage.getItem('formValues') ?? '{}',
   );
   const initialValues: FormValues =
     localStorageValues !== null && Object.keys(localStorageValues).length > 0
@@ -163,17 +154,17 @@ const Order = () => {
     watch,
     getValues,
     formState: {errors},
-  } = useForm({
+  } = useForm<FormValues>({
     defaultValues: initialValues,
     resolver: yupResolver(validationSchema),
   });
 
-  const isCardPayment =
-    useWatch({control, name: ['paymentMethod']})[0] == PaymentMethodEnum.Card;
-  const isDelivery =
-    useWatch({control, name: ['deliveryMethod']})[0] ==
-    DeliveryMethodEnum.Delivery;
-  const isHouse = useWatch({control, name: ['isHouse']})[0];
+  const paymentMethod = useWatch({control, name: 'paymentMethod'});
+  const deliveryMethod = useWatch({control, name: 'deliveryMethod'});
+  const isHouse = useWatch({control, name: 'isHouse'});
+  const isCardPayment = paymentMethod == PaymentMethodEnum.Card;
+  const isDelivery = deliveryMethod == DeliveryMethodEnum.Delivery;
+
   const onChangeDeliveryMethodScheme = (value: number) => {
     setValidationSchema(
       getValidationSchema({
@@ -225,41 +216,35 @@ const Order = () => {
       .filter(([_, value]) => !!value)
       .map(([label, value]) => `${label}: ${value}`)
       .join(', ');
-    try {
-      const request = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/placeOrder`,
-        {
-          firstName,
-          lastName,
-          address,
-          email,
-          phone,
-          isHouse,
-          deliveryMethod,
-          paymentMethod,
-          peopleCount,
-          cartData,
-          comment,
-          change,
-        },
-      );
-      if (request.data === 'success') {
-        navigate(thankYouRoute, {state: deliveryMethod});
-      }
-      setLoading(false);
-    } catch (e) {
-      throw new Error(e);
+    const request = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/placeOrder`,
+      {
+        firstName,
+        lastName,
+        address,
+        email,
+        phone,
+        isHouse,
+        deliveryMethod,
+        paymentMethod,
+        peopleCount,
+        cartData,
+        comment,
+        change,
+      },
+    );
+    if (request.data === 'success') {
+      navigate(thankYouRoute, {state: deliveryMethod});
     }
+    setLoading(false);
   };
 
   React.useEffect(() => {
-    const subscription = watch((value, {name}) => {
-      const values = getValues();
+    const subscription = watch(values => {
       localStorage.setItem(
         'formValues',
         JSON.stringify({
           ...values,
-          [name]: value[name],
         }),
       );
     });

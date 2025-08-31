@@ -37,6 +37,7 @@ import {css} from '@emotion/react';
 const item = theme => css`
   width: 24px;
   height: 24px;
+  cursor: pointer;
   background-color: transparent;
   border-radius: 50%;
   border: 1px solid ${theme.colors.stroke};
@@ -70,6 +71,7 @@ const labelStyles = css`
   display: flex;
   align-items: center;
   margin-right: 24px;
+  cursor: pointer;
 `;
 
 export default RadioButton;

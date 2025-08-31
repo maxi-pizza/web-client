@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {css} from '@emotion/react';
-import CloseSvg from 'src/assets/icons/close.svg';
+import CloseSvg from 'src/assets/icons/close.svg?react';
 import {FloatingOverlay, FloatingPortal} from '@floating-ui/react';
 
 const Modal = ({

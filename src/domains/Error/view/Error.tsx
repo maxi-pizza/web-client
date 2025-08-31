@@ -2,12 +2,11 @@ import React from 'react';
 import ErrorBackgroundLayout from 'src/layout/ErrorBackgroundLayout/ErrorBackgroundLayout.tsx';
 import Text from 'src/components/Text.tsx';
 import {css, useTheme} from '@emotion/react';
-import NoRouteSvg from '/src/assets/icons/404.svg';
-import Arrow from 'src/assets/icons/arrow-left.svg';
+import NoRouteSvg from '/src/assets/icons/404.svg?react';
+import Arrow from 'src/assets/icons/arrow-left.svg?react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
 import {rootRoute} from 'src/routes.ts';
-
 
 const Error = () => {
   const theme = useTheme() as WhiteTheme;

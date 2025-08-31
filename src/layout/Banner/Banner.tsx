@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {css} from '@emotion/react';
-import ArrowSvg from 'src/assets/icons/arrow-left.svg';
+import ArrowSvg from 'src/assets/icons/arrow-left.svg?react';
 import {useIsMobile, useIsTablet} from 'src/common/hooks/useMedia.ts';
 
 import {motion, AnimatePresence} from 'framer-motion';

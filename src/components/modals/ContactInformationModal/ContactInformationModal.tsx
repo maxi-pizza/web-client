@@ -5,9 +5,9 @@ import {observer} from 'mobx-react-lite';
 import {css} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 
-import DistanceSvg from 'src/assets/icons/distance.svg';
-import PaceSvg from 'src/assets/icons/pace.svg';
-import PhoneSvg from 'src/assets/icons/phone.svg';
+import DistanceSvg from 'src/assets/icons/distance.svg?react';
+import PaceSvg from 'src/assets/icons/pace.svg?react';
+import PhoneSvg from 'src/assets/icons/phone.svg?react';
 
 const ContactInformationModal = observer(() => {
   return (
