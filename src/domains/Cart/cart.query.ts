@@ -12,7 +12,7 @@ export const getItems = () => {
 
 export const setItem = (id: number, price: number, count: number) => {
   const currentCart = getItems();
-  if (count === 0) {
+  if (count < 1) {
     const {[id]: _, ...cart} = currentCart;
     localStorage.setItem(CART_QUERY_KEY, JSON.stringify(cart));
   } else {

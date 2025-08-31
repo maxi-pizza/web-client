@@ -58,10 +58,7 @@ const ProductInCart = ({product}: {product: ProductInCartProp}) => {
         <button onClick={onHandleRemove} css={deleteButtonWrapper}>
           <div css={deleteButton} />
           <TrashSvg
-            css={css`
-              position: absolute;
-              cursor: pointer;
-            `}
+            css={deleteButtonIcon}
             color={theme.colors.accent}
           />
         </button>
@@ -69,6 +66,11 @@ const ProductInCart = ({product}: {product: ProductInCartProp}) => {
     </div>
   );
 };
+
+const deleteButtonIcon = css`
+  position: absolute;
+  cursor: pointer;
+`;
 
 const cartItemWrapper = theme => css`
   margin-top: 32px;

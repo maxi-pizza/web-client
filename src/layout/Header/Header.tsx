@@ -13,9 +13,15 @@ import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
 import {favoriteRoute, rootRoute} from 'src/routes.ts';
 import modalsStore from 'src/stores/modalsStore.ts';
+import {useQuery} from '@tanstack/react-query';
+import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 
 const Header = () => {
   const theme = useTheme() as WhiteTheme;
+  const {data: cartData} = useQuery({
+    ...cartQuery,
+  });
+  const totalCount = Object.keys(cartData || {}).reduce((acc, key) => acc + cartData[key].count,  0)
   return (
     <div css={headerContainer}>
       <div css={wrapper}>
@@ -75,7 +81,21 @@ const Header = () => {
           handleButton={() =>
             modalsStore.handleCartModal(!modalsStore.cartModal)
           }
-          icon={<CartSvg />}
+          icon={<div style={{position: 'relative'}}>
+            <CartSvg />
+            <div style={{
+              position: 'absolute',
+              minWidth: 25,
+              height: 25,
+              top: -22,
+              right: -22,
+              borderRadius: '25px',
+              backgroundColor: 'red',
+              color: 'white',
+              padding: 5
+
+            }}>{totalCount}</div>
+        </div>}
         />
       </div>
     </div>

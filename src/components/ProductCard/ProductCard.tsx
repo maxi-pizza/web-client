@@ -6,8 +6,8 @@ import VariantImg from 'src/assets/icons/radio_button_partial.svg';
 import PlusSvg from 'src/assets/icons/plus.svg';
 import FavoriteSvg from 'src/assets/icons/favorite.svg';
 import FavoriteFilledSvg from 'src/assets/icons/favoriteFilled.svg';
-import BgDiscountSvg from 'src/assets/icons/bgdiscount.svg';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {DefaultError, useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import Counter from "./Counter";
 import {
   CART_QUERY_KEY,
   cartQuery,
@@ -51,7 +51,13 @@ const ProductCard = ({product}: {product: Product}) => {
         queryKey: [CART_QUERY_KEY],
       }),
   });
-  const {mutate: wishlistMutation} = useMutation({
+  const {mutate: wishlistMutation} = useMutation<
+    unknown,
+    DefaultError,
+    {
+      id: number;
+    }
+  >({
     mutationFn: ({id}) => setItemToWishlist(id),
     onSuccess: () =>
       queryClient.invalidateQueries({queryKey: [WISHLIST_QUERY_KEY]}),
@@ -64,6 +70,13 @@ const ProductCard = ({product}: {product: Product}) => {
   const formattedPrice = parseInt(product.price);
   const addToCart = () => {
     cartMutation({price: formattedPrice, count: count + 1});
+  };
+  const incrementCount = () => {
+    cartMutation({price: formattedPrice, count: count + 1});
+  };
+
+  const decrementCount = () => {
+    cartMutation({price: formattedPrice, count: count - 1});
   };
 
   const favorite = Number(wishlistData) === Number(product.id);
@@ -129,25 +142,26 @@ const ProductCard = ({product}: {product: Product}) => {
             <Text type={'h4'}>{String(formattedPrice)} грн</Text>
           </div>
           <div css={buttonWrapper}>
-            <button css={addToFavorite} onClick={() => addToWishlist()}>
-              {favorite ? (
-                <FavoriteFilledSvg
-                  color={theme.colors.accent}
-                  fill={theme.colors.accent}
-                />
-              ) : (
-                <FavoriteSvg
-                  color={theme.colors.accent}
-                  fill={theme.colors.accent}
-                />
-              )}
-            </button>
-            <button css={addButton} onClick={addToCart}>
-              <PlusSvg color={theme.colors.textWhite} />
-            </button>
+            {count ? (
+              <Counter onHandlePlus={incrementCount} onHandleMinus={decrementCount} count={count} />
+            ) : (
+              <button css={addButton} onClick={addToCart}>
+                <PlusSvg color={theme.colors.textWhite} />
+              </button>
+            )}
           </div>
         </div>
       </div>
+      <button css={addToFavorite} onClick={() => addToWishlist()}>
+        {favorite ? (
+          <FavoriteFilledSvg
+            color={theme.colors.accent}
+            fill={theme.colors.accent}
+          />
+        ) : (
+          <FavoriteSvg color={theme.colors.accent} fill={theme.colors.accent} />
+        )}
+      </button>
     </div>
   );
 };
@@ -264,15 +278,9 @@ const pricesWrapper = css`
   justify-content: flex-end;
 `;
 
-const priceStyles = css`
-  opacity: 30%;
-  text-decoration: line-through;
-`;
 
 const buttonWrapper = css`
   display: flex;
-  width: 104px;
-  justify-content: space-between;
 `;
 
 const addButton = theme => css`
@@ -297,6 +305,9 @@ const addButton = theme => css`
 `;
 
 const addToFavorite = theme => css`
+    position: absolute;
+  right: 16px;
+  top: 16px;
   width: 44px;
   height: 44px;
   svg {
@@ -321,13 +332,5 @@ const addToFavorite = theme => css`
   }
 `;
 
-const discountWrapper = css`
-  position: absolute;
-  right: 0;
-  top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 export default ProductCard;

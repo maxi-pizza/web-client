@@ -1,25 +1,74 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from 'src/layout/Header/Header.tsx';
 import Footer from 'src/layout/Footer/Footer.tsx';
 import {css} from '@emotion/react';
 import RestaurantCloseModal from 'src/components/modals/RestaurantClosedModal/RestaurantCloseModal.tsx';
-import {
-  Outlet,
-  ScrollRestoration,
-} from 'react-router-dom';
+import {Outlet, ScrollRestoration} from 'react-router-dom';
 import CartModal from 'src/components/modals/CartModal/CartModal.tsx';
 import ContactInformationModal from 'src/components/modals/ContactInformationModal/ContactInformationModal.tsx';
 import SearchModal from 'src/components/modals/SearchModal/SearchModal.tsx';
 import {categoryRoute} from 'src/routes.ts';
-
-
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {
+  CART_QUERY_KEY,
+  cartQuery,
+  setItem,
+} from 'src/domains/Cart/cart.query.ts';
+import {productsQuery} from 'src/domains/Home/products.query.ts';
+type Product = {
+  id: number;
+  slug: string;
+  name: string;
+  price: string;
+};
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+  products: Product[];
+};
 const Layout = () => {
+  const {data: cart} = useQuery(cartQuery);
+  const {data: productsData} = useQuery(productsQuery);
+  const queryClient = useQueryClient();
+  const {mutate: removeFromCart} = useMutation({
+    mutationKey: [CART_QUERY_KEY],
+    mutationFn: ({id}: {id: number}) => setItem(id, 0, 0),
+    onSuccess: () =>
+      queryClient.invalidateQueries({queryKey: [CART_QUERY_KEY]}),
+  });
+  useEffect(() => {
+    const staleItems = Object.keys(cart || {}).filter(id => {
+      const item = cart[id];
+      const products = (productsData || []).flatMap(
+        (category: Category) => category.products,
+      );
+      const product = products.find((product: Product) => +id === product.id);
 
+      if (!product) {
+        // product doesn't exist in catalog anymore
+        return true;
+      }
+
+      if (+product.price !== +item.price) {
+        // product  price doesn't match product price in cart
+        return true;
+      }
+
+      return false;
+    });
+
+    staleItems.forEach(id => {
+      removeFromCart({id: +id});
+    });
+  }, [productsData, cart, removeFromCart]);
   return (
     <div>
       <ScrollRestoration
         getKey={location => {
-          if (location.pathname.startsWith(categoryRoute.replace(":slug", ""))) {
+          if (
+            location.pathname.startsWith(categoryRoute.replace(':slug', ''))
+          ) {
             return 'category';
           }
           return location.key;

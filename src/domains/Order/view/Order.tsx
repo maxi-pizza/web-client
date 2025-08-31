@@ -226,20 +226,23 @@ const Order = () => {
       .map(([label, value]) => `${label}: ${value}`)
       .join(', ');
     try {
-      const request = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/placeOrder`, {
-        firstName,
-        lastName,
-        address,
-        email,
-        phone,
-        isHouse,
-        deliveryMethod,
-        paymentMethod,
-        peopleCount,
-        cartData,
-        comment,
-        change,
-      });
+      const request = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/placeOrder`,
+        {
+          firstName,
+          lastName,
+          address,
+          email,
+          phone,
+          isHouse,
+          deliveryMethod,
+          paymentMethod,
+          peopleCount,
+          cartData,
+          comment,
+          change,
+        },
+      );
       if (request.data === 'success') {
         navigate(thankYouRoute, {state: deliveryMethod});
       }
@@ -267,8 +270,8 @@ const Order = () => {
     <LoadingSpinner isLoading={isCheckoutLoading || isCartLoading || loading}>
       <div css={container}>
         <div css={pathContainer}>
-          <Link  to={rootRoute}>
-          <Text type={'bigBody'}>Головна </Text>
+          <Link to={rootRoute}>
+            <Text type={'bigBody'}>Головна </Text>
           </Link>
           <div
             css={css`
@@ -350,6 +353,28 @@ const Order = () => {
               </div>
               {isDelivery && (
                 <>
+                  <div css={toggleContainer}>
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, value}}) => (
+                        <SwitchButton
+                          onChange={value => {
+                            onChange(value);
+                            onChangeHouseScheme(value);
+                          }}
+                          checked={value}
+                        />
+                      )}
+                      name="isHouse"
+                    />
+
+                    <div
+                      css={css`
+                        margin-left: 8px;
+                      `}>
+                      <Text type={'bigBody'}>В мене приватний будинок</Text>
+                    </div>
+                  </div>
                   <div css={addressInputWrapper}>
                     <div css={inputsWrapper}>
                       <Controller
@@ -469,28 +494,6 @@ const Order = () => {
                           </>
                         )}
                       </div>
-                    </div>
-                  </div>
-                  <div css={toggleContainer}>
-                    <Controller
-                      control={control}
-                      render={({field: {onChange, value}}) => (
-                        <SwitchButton
-                          onChange={value => {
-                            onChange(value);
-                            onChangeHouseScheme(value);
-                          }}
-                          checked={value}
-                        />
-                      )}
-                      name="isHouse"
-                    />
-
-                    <div
-                      css={css`
-                        margin-left: 8px;
-                      `}>
-                      <Text type={'bigBody'}>В мене приватний будинок</Text>
                     </div>
                   </div>
                 </>
@@ -777,7 +780,5 @@ const orderButton = theme => css`
   border-radius: 8px;
   margin-top: 32px;
 `;
-
-
 
 export default Order;

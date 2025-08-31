@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 
 import '@fontsource/montserrat/400.css';
 import '@fontsource/montserrat/600.css';
@@ -10,8 +10,7 @@ const Text = ({
   type,
   color,
   opacity = '1',
-}: {
-  children: string;
+}: PropsWithChildren<{
   type:
     | 'h1'
     | 'h2'
@@ -25,7 +24,7 @@ const Text = ({
     | 'bodyText';
   color?: string;
   opacity?: string;
-}) => {
+}>) => {
   const styleMap = {
     h1,
     h2,
