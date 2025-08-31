@@ -26,6 +26,7 @@ import {
 import Logo from 'src/assets/logo.png';
 import {Product} from 'src/types.ts';
 import {publicStorage} from 'src/utils/publicStorage.ts';
+import {ShowMore} from '@re-dev/react-truncate';
 
 const ProductCard = ({product}: {product: Product}) => {
   const theme = useTheme() as WhiteTheme;
@@ -105,8 +106,13 @@ const ProductCard = ({product}: {product: Product}) => {
         <div css={css``}>
           <Text type={'h4'}>{product.name}</Text>
         </div>
+
         <div css={textWrapper}>
-          <Text type={'caption'}>Склад: {product.description || ''}</Text>
+          <Text type={'caption'}>
+            <ShowMore more={''} lines={3}>
+              Склад: {product.description || ''}
+            </ShowMore>
+          </Text>
         </div>
         <div
           css={css`
@@ -130,7 +136,7 @@ const ProductCard = ({product}: {product: Product}) => {
           </div>
           <div css={weightWrapper}>
             <Text type={'title'} color={theme.colors.textPrimary}>
-              {`${product.weight} ${product.unit}.`}
+              {`${product.weight ?? 0} ${product.unit}.`}
             </Text>
           </div>
         </div>
@@ -197,14 +203,14 @@ const imgBackground = theme => css`
 
 const container = theme => css`
   width: 343px;
-  height: 382px;
+  height: 401px;
   border-radius: 12px;
   border: 1px solid ${theme.colors.stroke};
   background-color: ${theme.colors.container};
   position: relative;
   @media (min-width: ${theme.media.laptop}) {
     width: 318px;
-    height: 482px;
+    height: 501px;
   }
 `;
 
@@ -218,6 +224,7 @@ const wrapper = theme => css`
 
 const textWrapper = theme => css`
   margin-bottom: 12px;
+  min-height: 57px;
   @media (min-width: ${theme.media.laptop}) {
     margin-top: 8px;
     margin-bottom: 16px;
