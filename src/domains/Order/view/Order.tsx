@@ -156,6 +156,7 @@ const Order = () => {
     formState: {errors},
   } = useForm<FormValues>({
     defaultValues: initialValues,
+    // @ts-ignore
     resolver: yupResolver(validationSchema),
   });
 
@@ -213,6 +214,7 @@ const Order = () => {
       ['Поверх', floor],
       ['код', intercomCode],
     ]
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, value]) => !!value)
       .map(([label, value]) => `${label}: ${value}`)
       .join(', ');
@@ -330,6 +332,7 @@ const Order = () => {
                         onChange(value);
                         onChangeDeliveryMethodScheme(value);
                       }}
+                      // @ts-ignore
                       value={value}
                     />
                   )}
@@ -492,6 +495,7 @@ const Order = () => {
                     render={({field: {onChange, value}}) => (
                       <RadioButton
                         options={filteredPaymentMethods}
+                        // @ts-ignore
                         value={value}
                         onChangeType={onChange}
                       />

@@ -20,7 +20,7 @@ const RadioButton = ({
             value={String(option.id)}
             css={item}
             onClick={() => onChangeType(option.id)}
-            checked={value == option.id}>
+            checked={value == option.id + ''}>
             <RadioGroup.Indicator css={indicator} />
           </RadioGroup.Item>
           <Text type={'bigBody'}>{option.name}</Text>
