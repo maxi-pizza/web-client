@@ -25,6 +25,7 @@ import {
 } from 'src/domains/Favorite/wishlist.query.ts';
 import Logo from 'src/assets/logo.png';
 import {Product} from 'src/types.ts';
+import {publicStorage} from 'src/utils/publicStorage.ts';
 
 const ProductCard = ({product}: {product: Product}) => {
   const theme = useTheme() as WhiteTheme;
@@ -76,6 +77,10 @@ const ProductCard = ({product}: {product: Product}) => {
 
   const favorite = Number(wishlistData) === Number(product.id);
 
+  const image = product.images[0]
+    ? publicStorage(product.images[0].full)
+    : product.image;
+
   return (
     <div css={container}>
       {/*<div css={discountWrapper}>*/}
@@ -88,8 +93,8 @@ const ProductCard = ({product}: {product: Product}) => {
       {/*  <BgDiscountSvg />*/}
       {/*</div>*/}
       <div css={imgBackground}>
-        {product.image ? (
-          <img src={product.image} alt={'product'} css={imgStyles} />
+        {image ? (
+          <img src={image} alt={'product'} css={imgStyles} />
         ) : (
           <div css={imgStyles}>
             <img src={String(Logo)} alt={'product'} css={placeholderImg} />

@@ -2,16 +2,18 @@ import {css, Global, ThemeProvider} from '@emotion/react';
 import {theme} from 'src/styles/theme.ts';
 import {RouterProvider} from 'react-router-dom';
 import {router} from 'src/router.tsx';
-import { QueryClientProvider} from '@tanstack/react-query';
+import {QueryClientProvider} from '@tanstack/react-query';
 import React from 'react';
 import {queryClient} from 'src/queryClient.ts';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Global styles={globalStyles} />
-        <RouterProvider  router={router} />
+        <RouterProvider router={router} />
+        <ReactQueryDevtools buttonPosition={'bottom-left'} position="bottom" />
       </QueryClientProvider>
     </ThemeProvider>
   );

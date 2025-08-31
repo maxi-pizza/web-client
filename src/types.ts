@@ -1,3 +1,11 @@
+export type Image = {
+  full: string;
+  id: number;
+  product_id: number;
+  updated_at: string;
+  created_at: string;
+};
+
 export type Product = {
   id: number;
   slug: string;
@@ -7,6 +15,7 @@ export type Product = {
   weight: string;
   price: string;
   unit: string;
+  images: Image[];
 };
 
 export type Category = {
