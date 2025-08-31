@@ -576,7 +576,13 @@ const Order = () => {
             </div>
           </div>
           <div>
-            <Cart withOrderButton={false} />
+            <div
+              style={{
+                position: 'sticky',
+                top: 10,
+              }}>
+              <Cart withOrderButton={false} />
+            </div>
           </div>
         </div>
       </div>
