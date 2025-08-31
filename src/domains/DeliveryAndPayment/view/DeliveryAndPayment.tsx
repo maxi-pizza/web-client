@@ -245,4 +245,4 @@ const mobileTextWrapper = theme => css`
   }
 `;
 
-export default DeliveryAndPayment;
+export const Component = DeliveryAndPayment;

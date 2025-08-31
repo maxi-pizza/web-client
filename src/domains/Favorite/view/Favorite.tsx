@@ -207,4 +207,4 @@ const productsGrid = theme => css`
   }
 `;
 
-export default Favorite;
+export const Component = Favorite;

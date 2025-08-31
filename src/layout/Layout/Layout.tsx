@@ -3,7 +3,12 @@ import Header from 'src/layout/Header/Header.tsx';
 import Footer from 'src/layout/Footer/Footer.tsx';
 import {css} from '@emotion/react';
 import RestaurantCloseModal from 'src/components/modals/RestaurantClosedModal/RestaurantCloseModal.tsx';
-import {Outlet, ScrollRestoration} from 'react-router-dom';
+import {
+  Outlet,
+  RouterState,
+  RouterSubscriber,
+  ScrollRestoration,
+} from 'react-router-dom';
 import CartModal from 'src/components/modals/CartModal/CartModal.tsx';
 import ContactInformationModal from 'src/components/modals/ContactInformationModal/ContactInformationModal.tsx';
 import SearchModal from 'src/components/modals/SearchModal/SearchModal.tsx';
@@ -15,6 +20,9 @@ import {
   setItem,
 } from 'src/domains/Cart/cart.query.ts';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
+import {router} from 'src/router.tsx';
+import modalsStore from 'src/stores/modalsStore.ts';
+import Error505 from 'src/domains/505Error/505Error.tsx';
 type Product = {
   id: number;
   slug: string;
@@ -62,6 +70,30 @@ const Layout = () => {
       removeFromCart({id: +id});
     });
   }, [productsData, cart, removeFromCart]);
+
+  useEffect(() => {
+    const routerSubscriber: RouterSubscriber = (state: RouterState) => {
+      if (state.navigation.location) {
+        return;
+      }
+
+      const closed = isClosed({
+        start: [10, 0],
+        end: [22, 0],
+      });
+
+      if (closed) {
+        modalsStore.handleRestaurantClosedModal(true);
+      }
+    };
+    // run immediately
+    routerSubscriber(router.state, {
+      deletedFetchers: [],
+      flushSync: false,
+    });
+
+    return router.subscribe(routerSubscriber);
+  }, []);
   return (
     <div>
       <ScrollRestoration
@@ -90,6 +122,18 @@ const Layout = () => {
   );
 };
 
+const isClosed = ({start, end}) => {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  return (
+    hours < start[0] ||
+    (start[0] === hours && minutes < start[1]) ||
+    hours > end[0] ||
+    (end[0] === hours && minutes > end[1])
+  );
+};
+
 const main = css`
   margin-top: -92px;
   margin-bottom: -92px;
@@ -104,4 +148,6 @@ const stickyHeader = theme => css`
     position: unset;
   }
 `;
-export default Layout;
+
+export const Component = Layout;
+export const ErrorBoundary = Error505;

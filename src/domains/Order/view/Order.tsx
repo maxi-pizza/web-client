@@ -776,4 +776,4 @@ const orderButton = theme => css`
   margin-top: 32px;
 `;
 
-export default Order;
+export const Component = Order;

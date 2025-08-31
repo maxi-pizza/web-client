@@ -11,10 +11,10 @@ const RestaurantCloseModal = observer(() => {
     <Modal
       handleModal={() =>
         modalsStore.handleRestaurantClosedModal(
-          !modalsStore.restaurantClosedModal,
+          !modalsStore.showRestaurantClosedModal,
         )
       }
-      isVisible={modalsStore.restaurantClosedModal}>
+      isVisible={modalsStore.showRestaurantClosedModal}>
       <div css={modalWrapper}>
         <ErrorSvg width={'120px'} height={'120px'} />
         <div

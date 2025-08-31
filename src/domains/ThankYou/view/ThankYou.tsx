@@ -203,4 +203,4 @@ const checkedSvg = theme => css`
   }
 `;
 
-export default ThankYou;
+export const Component = ThankYou;

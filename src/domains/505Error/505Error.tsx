@@ -2,7 +2,7 @@ import React from 'react';
 import ErrorBackgroundLayout from 'src/layout/ErrorBackgroundLayout/ErrorBackgroundLayout.tsx';
 import Text from 'src/components/Text.tsx';
 import {css, useTheme} from '@emotion/react';
-import NoRouteSvg from '/src/assets/icons/404.svg?react';
+import ErrorSvg from 'src/assets/icons/505.svg?react';
 import Arrow from 'src/assets/icons/arrow-left.svg?react';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
@@ -12,7 +12,7 @@ const Error = () => {
   const theme = useTheme() as WhiteTheme;
   return (
     <ErrorBackgroundLayout>
-      <NoRouteSvg
+      <ErrorSvg
         css={css`
           position: absolute;
           width: 312px;
@@ -52,8 +52,7 @@ const Error = () => {
             }
           `}>
           <Text type={'bigBody'} opacity={'60%'}>
-            Упс! Схоже, ви натрапили на мертве посилання, давайте повернемося до
-            відомого маршруту!
+            Упс! Схоже сталася помилка. Ми спробуемо її усунити якумога швидше
           </Text>
         </div>
         <Link to={rootRoute} css={backButton}>

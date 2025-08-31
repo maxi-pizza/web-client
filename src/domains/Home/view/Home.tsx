@@ -370,4 +370,4 @@ const stickyCategories = theme => css`
   }
 `;
 
-export default Home;
+export const Component = Home;

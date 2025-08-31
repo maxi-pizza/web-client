@@ -1,7 +1,7 @@
 import {makeAutoObservable} from 'mobx';
 
 class ModalsStore {
-  restaurantClosedModal = true;
+  showRestaurantClosedModal = false;
   cartModal = false;
   contactInformationModal = false;
   searchModal = false;
@@ -9,7 +9,7 @@ class ModalsStore {
     makeAutoObservable(this);
   }
   handleRestaurantClosedModal(isVisible: boolean) {
-    this.restaurantClosedModal = isVisible;
+    this.showRestaurantClosedModal = isVisible;
   }
   handleCartModal(isVisible: boolean) {
     this.cartModal = isVisible;
