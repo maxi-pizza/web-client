@@ -5,12 +5,12 @@ import {css, useTheme} from '@emotion/react';
 import {observer} from 'mobx-react-lite';
 import Search from 'src/components/Search/Search.tsx';
 import {useQuery} from '@tanstack/react-query';
-import {productsQuery} from 'src/domains/Home/products.query.ts';
+import {productsQuery} from 'src/queries/products.query.ts';
 import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
 import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 import Text from 'src/components/Text.tsx';
 import EmptyCartSvg from 'src/assets/icons/emtyCart.svg?react';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 
 type Product = {
   name: string;

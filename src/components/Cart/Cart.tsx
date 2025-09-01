@@ -1,16 +1,16 @@
 import React, {Fragment, memo} from 'react';
 import {useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 import ProductInCart from 'src/components/ProductInCart/ProductInCart.tsx';
 import {Link} from 'react-router-dom';
 import {checkoutRoute} from 'src/routes.ts';
 import {useQuery} from '@tanstack/react-query';
-import {cartQuery} from 'src/domains/Cart/cart.query.ts';
-import {productsQuery} from 'src/domains/Home/products.query.ts';
+import {cartQuery} from 'src/queries/cart.query.ts';
+import {productsQuery} from 'src/queries/products.query.ts';
 import EmptyCartSvg from 'src/assets/icons/emtyCart.svg?react';
 import modalsStore from 'src/stores/modalsStore.ts';
-import {useIsMobile, useIsTablet} from 'src/common/hooks/useMedia.ts';
+import {useIsMobile, useIsTablet} from 'src/hooks/useMedia.ts';
 import * as styles from './Cart.style.ts';
 
 const Cart = memo(

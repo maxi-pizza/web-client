@@ -1,6 +1,8 @@
-const basePath = import.meta.env.VITE_APP_BASE_PATH || '';
+import {APP_BASE_PATH} from 'src/env.ts';
 
-export const rootRoute =  `${basePath}/`;
+const basePath = APP_BASE_PATH || '';
+
+export const rootRoute = `${basePath}/`;
 export const categoryRoute = `${basePath}/category/:slug`;
 export const deliveryAndPaymentRoute = `${basePath}/delivery-and-payment`;
 export const favoriteRoute = `${basePath}/favorite`;

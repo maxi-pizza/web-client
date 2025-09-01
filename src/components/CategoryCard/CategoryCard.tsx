@@ -1,7 +1,7 @@
 import React, {ForwardedRef, forwardRef, useRef} from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 import {Link} from 'react-router-dom';
 import {composeRefs} from 'src/utils/ref.ts';
 import {categoryRoute} from 'src/routes.ts';

@@ -6,6 +6,13 @@ export type Image = {
   created_at: string;
 };
 
+export type Banner = {
+  id: number;
+  name: string;
+  slug: string;
+  image: string;
+};
+
 export type Product = {
   id: number;
   slug: string;

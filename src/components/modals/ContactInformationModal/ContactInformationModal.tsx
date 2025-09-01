@@ -10,7 +10,7 @@ import PaceSvg from 'src/assets/icons/pace.svg?react';
 import PhoneSvg from 'src/assets/icons/phone.svg?react';
 import InstagramSvg from 'src/assets/icons/instagram.svg?react';
 import {Link} from 'react-router-dom';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 
 const ContactInformationModal = observer(() => {
   const theme = useTheme() as WhiteTheme;
@@ -39,15 +39,15 @@ const ContactInformationModal = observer(() => {
           <Text type={'bigBody'}>10:00-22:00</Text>
         </div>
         <div css={horizontalBar} />
-        <div css={textNSvgWrapper}>
+        <Link to={'tel:0669898095'} css={textNSvgWrapper}>
           <PhoneSvg />
-          <Text type={'bigBody'}>066-98-98-095</Text>
-        </div>
+          <Text type={'bigBody'}>066 98 98 095</Text>
+        </Link>
         <div css={horizontalBar} />
-        <div css={textNSvgWrapper}>
+        <Link to={'tel:0989898095'} css={textNSvgWrapper}>
           <PhoneSvg />
           <Text type={'bigBody'}>098 98 98 095</Text>
-        </div>
+        </Link>
 
         <Link
           target={'_blank'}

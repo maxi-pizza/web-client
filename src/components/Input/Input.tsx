@@ -1,6 +1,6 @@
 import React from 'react';
 import {css, useTheme} from '@emotion/react';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 import Text from 'src/components/Text.tsx';
 
 const Input = ({

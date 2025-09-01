@@ -3,13 +3,9 @@ import Text from 'src/components/Text.tsx';
 import Counter from 'src/components/Counter/Counter.tsx';
 import TrashSvg from 'src/assets/icons/trash.svg?react';
 import {css, useTheme} from '@emotion/react';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {
-  CART_QUERY_KEY,
-  cartQuery,
-  setItem,
-} from 'src/domains/Cart/cart.query.ts';
+import {CART_QUERY_KEY, cartQuery, setItem} from 'src/queries/cart.query.ts';
 
 type ProductInCartProp = {
   id: number;

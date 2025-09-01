@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchSvg from 'src/assets/icons/search.svg?react';
 import {css, useTheme} from '@emotion/react';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 
 const Search = ({onSearch, value}: {onSearch: (e) => void; value: string}) => {
   const theme = useTheme() as WhiteTheme;

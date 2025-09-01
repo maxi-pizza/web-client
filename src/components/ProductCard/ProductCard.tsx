@@ -1,6 +1,6 @@
 import React from 'react';
 import {css, useTheme} from '@emotion/react';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 import Text from 'src/components/Text.tsx';
 import VariantImg from 'src/assets/icons/radio_button_partial.svg?react';
 import PlusSvg from 'src/assets/icons/plus.svg?react';
@@ -13,16 +13,12 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import Counter from './Counter';
-import {
-  CART_QUERY_KEY,
-  cartQuery,
-  setItem,
-} from 'src/domains/Cart/cart.query.ts';
+import {CART_QUERY_KEY, cartQuery, setItem} from 'src/queries/cart.query.ts';
 import {
   setItemToWishlist,
   WISHLIST_QUERY_KEY,
   wishlistQuery,
-} from 'src/domains/Favorite/wishlist.query.ts';
+} from 'src/queries/wishlist.query.ts';
 import Logo from 'src/assets/logo.png';
 import {Product} from 'src/types.ts';
 import {publicStorage} from 'src/utils/publicStorage.ts';

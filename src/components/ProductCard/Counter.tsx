@@ -3,7 +3,7 @@ import MinusSvg from 'src/assets/icons/minus.svg?react';
 import Text from 'src/components/Text.tsx';
 import PlusSvg from 'src/assets/icons/plus.svg?react';
 import {css, useTheme} from '@emotion/react';
-import {WhiteTheme} from 'src/styles/theme.ts';
+import {WhiteTheme} from 'src/theme.ts';
 
 const Counter = ({
   count,
