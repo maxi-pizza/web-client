@@ -1,4 +1,4 @@
-import {createBrowserRouter, redirect} from 'react-router-dom';
+import {createBrowserRouter} from 'react-router-dom';
 import {
   deliveryAndPaymentRoute,
   favoriteRoute,
@@ -9,22 +9,6 @@ import {
 } from 'src/routes.ts';
 import Error404 from 'src/domains/404Error/404Error.tsx';
 
-import {queryClient} from 'src/queryClient.ts';
-import {productsQuery} from 'src/domains/Home/products.query.ts';
-
-const layoutLoader = async () => {
-  const data = (await queryClient.ensureQueryData(productsQuery)) as {
-    id: string;
-    name: string;
-    slug: string;
-    products: {
-      id: string;
-    }[];
-  }[];
-  const categories = data.filter(category => !!category.products.length);
-  return redirect(categoryRoute.replace(':slug', categories[0].slug));
-};
-
 export const router = createBrowserRouter([
   {
     path: rootRoute,
@@ -32,7 +16,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: layoutLoader,
+        lazy: () => import('src/domains/Home/view/Home2.tsx'),
       },
       {
         path: deliveryAndPaymentRoute,

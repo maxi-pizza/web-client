@@ -12,7 +12,7 @@ import {
 import CartModal from 'src/components/modals/CartModal/CartModal.tsx';
 import ContactInformationModal from 'src/components/modals/ContactInformationModal/ContactInformationModal.tsx';
 import SearchModal from 'src/components/modals/SearchModal/SearchModal.tsx';
-import {categoryRoute} from 'src/routes.ts';
+import {categoryRoute, rootRoute} from 'src/routes.ts';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {
   CART_QUERY_KEY,
@@ -102,7 +102,8 @@ const Layout = () => {
       <ScrollRestoration
         getKey={location => {
           if (
-            location.pathname.startsWith(categoryRoute.replace(':slug', ''))
+            location.pathname.startsWith(categoryRoute.replace(':slug', '')) ||
+            location.pathname === rootRoute
           ) {
             return 'category';
           }

@@ -7,6 +7,9 @@ import {wrap} from 'motion';
 
 import Banner6 from 'src/assets/banner6.png';
 import Banner7 from 'src/assets/banner7.png';
+import {InView} from 'react-intersection-observer';
+import {rootRoute} from 'src/routes.ts';
+import {useNavigate} from 'react-router-dom';
 
 const variants = {
   enter: (direction: number) => {
@@ -55,15 +58,24 @@ const Banner2 = () => {
   }, [images]);
 
   const [[page, direction], setPage] = useState([0, 0]);
+  const navigate = useNavigate();
 
   const imageIndex = wrap(0, images.length, page);
 
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
   };
-  // setTimeout(() => paginate(1), 7000);
+  const handleBannerStartInView = (inView: boolean) => {
+    if (inView) {
+      navigate(rootRoute);
+    }
+  };
+
   return (
     <div css={root}>
+      <InView threshold={1} onChange={handleBannerStartInView}>
+        <div />
+      </InView>
       <div css={bannerContainer}>
         <AnimatePresence initial={false} custom={direction}>
           <motion.img
