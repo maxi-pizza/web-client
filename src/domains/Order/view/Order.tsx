@@ -460,7 +460,7 @@ const Order = () => {
 };
 
 const cartWrapper = theme => css`
-  height: 500px;
+  display: none;
 
   @media (min-width: ${theme.media.laptop}) {
     display: flex;
@@ -527,14 +527,12 @@ const orderCard = theme => css`
   background-color: transparent;
   width: 343px;
   padding: 0;
-  margin-top: 20px;
 
   @media (min-width: ${theme.media.tablet}) {
     border-radius: 12px;
     border: 1px solid ${theme.colors.stroke};
     background-color: ${theme.colors.container};
     padding: 32px;
-    margin-bottom: 80px;
     width: 740px;
   }
   @media (min-width: ${theme.media.laptop}) {
