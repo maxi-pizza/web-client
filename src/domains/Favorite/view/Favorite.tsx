@@ -12,6 +12,8 @@ import {
   WISHLIST_QUERY_KEY,
   wishlistQuery,
 } from 'src/domains/Favorite/wishlist.query.ts';
+import {rootRoute} from 'src/routes.ts';
+import {Link} from 'react-router-dom';
 
 const Favorite = () => {
   const {data: productsData} = useQuery(productsQuery);
@@ -58,7 +60,9 @@ const Favorite = () => {
             css={css`
               margin-right: 8px;
             `}>
-            <Text type={'bigBody'}>Головна</Text>
+            <Link to={rootRoute}>
+              <Text type={'bigBody'}>Головна</Text>
+            </Link>
           </div>
           <Text type={'bigBody'} color={theme.colors.accent}>
             / Улюблені страви

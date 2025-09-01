@@ -24,3 +24,7 @@ export const setItem = (id: number, price: number, count: number) => {
   }
   return getItems();
 };
+
+export const clearCart = () => {
+  localStorage.removeItem(CART_QUERY_KEY);
+};

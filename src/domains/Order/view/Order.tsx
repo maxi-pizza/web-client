@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
@@ -6,9 +6,14 @@ import Cart from 'src/components/Cart/Cart.tsx';
 import Counter from 'src/components/Counter/Counter.tsx';
 import RadioButton from 'src/components/RadionButton/RadioButton.tsx';
 import Input from 'src/components/Input/Input.tsx';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {useQuery} from '@tanstack/react-query';
-import {cartQuery} from 'src/domains/Cart/cart.query.ts';
+import {Link, useLocation, useNavigate, useNavigation} from 'react-router-dom';
+import {
+  DefaultError,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
+import {cartQuery, clearCart} from 'src/domains/Cart/cart.query.ts';
 import {rootRoute, thankYouRoute} from 'src/routes.ts';
 import {checkoutQuery} from 'src/domains/Order/checkout.query.ts';
 import {Controller, useForm, useWatch} from 'react-hook-form';
@@ -18,6 +23,7 @@ import {isValidUkrainianNumber} from 'src/domains/Order/utils.ts';
 import axios from 'axios';
 import LoadingSpinner from 'src/layout/LoadingSpinner/LoadingSpinner.tsx';
 import {DeliveryMethodEnum, PaymentMethodEnum} from 'src/types.ts';
+import {toast} from 'react-toastify';
 
 type FormValues = {
   //isHouse: boolean;
@@ -42,15 +48,26 @@ type FormValues = {
 const Order = () => {
   const {pathname} = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const {state} = useNavigation();
   const {data: cartData, isLoading: isCartLoading} = useQuery(cartQuery);
   const {data: checkoutData, isLoading: isCheckoutLoading} =
     useQuery(checkoutQuery);
+  const {mutate: clearCartMutation} = useMutation({
+    mutationFn: async () => {
+      return clearCart();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(cartQuery);
+    },
+  });
   const theme = useTheme() as WhiteTheme;
-  const [loading, setLoading] = useState<boolean>(false);
+
   const paymentMethods = checkoutData?.payment_methods ?? [];
   const filteredPaymentMethods = (paymentMethods || []).filter(
     method => method.name !== 'WayForPay',
   );
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const localStorageValues: FormValues = JSON.parse(
     localStorage.getItem('formValues') ?? '{}',
@@ -73,7 +90,7 @@ const Order = () => {
           intercomCode: '',
 
           change: '',
-          deliveryMethod: DeliveryMethodEnum.Delivery,
+          deliveryMethod: DeliveryMethodEnum.Takeaway,
 
           paymentMethod: PaymentMethodEnum.Card,
           peopleCount: 0,
@@ -82,10 +99,13 @@ const Order = () => {
   const deliveryMethods = checkoutData?.delivery_methods ?? [];
 
   useEffect(() => {
+    if (state !== 'idle') {
+      return;
+    }
     if (cartData && Object.keys(cartData).length < 1) {
       navigate(rootRoute);
     }
-  }, [cartData, navigate]);
+  }, [cartData, navigate, state]);
   useEffect(() => {
     if (checkoutData) {
       window.scrollTo(0, 0);
@@ -100,7 +120,7 @@ const Order = () => {
     phone: yup
       .string()
       .required(validationRequired)
-      .test('is possible number', 'Неправильний телефон', value =>
+      .test('is possible number', 'Не вірний формат телефону', value =>
         isValidUkrainianNumber(value),
       ),
     comment: yup.string(),
@@ -111,7 +131,7 @@ const Order = () => {
     phone: yup
       .string()
       .required(validationRequired)
-      .test('is possible number', 'Неправильний телефон', value =>
+      .test('is possible number', 'Не вірний формат телефону', value =>
         isValidUkrainianNumber(value),
       ),
     comment: yup.string(),
@@ -127,12 +147,27 @@ const Order = () => {
   const [validationSchema, setValidationSchema] = useState<
     typeof takeawaySchema | typeof deliverySchema
   >(getValidationSchema(initialValues));
+  const {mutate: placeOrder, isPending: isPlacingOrder} = useMutation<
+    unknown,
+    DefaultError,
+    {
+      data: any;
+    }
+  >({
+    mutationFn: async ({data}: {data: any}) => {
+      return await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/placeOrder`,
+        data,
+      );
+    },
+  });
   const {
     handleSubmit,
     control,
     watch,
     getValues,
-    formState: {errors},
+
+    formState: {errors, isSubmitting},
   } = useForm<FormValues>({
     defaultValues: initialValues,
     // @ts-ignore
@@ -157,59 +192,60 @@ const Order = () => {
     );
   };
 
-  const onSubmit = async data => {
-    setLoading(true);
+  useEffect(() => {
+    if (containerRef.current && Object.keys(errors).length > 0) {
+      containerRef.current.scrollIntoView();
+    }
+  }, [errors]);
+
+  const onSubmit = async (data: FormValues) => {
     const {
       name,
       email,
       phone,
-      street,
+      address,
       comment,
-      house,
-      apartment,
-      isHouse,
       deliveryMethod,
       paymentMethod,
-      intercomCode,
       peopleCount,
-      floor,
       change,
-      entrance,
     } = data;
-    const [firstName, lastName = ''] = name.split(' ');
-    const address = [
-      ['Вулиця', street],
-      ['Будинок', house],
-      ['Квартира', apartment],
-      ["Під'їзд", entrance],
-      ['Поверх', floor],
-      ['код', intercomCode],
-    ]
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .filter(([_, value]) => !!value)
-      .map(([label, value]) => `${label}: ${value}`)
-      .join(', ');
-    const request = await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/placeOrder`,
+
+    placeOrder(
       {
-        firstName,
-        lastName,
-        address,
-        email,
-        phone,
-        isHouse,
-        deliveryMethod,
-        paymentMethod,
-        peopleCount,
-        cartData,
-        comment,
-        change,
+        data: {
+          name: name,
+          address,
+          email,
+          phone,
+          delivery_method_id: deliveryMethod,
+          payment_method_id: paymentMethod,
+          people_count: peopleCount,
+          products: Object.keys(cartData).map(id => ({
+            product_id: id,
+            variant_id: undefined,
+            count: cartData[id].count,
+          })),
+          comment,
+          change,
+        },
+      },
+      {
+        onSuccess: () => {
+          localStorage.removeItem('formValues');
+          navigate(thankYouRoute, {state: deliveryMethod});
+
+          setTimeout(() => {
+            clearCartMutation();
+          }, 500);
+        },
+        onError: () => {
+          toast('Щось пішло не так', {
+            type: 'error',
+          });
+        },
       },
     );
-    if (request.data === 'success') {
-      navigate(thankYouRoute, {state: deliveryMethod});
-    }
-    setLoading(false);
   };
 
   React.useEffect(() => {
@@ -224,9 +260,12 @@ const Order = () => {
     return () => subscription.unsubscribe();
   }, [watch, getValues]);
 
+  const isLoading =
+    isCheckoutLoading || isCartLoading || isSubmitting || isPlacingOrder;
+
   return (
-    <LoadingSpinner isLoading={isCheckoutLoading || isCartLoading || loading}>
-      <div css={container}>
+    <LoadingSpinner isLoading={isLoading}>
+      <div ref={containerRef} css={container}>
         <div css={pathContainer}>
           <Link to={rootRoute}>
             <Text type={'bigBody'}>Головна </Text>
@@ -410,11 +449,7 @@ const Order = () => {
             </div>
           </div>
           <div>
-            <div
-              style={{
-                position: 'sticky',
-                top: 10,
-              }}>
+            <div css={cartWrapper}>
               <Cart withOrderButton={false} />
             </div>
           </div>
@@ -423,6 +458,18 @@ const Order = () => {
     </LoadingSpinner>
   );
 };
+
+const cartWrapper = theme => css`
+  height: 500px;
+
+  @media (min-width: ${theme.media.laptop}) {
+    display: flex;
+    position: sticky;
+    top: 10px;
+    height: unset;
+    max-height: calc(100vh - 40px);
+  }
+`;
 
 const container = theme => css`
   background-color: ${theme.colors.background};

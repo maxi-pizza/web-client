@@ -13,6 +13,7 @@ import {WhiteTheme} from 'src/styles/theme.ts';
 import {Link} from 'react-router-dom';
 import {favoriteRoute, rootRoute} from 'src/routes.ts';
 import modalsStore from 'src/stores/modalsStore.ts';
+import InstagramSvg from 'src/assets/icons/instagram.svg?react';
 import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/domains/Cart/cart.query.ts';
 
@@ -51,12 +52,38 @@ const Header = () => {
             <PhoneSvg color={theme.colors.accent} />
             <Text type={'bigBody'}>098 98 98 095</Text>
           </div>
+          <Link
+            target={'_blank'}
+            to={'https://www.instagram.com/maxipizza.art/'}
+            css={[
+              textNSvgWrapper,
+              css({
+                ':hover': {
+                  textDecoration: 'underline',
+                },
+              }),
+            ]}>
+            <InstagramSvg color={theme.colors.accent} />
+
+            <Text type={'bigBody'}> maxipizza.art</Text>
+          </Link>
         </div>
       </div>
-      <Link css={button} to={favoriteRoute}>
-        <FavouriteSvg color={theme.colors.accent} />
-        <Text type={'subscribe'}>Улюблені страви</Text>
-      </Link>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '20px',
+        }}>
+        {/*<Link css={deliveryAndPayment} to={deliveryAndPaymentRoute}>*/}
+        {/*  <Text type={'bigBody'}>Доставка і оплата</Text>*/}
+        {/*</Link>*/}
+        <Link css={button} to={favoriteRoute}>
+          <FavouriteSvg color={theme.colors.accent} />
+          <Text type={'subscribe'}>Улюблені страви</Text>
+        </Link>
+      </div>
+
       <div css={mobileHeaderMenu}>
         <HeaderButton
           icon={<SearchSvg />}
@@ -196,6 +223,16 @@ const button = theme => css`
   }
   @media (min-width: ${theme.media.pc}) {
     margin-right: 132px;
+  }
+`;
+
+const deliveryAndPayment = theme => css`
+  display: none;
+  @media (min-width: ${theme.media.laptop}) {
+    display: block;
+  }
+  :hover {
+    text-decoration: underline;
   }
 `;
 

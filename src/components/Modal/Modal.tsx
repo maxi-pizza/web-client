@@ -44,6 +44,7 @@ const contentWrapper = theme => css`
   border: 1px solid ${theme.colors.stroke};
   border-radius: 12px;
   display: flex;
+  max-height: 90%;
 `;
 const close = theme => css`
   position: absolute;

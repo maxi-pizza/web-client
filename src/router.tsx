@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
       },
       {
         path: categoryRoute,
-        lazy: () => import('src/domains/Home/view/Home.tsx'),
+        lazy: () => import('src/domains/Home/view/Home2.tsx'),
       },
       {
         path: favoriteRoute,

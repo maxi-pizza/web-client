@@ -4,7 +4,6 @@ import modalsStore from 'src/stores/modalsStore.ts';
 import {css, useTheme} from '@emotion/react';
 import {observer} from 'mobx-react-lite';
 import Search from 'src/components/Search/Search.tsx';
-import {useSearchParams} from 'react-router-dom';
 import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/domains/Home/products.query.ts';
 import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
@@ -27,8 +26,8 @@ type Product = {
 const SearchModal = observer(() => {
   const theme = useTheme() as WhiteTheme;
   const {data: productsData} = useQuery(productsQuery);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState<string>(searchParams.get('q') || '');
+
+  const [search, setSearch] = useState<string>('');
   const items: Product[] = (productsData || []).flatMap(
     category => category.products,
   );
@@ -41,7 +40,6 @@ const SearchModal = observer(() => {
       : [];
   const onSearch = s => {
     setSearch(s);
-    setSearchParams({q: search});
   };
   return (
     <Modal
@@ -55,7 +53,7 @@ const SearchModal = observer(() => {
           {search.length < 3 && <Text type={'caption'}>Введіть 3 символи</Text>}
         </div>
         <div css={productsGrid}>
-          {search.length > 0 && searchedItems.length > 0 ? (
+          {search.length > 2 && searchedItems.length > 0 ? (
             searchedItems.map(product => <ProductCard product={product} />)
           ) : (
             <div css={nothingFound}>

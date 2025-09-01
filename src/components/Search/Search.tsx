@@ -34,6 +34,7 @@ const svgWrapper = css`
 const inputStyles = theme => css`
   padding-left: 48px;
   width: 100%;
+  background-color: white;
   height: 100%;
   font-family: ${theme.fontFamily};
   color: ${theme.colors.textPrimary};
@@ -41,7 +42,7 @@ const inputStyles = theme => css`
   font-weight: ${theme.fontWeights.regular};
   border: 1px solid ${theme.colors.stroke};
   border-radius: 8px;
-  background-color: ${theme.colors.background};
+
   outline: none;
 `;
 

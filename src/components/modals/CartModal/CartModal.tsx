@@ -19,7 +19,7 @@ const CartModal = observer(() => {
 
 const container = css`
   width: 343px;
-  margin-top: 30px;
+  height: 100%;
 `;
 
 export default CartModal;

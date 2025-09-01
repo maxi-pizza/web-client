@@ -6,11 +6,13 @@ import {QueryClientProvider} from '@tanstack/react-query';
 import React from 'react';
 import {queryClient} from 'src/queryClient.ts';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+import {ToastContainer} from 'react-toastify';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
+        <ToastContainer />
         <Global styles={globalStyles} />
         <RouterProvider router={router} />
         <ReactQueryDevtools buttonPosition={'bottom-left'} position="bottom" />

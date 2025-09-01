@@ -79,6 +79,7 @@ const Footer = () => {
           <div css={socialWrapper}>
             <a
               css={socialButton}
+              target="_blank"
               href={'https://www.instagram.com/maxipizza.art/'}>
               <InstagramSvg color={theme.colors.accent} />
             </a>

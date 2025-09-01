@@ -46,6 +46,9 @@ const Layout = () => {
       queryClient.invalidateQueries({queryKey: [CART_QUERY_KEY]}),
   });
   useEffect(() => {
+    if (!productsData) {
+      return;
+    }
     const staleItems = Object.keys(cart || {}).filter(id => {
       const item = cart[id];
       const products = (productsData || []).flatMap(

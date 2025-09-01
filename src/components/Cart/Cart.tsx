@@ -1,5 +1,5 @@
 import React, {Fragment, memo} from 'react';
-import {css, useTheme} from '@emotion/react';
+import {useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 import {WhiteTheme} from 'src/styles/theme.ts';
 import ProductInCart from 'src/components/ProductInCart/ProductInCart.tsx';
@@ -11,6 +11,7 @@ import {productsQuery} from 'src/domains/Home/products.query.ts';
 import EmptyCartSvg from 'src/assets/icons/emtyCart.svg?react';
 import modalsStore from 'src/stores/modalsStore.ts';
 import {useIsMobile, useIsTablet} from 'src/common/hooks/useMedia.ts';
+import * as styles from './Cart.style.ts';
 
 const Cart = memo(
   ({
@@ -30,7 +31,6 @@ const Cart = memo(
     const productsInCart = productsArray.filter(product =>
       ids.includes(String(product.id)),
     );
-    // todo: delete old products
 
     const sum = ids.reduce((acc, id) => {
       return acc + cartData[id]?.count * cartData[id]?.price;
@@ -40,32 +40,29 @@ const Cart = memo(
     const isTablet = useIsTablet();
 
     return (
-      <div css={cart({isModal: modal})}>
-        <div
-          css={css`
-            margin-top: 32px;
-          `}>
+      <div css={styles.cart({isModal: modal})}>
+        <div css={styles.header}>
           <Text type={'h3'}>Ваше замовлення</Text>
         </div>
         {productsInCart.length > 0 ? (
           <>
-            <div css={cartWrapper}>
+            <div css={styles.cartWrapper}>
               {productsInCart.map(p => (
                 <Fragment key={p.id}>
                   <ProductInCart product={p} />
-                  <div css={dottedLine} />
+                  <div css={styles.dottedLine} />
                 </Fragment>
               ))}
             </div>
-            <div css={cartFooter}>
-              <div css={horizontalLine} />
-              <div css={sumWrapper}>
+            <div css={styles.cartFooter}>
+              <div css={styles.horizontalLine} />
+              <div css={styles.sumWrapper}>
                 <Text type={'h4'}>Всього:</Text>
                 <Text type={'h4'}>{String(sum)} грн</Text>
               </div>
               {withOrderButton && (
                 <Link
-                  css={orderButton}
+                  css={styles.orderButton}
                   to={checkoutRoute}
                   onClick={() => {
                     return isMobile || isTablet
@@ -80,25 +77,8 @@ const Cart = memo(
             </div>
           </>
         ) : (
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-direction: column;
-              height: 52vh;
-
-              @media (min-width: ${theme.media.laptop}) {
-                height: 500px;
-              }
-              @media (min-width: ${theme.media.pc}) {
-                height: 650px;
-              }
-            `}>
-            <div
-              css={css`
-                margin-bottom: 40px;
-              `}>
+          <div css={styles.empty}>
+            <div css={styles.emptyCartImage}>
               <EmptyCartSvg color={theme.colors.pageIndicator} />
             </div>
             <Text type={'bigBody'}>Ви ще не додали жодного товару.</Text>
@@ -108,88 +88,5 @@ const Cart = memo(
     );
   },
 );
-
-const cartWrapper = theme => css`
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
-  padding-right: 4px;
-  height: 52vh;
-  @media (min-width: ${theme.media.laptop}) {
-    height: 500px;
-  }
-`;
-
-const cart =
-  ({isModal}) =>
-  theme => css`
-    background-color: ${isModal
-      ? theme.colors.background
-      : theme.colors.container};
-    border: ${isModal ? 'none' : `1px solid ${theme.colors.stroke}`};
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 343px;
-
-    @media (min-width: ${theme.media.laptop}) {
-      width: 396px;
-    }
-  `;
-
-const dottedLine = theme => css`
-  height: 1px;
-  border-top: 1px dashed ${theme.colors.stroke};
-  width: 313px;
-
-  @media (min-width: ${theme.media.laptop}) {
-    width: 348px;
-  }
-`;
-
-const horizontalLine = theme => css`
-  height: 1px;
-  background-color: ${theme.colors.stroke};
-  width: 313px;
-
-  @media (min-width: ${theme.media.laptop}) {
-    width: 348px;
-  }
-`;
-
-const cartFooter = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  margin-bottom: 24px;
-  margin-top: 40px;
-`;
-
-const sumWrapper = css`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 24px;
-`;
-
-const orderButton = theme => css`
-  background-color: ${theme.colors.accent};
-  width: 313px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 24px;
-
-  @media (min-width: ${theme.media.laptop}) {
-    width: 348px;
-    height: 53px;
-  }
-`;
 
 export default Cart;
