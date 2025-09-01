@@ -29,6 +29,7 @@ const variants = {
   },
 };
 
+// todo: load banners from backend
 const swipeConfidenceThreshold = 1000;
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;

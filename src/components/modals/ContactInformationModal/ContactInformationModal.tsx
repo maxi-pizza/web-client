@@ -2,14 +2,18 @@ import React from 'react';
 import Modal from 'src/components/Modal/Modal.tsx';
 import modalsStore from 'src/stores/modalsStore.ts';
 import {observer} from 'mobx-react-lite';
-import {css} from '@emotion/react';
+import {css, useTheme} from '@emotion/react';
 import Text from 'src/components/Text.tsx';
 
 import DistanceSvg from 'src/assets/icons/distance.svg?react';
 import PaceSvg from 'src/assets/icons/pace.svg?react';
 import PhoneSvg from 'src/assets/icons/phone.svg?react';
+import InstagramSvg from 'src/assets/icons/instagram.svg?react';
+import {Link} from 'react-router-dom';
+import {WhiteTheme} from 'src/styles/theme.ts';
 
 const ContactInformationModal = observer(() => {
+  const theme = useTheme() as WhiteTheme;
   return (
     <Modal
       handleModal={() =>
@@ -44,6 +48,22 @@ const ContactInformationModal = observer(() => {
           <PhoneSvg />
           <Text type={'bigBody'}>098 98 98 095</Text>
         </div>
+
+        <Link
+          target={'_blank'}
+          to={'https://www.instagram.com/maxipizza.art/'}
+          css={[
+            textNSvgWrapper,
+            css({
+              ':hover': {
+                textDecoration: 'underline',
+              },
+            }),
+          ]}>
+          <InstagramSvg color={theme.colors.accent} />
+
+          <Text type={'bigBody'}> maxipizza.art</Text>
+        </Link>
       </div>
     </Modal>
   );
@@ -51,7 +71,7 @@ const ContactInformationModal = observer(() => {
 
 const container = css`
   width: 343px;
-  height: 278px;
+  height: 320px;
   margin-top: 30px;
   display: flex;
   flex-direction: column;
