@@ -7,13 +7,15 @@ import PhoneSvg from 'src/assets/icons/phone.svg?react';
 import Text from 'src/components/Text.tsx';
 import {theme, WhiteTheme} from 'src/theme.ts';
 import InstagramSvg from 'src/assets/icons/instagram.svg?react';
-import FacebookSvg from 'src/assets/icons/facebook.svg?react';
-import TelegramSvg from 'src/assets/icons/telegram.svg?react';
 import {Link} from 'react-router-dom';
 import {deliveryAndPaymentRoute} from 'src/routes.ts';
+import {useQuery} from '@tanstack/react-query';
+import {contactsQuery} from 'src/queries/contacts.query.ts';
+import {sanitizePhone} from 'src/utils/utils.ts';
 
 const Footer = () => {
   const theme = useTheme() as WhiteTheme;
+  const {data} = useQuery(contactsQuery);
 
   return (
     <div css={container}>
@@ -35,18 +37,16 @@ const Footer = () => {
               10:00-22:00
             </Text>
           </div>
-          <Link to={'tel:0669898095'} css={marginWrapper}>
-            <PhoneSvg css={svgStyles} color={theme.colors.accent} />
-            <Text type={'bigBody'} color={theme.colors.textWhite}>
-              066-98-98-095
-            </Text>
-          </Link>
-          <Link to={'tel:0989898095'} css={marginWrapper}>
-            <PhoneSvg css={svgStyles} color={theme.colors.accent} />
-            <Text type={'bigBody'} color={theme.colors.textWhite}>
-              098 98 98 095
-            </Text>
-          </Link>
+          {(data?.phones || []).map(phone => {
+            return (
+              <Link to={`tel:${sanitizePhone(phone)}`} css={marginWrapper}>
+                <PhoneSvg css={svgStyles} color={theme.colors.accent} />
+                <Text type={'bigBody'} color={theme.colors.textWhite}>
+                  {phone}
+                </Text>
+              </Link>
+            );
+          })}
         </div>
         <div css={legalInformationWrapper}>
           <div>
@@ -77,12 +77,12 @@ const Footer = () => {
             Ми в соціальних мережах:
           </Text>
           <div css={socialWrapper}>
-            <a
-              css={socialButton}
-              target="_blank"
-              href={'https://www.instagram.com/maxipizza.art/'}>
-              <InstagramSvg color={theme.colors.accent} />
-            </a>
+            {data?.instagram_web && (
+              <a css={socialButton} target="_blank" href={data?.instagram_web}>
+                <InstagramSvg color={theme.colors.accent} />
+              </a>
+            )}
+
             {/*<button css={socialButton}>*/}
             {/*  <TelegramSvg color={theme.colors.accent} />*/}
             {/*</button>*/}

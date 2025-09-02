@@ -17,12 +17,13 @@ import InstagramSvg from 'src/assets/icons/instagram.svg?react';
 import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/queries/cart.query.ts';
 import {ModalEnum} from 'src/contants.ts';
+import {contactsQuery} from 'src/queries/contacts.query.ts';
+import {sanitizePhone} from 'src/utils/utils.ts';
 
 const Header = () => {
   const theme = useTheme() as WhiteTheme;
-  const {data: cartData} = useQuery({
-    ...cartQuery,
-  });
+  const {data: cartData} = useQuery(cartQuery);
+  const {data: contactsData} = useQuery(contactsQuery);
   const totalCount = Object.keys(cartData || {}).reduce(
     (acc, key) => acc + cartData[key].count,
     0,
@@ -43,31 +44,39 @@ const Header = () => {
             <PaceSvg color={theme.colors.accent} />
             <Text type={'bigBody'}>10:00-22:00</Text>
           </div>
-          <div css={verticalBar} />
-          <Link to={'tel:0669898095'} css={textNSvgWrapper}>
-            <PhoneSvg color={theme.colors.accent} />
-            <Text type={'bigBody'}>066 98 98 095</Text>
-          </Link>
-          <div css={verticalBar} />
-          <Link to={'tel:0989898095'} css={textNSvgWrapper}>
-            <PhoneSvg color={theme.colors.accent} />
-            <Text type={'bigBody'}>098 98 98 095</Text>
-          </Link>
-          <Link
-            target={'_blank'}
-            to={'https://www.instagram.com/maxipizza.art/'}
-            css={[
-              textNSvgWrapper,
-              css({
-                ':hover': {
-                  textDecoration: 'underline',
-                },
-              }),
-            ]}>
-            <InstagramSvg color={theme.colors.accent} />
+          {(contactsData?.phones || []).map(phone => (
+            <>
+              <div css={verticalBar} />
+              <Link to={`tel:${sanitizePhone(phone)}`} css={textNSvgWrapper}>
+                <PhoneSvg color={theme.colors.accent} />
+                <Text type={'bigBody'}>{phone}</Text>
+              </Link>
+            </>
+          ))}
 
-            <Text type={'bigBody'}> maxipizza.art</Text>
-          </Link>
+          {contactsData?.instagram_web && (
+            <>
+              <div css={verticalBar} />
+
+              <Link
+                target={'_blank'}
+                to={contactsData?.instagram_web}
+                css={[
+                  textNSvgWrapper,
+                  css({
+                    ':hover': {
+                      textDecoration: 'underline',
+                    },
+                  }),
+                ]}>
+                <InstagramSvg color={theme.colors.accent} />
+
+                <Text type={'bigBody'}>
+                  {contactsData?.instagram_display_text}
+                </Text>
+              </Link>
+            </>
+          )}
         </div>
       </div>
       <div
@@ -224,15 +233,15 @@ const button = theme => css`
   }
 `;
 
-const deliveryAndPayment = theme => css`
-  display: none;
-  @media (min-width: ${theme.media.laptop}) {
-    display: block;
-  }
-  :hover {
-    text-decoration: underline;
-  }
-`;
+// const deliveryAndPayment = theme => css`
+//   display: none;
+//   @media (min-width: ${theme.media.laptop}) {
+//     display: block;
+//   }
+//   :hover {
+//     text-decoration: underline;
+//   }
+// `;
 
 const mobileHeaderMenu = theme => css`
   display: flex;

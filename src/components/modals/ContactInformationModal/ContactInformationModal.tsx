@@ -12,18 +12,19 @@ import InstagramSvg from 'src/assets/icons/instagram.svg?react';
 import {Link} from 'react-router-dom';
 import {WhiteTheme} from 'src/theme.ts';
 import {ModalEnum} from 'src/contants.ts';
+import {useQuery} from '@tanstack/react-query';
+import {contactsQuery} from 'src/queries/contacts.query.ts';
+import {sanitizePhone} from 'src/utils/utils.ts';
 
 const ContactInformationModal = observer(() => {
   const theme = useTheme() as WhiteTheme;
+  const {data} = useQuery(contactsQuery);
   return (
     <Modal
       onClose={() => modalsStore.close(ModalEnum.Contacts)}
       isVisible={modalsStore.isOpen(ModalEnum.Contacts)}>
       <div css={container}>
-        <div
-          css={css`
-            margin-bottom: 14px;
-          `}>
+        <div css={header}>
           <Text type={'h3'}>Контактна інформація:</Text>
         </div>
         <div css={textNSvgWrapper}>
@@ -35,36 +36,44 @@ const ContactInformationModal = observer(() => {
           <PaceSvg />
           <Text type={'bigBody'}>10:00-22:00</Text>
         </div>
-        <div css={horizontalBar} />
-        <Link to={'tel:0669898095'} css={textNSvgWrapper}>
-          <PhoneSvg />
-          <Text type={'bigBody'}>066 98 98 095</Text>
-        </Link>
-        <div css={horizontalBar} />
-        <Link to={'tel:0989898095'} css={textNSvgWrapper}>
-          <PhoneSvg />
-          <Text type={'bigBody'}>098 98 98 095</Text>
-        </Link>
 
-        <Link
-          target={'_blank'}
-          to={'https://www.instagram.com/maxipizza.art/'}
-          css={[
-            textNSvgWrapper,
-            css({
-              ':hover': {
-                textDecoration: 'underline',
-              },
-            }),
-          ]}>
-          <InstagramSvg color={theme.colors.accent} />
+        {(data?.phones || []).map(phone => {
+          return (
+            <>
+              <div css={horizontalBar} />
+              <Link to={`tel:${sanitizePhone(phone)}`} css={textNSvgWrapper}>
+                <PhoneSvg />
+                <Text type={'bigBody'}> {phone}</Text>
+              </Link>
+            </>
+          );
+        })}
+        <div css={horizontalBar} />
+        {data?.instagram_web && (
+          <Link
+            target={'_blank'}
+            to={data.instagram_web}
+            css={[
+              textNSvgWrapper,
+              css({
+                ':hover': {
+                  textDecoration: 'underline',
+                },
+              }),
+            ]}>
+            <InstagramSvg color={theme.colors.accent} />
 
-          <Text type={'bigBody'}> maxipizza.art</Text>
-        </Link>
+            <Text type={'bigBody'}>{data.instagram_display_text}</Text>
+          </Link>
+        )}
       </div>
     </Modal>
   );
 });
+
+const header = css`
+  margin-bottom: 14px;
+`;
 
 const container = css`
   width: 343px;

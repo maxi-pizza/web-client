@@ -4,3 +4,7 @@ export const PHONE_UA_REGEX =
 export const isValidUkrainianNumber = (value: string) => {
   return PHONE_UA_REGEX.test(value ?? '');
 };
+
+export const sanitizePhone = (phone: string) => {
+  return phone.replace(/[^0-9.]/g, '');
+};
