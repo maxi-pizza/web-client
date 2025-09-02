@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {css} from '@emotion/react';
 import ArrowSvg from 'src/assets/icons/arrow-left.svg?react';
 
@@ -56,14 +56,30 @@ const Banner2 = () => {
 
   const imageIndex = wrap(0, images.length, page);
 
-  const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
-  };
+  const paginate = useCallback(
+    (newDirection: number) => {
+      setPage([page + newDirection, newDirection]);
+    },
+    [page, setPage],
+  );
   const handleBannerStartInView = (inView: boolean) => {
     if (inView) {
       navigate(rootRoute);
     }
   };
+
+  const slideToNextItem = useCallback(() => {
+    paginate(1);
+  }, [paginate]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      slideToNextItem();
+    }, 5000);
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [slideToNextItem]);
 
   if (images.length < 1) {
     return null;
