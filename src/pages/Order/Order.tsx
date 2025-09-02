@@ -117,7 +117,7 @@ const Order = () => {
 
   const takeawaySchema = yup.object({
     name: yup.string(),
-    email: yup.string(),
+    email: yup.string().email(),
     phone: yup
       .string()
       .required(validationRequired)
@@ -237,8 +237,12 @@ const Order = () => {
             clearCartMutation();
           }, 500);
         },
-        onError: () => {
-          toast('Щось пішло не так', {
+        onError: e => {
+          const message =
+            (axios.isAxiosError(e) && e.response?.data?.message) ||
+            'Щось пішло не так';
+          console.log(message, e);
+          toast(message, {
             type: 'error',
           });
         },
@@ -315,12 +319,16 @@ const Order = () => {
                 <div css={contactInput}>
                   <Controller
                     control={control}
-                    render={({field: {onChange, value}}) => (
+                    render={({
+                      field: {onChange, value},
+                      formState: {errors},
+                    }) => (
                       <Input
                         placeholder={'Email'}
                         inputType={'text'}
                         value={value}
                         onChangeText={onChange}
+                        error={errors.email?.message}
                       />
                     )}
                     name="email"
