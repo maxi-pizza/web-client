@@ -34,10 +34,11 @@ type FormValues = {
   // floor: string;
   // apartment: string;
   // house: string;
+  // intercomCode: string;
 
   deliveryMethod: number;
   change: string;
-  intercomCode: string;
+
   phone: string;
   address: string;
   peopleCount: number;
@@ -88,20 +89,18 @@ const Order = () => {
       : {
           name: '',
           email: '',
-          phone: '',
+          phone: '+38',
           comment: '',
           // house: '',
           // street: '',
           // floor: '',
           // isHouse: false,
-          //   entrance: '',
-          //   apartment: '',
+          // entrance: '',
+          // apartment: '',
+          // intercomCode: '',
           address: '',
-          intercomCode: '',
-
           change: '',
           deliveryMethod: DeliveryMethodEnum.Takeaway,
-
           paymentMethod: PaymentMethodEnum.Card,
           peopleCount: 0,
         };
