@@ -1,22 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {css} from '@emotion/react';
 import ArrowSvg from 'src/assets/icons/arrow-left.svg?react';
-import {useIsMobile} from 'src/hooks/useMedia.ts';
 
 import {motion, AnimatePresence} from 'framer-motion';
 import {wrap} from 'motion';
 
-import Banner2 from 'src/assets/banner2.png';
-import Banner3 from 'src/assets/banner3.png';
-import Banner4 from 'src/assets/banner4.png';
-import Banner5 from 'src/assets/banner5.png';
-import Banner6 from 'src/assets/banner6-n.png';
-
-import BannerMobile2 from 'src/assets/banner-mobile2.png';
-import BannerMobile3 from 'src/assets/banner-mobile3.png';
-import BannerMobile4 from 'src/assets/banner-mobile4.png';
-import BannerMobile5 from 'src/assets/banner-mobile5.png';
-import BannerMobile6 from 'src/assets/banner-mobile6.png';
+import {InView} from 'react-intersection-observer';
+import {rootRoute} from 'src/routes.ts';
+import {useNavigate} from 'react-router-dom';
+import {useQuery} from '@tanstack/react-query';
+import {bannersQuery} from 'src/queries/banners.query.ts';
+import {publicStorage} from 'src/utils/publicStorage.ts';
 
 const variants = {
   enter: (direction: number) => {
@@ -49,101 +43,129 @@ const Banner = () => {
     img.src = src;
   };
 
-  const images = [
-    // Banner1,
-    Banner2,
-    Banner3,
-    Banner4,
-    Banner5,
-    Banner6,
-  ];
-  const mobileImages = [
-    // BannerMobile1,
-    BannerMobile2,
-    BannerMobile3,
-    BannerMobile4,
-    BannerMobile5,
-    BannerMobile6,
-  ];
+  const {data} = useQuery(bannersQuery);
+
+  const images = (data || []).map(banner => publicStorage(banner.image));
 
   useEffect(() => {
     images.forEach(preloadImage);
-  }, []);
+  }, [images]);
 
   const [[page, direction], setPage] = useState([0, 0]);
-  const mobile = useIsMobile();
+  const navigate = useNavigate();
 
   const imageIndex = wrap(0, images.length, page);
 
-  const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
+  const paginate = useCallback(
+    (newDirection: number) => {
+      setPage([page + newDirection, newDirection]);
+    },
+    [page, setPage],
+  );
+  const handleBannerStartInView = (inView: boolean) => {
+    if (inView) {
+      navigate(rootRoute);
+    }
   };
-  // setTimeout(() => paginate(1), 7000);
+
+  const slideToNextItem = useCallback(() => {
+    paginate(1);
+  }, [paginate]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      slideToNextItem();
+    }, 5000);
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [slideToNextItem]);
+
+  if (images.length < 1) {
+    return null;
+  }
+
   return (
-    <div css={bannerContainer}>
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.img
-          key={page}
-          src={mobile ? mobileImages[imageIndex] : images[imageIndex]}
-          custom={direction}
-          variants={variants}
-          initial={'enter'}
-          animate={'center'}
-          exit={'exit'}
-          transition={{
-            opacity: {duration: 0.2},
-          }}
-          drag="x"
-          dragConstraints={{left: 0, right: 0}}
-          dragElastic={1}
-          onDragEnd={(e, {offset, velocity}) => {
-            const swipe = swipePower(offset.x, velocity.x);
-            if (swipe < -swipeConfidenceThreshold) {
-              paginate(1);
-            } else if (swipe > swipeConfidenceThreshold) {
-              paginate(-1);
-            }
-          }}
-        />
-      </AnimatePresence>
-      {/*<img*/}
-      {/*  css={imageStyles}*/}
-      {/*  src={mobile || tablet ? String(BannerMobileImg) : String(BannerImg)}*/}
-      {/*  alt={'baner'}*/}
-      {/*/>*/}
-      <div css={pageControlWrapper({slidesCount: images.length})}>
-        {images.map((image, i) => (
-          <div css={activeIndicator({isActive: i === imageIndex})} key={i}>
-            <div
-              css={pageIndicator({isActive: i === imageIndex})}
-              onClick={() => paginate(i - imageIndex)}
-            />
-          </div>
-        ))}
+    <div css={root}>
+      <InView threshold={1} onChange={handleBannerStartInView}>
+        <div />
+      </InView>
+      <div css={bannerContainer}>
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.img
+            key={page}
+            src={images[imageIndex]}
+            custom={direction}
+            variants={variants}
+            initial={'enter'}
+            animate={'center'}
+            exit={'exit'}
+            transition={{
+              opacity: {duration: 0.2},
+            }}
+            drag="x"
+            dragConstraints={{left: 0, right: 0}}
+            dragElastic={1}
+            onDragEnd={(_, {offset, velocity}) => {
+              const swipe = swipePower(offset.x, velocity.x);
+              if (swipe < -swipeConfidenceThreshold) {
+                paginate(1);
+              } else if (swipe > swipeConfidenceThreshold) {
+                paginate(-1);
+              }
+            }}
+          />
+        </AnimatePresence>
+
+        <div css={pageControlWrapper({slidesCount: images.length})}>
+          {images.map((_, i) => (
+            <div css={activeIndicator({isActive: i === imageIndex})} key={i}>
+              <div
+                css={pageIndicator({isActive: i === imageIndex})}
+                onClick={() => paginate(i - imageIndex)}
+              />
+            </div>
+          ))}
+        </div>
+        <button css={leftArrowBtn} onClick={() => paginate(-1)}>
+          <ArrowSvg />
+        </button>
+        <button css={rightArrowBtn} onClick={() => paginate(1)}>
+          <ArrowSvg />
+        </button>
       </div>
-      <button css={leftArrowBtn} onClick={() => paginate(-1)}>
-        <ArrowSvg />
-      </button>
-      <button css={rightArrowBtn} onClick={() => paginate(1)}>
-        <ArrowSvg />
-      </button>
     </div>
   );
 };
 
+const root = theme => css`
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 130px;
+
+  @media (min-width: ${theme.media.pc}) {
+    width: 1661px;
+  }
+`;
+
 const bannerContainer = theme => css`
-  margin-top: -92px;
   z-index: 1;
   position: relative;
-  width: 100%;
-  padding-top: calc(700 / 350 * 100%);
+
+  padding-top: calc(73 / 130 * 100%);
+  border-radius: 40px;
+
   overflow-x: hidden;
+
   @media (min-width: ${theme.media.tablet}) {
-    padding-top: calc(1000 / 1800 * 100%);
+    border-radius: 40px;
   }
+
   @media (min-width: ${theme.media.laptop}) {
-    padding-top: calc(800 / 1920 * 100%);
+    border-radius: 80px;
   }
+
   img {
     position: absolute;
     width: 100%;
@@ -160,7 +182,11 @@ const pageControlWrapper =
   theme => css`
     position: absolute;
     bottom: 0;
-    margin-bottom: 96px;
+    opacity: 0.5;
+    :hover {
+      opacity: 1;
+    }
+    margin-bottom: 0;
     transform: translate(-50%, -50%);
     left: 50%;
     height: 24px;

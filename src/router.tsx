@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        lazy: () => import('src/pages/Home/Home2.tsx'),
+        lazy: () => import('src/pages/Home/Home.tsx'),
       },
       {
         path: deliveryAndPaymentRoute,
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
       },
       {
         path: categoryRoute,
-        lazy: () => import('src/pages/Home/Home2.tsx'),
+        lazy: () => import('src/pages/Home/Home.tsx'),
       },
       {
         path: favoriteRoute,

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
-import Banner from 'src/components/Banner/Banner.tsx';
+
 import MenuLayout from 'src/components/MenuLayout/MenuLayout.tsx';
 import Search from 'src/components/Search/Search.tsx';
 
@@ -8,7 +8,6 @@ import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 import Cart from 'src/components/Cart/Cart.tsx';
 import {useQuery} from '@tanstack/react-query';
 import {productsQuery} from 'src/queries/products.query.ts';
-
 import {observer} from 'mobx-react-lite';
 import {useParams, useSearchParams} from 'react-router-dom';
 import {fuzzySearch} from 'src/utils/fuzzySearch.ts';
@@ -19,6 +18,7 @@ import {router} from 'src/router.tsx';
 import {categoryRoute} from 'src/routes.ts';
 import {Category, Product} from 'src/types.ts';
 import {ProductsByCategory} from 'src/pages/Home/ProductsByCategory.tsx';
+import Banner from 'src/components/Banner/Banner.tsx';
 
 const PC_COLUMNS = 3;
 const TABLET_COLUMNS = 2;
@@ -109,10 +109,11 @@ const Home = observer(() => {
     item.products?.length ? estSizeForResolutions(item.products.length) : 0,
   );
 
-  const scrollMargin = bannerContainerRef?.current?.offsetHeight
-    ? bannerContainerRef.current?.offsetHeight +
-      (isMobile ? -90 : isTablet ? -70 : CATALOG_TOP_PADDING)
-    : 0;
+  const scrollMargin =
+    bannerContainerRef?.current?.offsetHeight != null
+      ? bannerContainerRef.current.offsetHeight +
+        (isMobile ? 20 : isTablet ? 20 : CATALOG_TOP_PADDING + 150)
+      : 0;
 
   const categoryVirtualizer = useWindowVirtualizer({
     count: nonEmptyCategories.length,
@@ -257,7 +258,8 @@ const Home = observer(() => {
 
 const container = theme => css`
   background-color: ${theme.colors.background};
-  margin-top: -80px;
+  margin-top: 50px;
+  border: 1px solid #eeeef5;
   margin-bottom: -80px;
   position: relative;
   z-index: 2;
@@ -271,7 +273,7 @@ const container = theme => css`
 `;
 
 const menuWrapper = theme => css`
-  padding-top: 80px;
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -280,6 +282,7 @@ const menuWrapper = theme => css`
   @media (min-width: ${theme.media.laptop}) {
     flex-direction: row;
     align-items: normal;
+    padding-top: 80px;
     justify-content: center;
   }
 `;
@@ -325,11 +328,11 @@ const searchProductsGrid = theme => css`
 
 const cartWrapper = theme => css`
   display: none;
+  max-height: calc(100vh - 40px);
 
   @media (min-width: ${theme.media.laptop}) {
     display: block;
     margin-left: 24px;
-    height: 100%;
     position: sticky;
     top: 10px;
   }
