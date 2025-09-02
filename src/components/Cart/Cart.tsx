@@ -10,7 +10,6 @@ import {cartQuery} from 'src/queries/cart.query.ts';
 import {productsQuery} from 'src/queries/products.query.ts';
 import EmptyCartSvg from 'src/assets/icons/emtyCart.svg?react';
 import modalsStore from 'src/stores/modalsStore.ts';
-import {useIsMobile, useIsTablet} from 'src/hooks/useMedia.ts';
 import * as styles from './Cart.style.ts';
 import {ModalEnum} from 'src/contants.ts';
 
@@ -36,9 +35,6 @@ const Cart = memo(
     const sum = ids.reduce((acc, id) => {
       return acc + cartData[id]?.count * cartData[id]?.price;
     }, 0);
-
-    const isMobile = useIsMobile();
-    const isTablet = useIsTablet();
 
     return (
       <div css={styles.cart({isModal: modal})}>
@@ -66,9 +62,7 @@ const Cart = memo(
                   css={styles.orderButton}
                   to={checkoutRoute}
                   onClick={() => {
-                    if (isMobile || isTablet) {
-                      modalsStore.open(ModalEnum.Cart);
-                    }
+                    modalsStore.close(ModalEnum.Cart);
                   }}>
                   <Text type={'h5'} color={theme.colors.textWhite}>
                     Замовити
