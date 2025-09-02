@@ -18,6 +18,7 @@
     "@radix-ui/react-radio-group": "^1.2.1",
     "@radix-ui/react-switch": "^1.1.1",
     "@re-dev/react-truncate": "^0.5.2",
+    "@react-input/mask": "^2.0.4",
     "@tanstack/react-query": "^5.62.7",
     "@tanstack/react-query-devtools": "^5.85.6",
     "@tanstack/react-virtual": "^3.11.2",

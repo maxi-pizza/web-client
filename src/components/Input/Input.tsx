@@ -1,45 +1,45 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {css, useTheme} from '@emotion/react';
 import {WhiteTheme} from 'src/theme.ts';
 import Text from 'src/components/Text.tsx';
 
-const Input = ({
-  inputType,
-  placeholder,
-  value,
-  onChangeText,
-  error,
-}: {
+type InputProps = {
   inputType: 'text' | 'tel' | 'number' | 'email';
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
   error?: string;
-}) => {
-  const theme = useTheme() as WhiteTheme;
-
-  return (
-    <div
-      css={css`
-        position: relative;
-      `}>
-      <input
-        type={inputType}
-        placeholder={placeholder}
-        value={value}
-        onChange={e => onChangeText(e.target.value)}
-        css={inputStyles(error)}
-      />
-      {error && (
-        <div css={errorWrapper}>
-          <Text type={'caption'} color={theme.colors.accent}>
-            {error}
-          </Text>
-        </div>
-      )}
-    </div>
-  );
 };
+
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({inputType, placeholder, value, onChangeText, error}: InputProps, ref) => {
+    const theme = useTheme() as WhiteTheme;
+
+    return (
+      <div css={root}>
+        <input
+          ref={ref}
+          type={inputType}
+          placeholder={placeholder}
+          value={value}
+          onChange={e => onChangeText(e.target.value)}
+          css={inputStyles(error)}
+        />
+        {error && (
+          <div css={errorWrapper}>
+            <Text type={'caption'} color={theme.colors.accent}>
+              {error}
+            </Text>
+          </div>
+        )}
+      </div>
+    );
+  },
+);
+
+const root = css`
+  position: relative;
+`;
 
 const errorWrapper = css`
   position: absolute;

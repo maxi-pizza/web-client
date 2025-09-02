@@ -25,6 +25,7 @@ import LoadingSpinner from 'src/components/LoadingSpinner/LoadingSpinner.tsx';
 import {DeliveryMethodEnum, PaymentMethodEnum} from 'src/types.ts';
 import {toast} from 'react-toastify';
 import {API_BASE_URL} from 'src/env.ts';
+import {unformat, useMask} from '@react-input/mask';
 
 type FormValues = {
   // isHouse: boolean;
@@ -46,8 +47,16 @@ type FormValues = {
   email: string;
 };
 
+const phoneMaskOptions = {
+  mask: '+38(___) ___-__-__',
+  replacement: {_: /\d/},
+  showMask: true,
+};
+
 const Order = () => {
   const {pathname} = useLocation();
+  const phoneInputRef = useMask(phoneMaskOptions);
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const {state} = useNavigation();
@@ -215,7 +224,7 @@ const Order = () => {
           name: name,
           address,
           email,
-          phone,
+          phone: unformat(phone, phoneMaskOptions),
           delivery_method_id: deliveryMethod,
           payment_method_id: paymentMethod,
           people_count: peopleCount,
@@ -308,6 +317,7 @@ const Order = () => {
                       <Input
                         placeholder={'Номер телефону*'}
                         inputType={'text'}
+                        ref={phoneInputRef}
                         onChangeText={onChange}
                         value={value}
                         error={errors.phone?.message}
