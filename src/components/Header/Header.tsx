@@ -16,6 +16,7 @@ import modalsStore from 'src/stores/modalsStore.ts';
 import InstagramSvg from 'src/assets/icons/instagram.svg?react';
 import {useQuery} from '@tanstack/react-query';
 import {cartQuery} from 'src/queries/cart.query.ts';
+import {ModalEnum} from 'src/contants.ts';
 
 const Header = () => {
   const theme = useTheme() as WhiteTheme;
@@ -88,15 +89,13 @@ const Header = () => {
         <HeaderButton
           icon={<SearchSvg />}
           handleButton={() => {
-            modalsStore.handleSearchModal(!modalsStore.searchModal);
+            modalsStore.open(ModalEnum.Search);
           }}
         />
         <HeaderButton
-          handleButton={() =>
-            modalsStore.handleContactInformationModal(
-              !modalsStore.contactInformationModal,
-            )
-          }
+          handleButton={() => {
+            modalsStore.open(ModalEnum.Contacts);
+          }}
           icon={<DistanceSvg />}
         />
         <Link to={favoriteRoute}>
@@ -108,26 +107,13 @@ const Header = () => {
           />
         </Link>
         <HeaderButton
-          handleButton={() =>
-            modalsStore.handleCartModal(!modalsStore.cartModal)
-          }
+          handleButton={() => {
+            modalsStore.open(ModalEnum.Cart);
+          }}
           icon={
             <div style={{position: 'relative'}}>
               <CartSvg />
-              <div
-                style={{
-                  position: 'absolute',
-                  minWidth: 25,
-                  height: 25,
-                  top: -22,
-                  right: -22,
-                  borderRadius: '25px',
-                  backgroundColor: 'red',
-                  color: 'white',
-                  padding: 5,
-                }}>
-                {totalCount}
-              </div>
+              <div css={cartCount}>{totalCount}</div>
             </div>
           }
         />
@@ -135,6 +121,18 @@ const Header = () => {
     </div>
   );
 };
+
+const cartCount = css({
+  position: 'absolute',
+  minWidth: 25,
+  height: 25,
+  top: -22,
+  right: -22,
+  borderRadius: '25px',
+  backgroundColor: 'red',
+  color: 'white',
+  padding: 5,
+});
 
 const headerContainer = theme => css`
   background-color: ${theme.colors.background};

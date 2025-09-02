@@ -5,23 +5,19 @@ import Text from 'src/components/Text.tsx';
 import {observer} from 'mobx-react-lite';
 import modalsStore from 'src/stores/modalsStore.ts';
 import {css} from '@emotion/react';
+import {ModalEnum} from 'src/contants.ts';
 
 const RestaurantCloseModal = observer(() => {
+  const handleClose = () => {
+    modalsStore.close(ModalEnum.RestaurantClosed);
+  };
   return (
     <Modal
-      handleModal={() =>
-        modalsStore.handleRestaurantClosedModal(
-          !modalsStore.showRestaurantClosedModal,
-        )
-      }
-      isVisible={modalsStore.showRestaurantClosedModal}>
+      onClose={handleClose}
+      isVisible={modalsStore.isOpen(ModalEnum.RestaurantClosed)}>
       <div css={modalWrapper}>
         <ErrorSvg width={'120px'} height={'120px'} />
-        <div
-          css={css`
-            margin-top: 24px;
-            margin-bottom: 24px;
-          `}>
+        <div css={title}>
           <Text type={'h2'}>Ми зараз зачинені!</Text>
         </div>
         <Text type={'h4'} opacity={'60%'}>
@@ -32,6 +28,11 @@ const RestaurantCloseModal = observer(() => {
     </Modal>
   );
 });
+
+const title = css`
+  margin-top: 24px;
+  margin-bottom: 24px;
+`;
 
 const modalWrapper = theme => css`
   display: flex;

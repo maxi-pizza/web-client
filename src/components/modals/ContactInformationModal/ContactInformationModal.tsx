@@ -11,17 +11,14 @@ import PhoneSvg from 'src/assets/icons/phone.svg?react';
 import InstagramSvg from 'src/assets/icons/instagram.svg?react';
 import {Link} from 'react-router-dom';
 import {WhiteTheme} from 'src/theme.ts';
+import {ModalEnum} from 'src/contants.ts';
 
 const ContactInformationModal = observer(() => {
   const theme = useTheme() as WhiteTheme;
   return (
     <Modal
-      handleModal={() =>
-        modalsStore.handleContactInformationModal(
-          !modalsStore.contactInformationModal,
-        )
-      }
-      isVisible={modalsStore.contactInformationModal}>
+      onClose={() => modalsStore.close(ModalEnum.Contacts)}
+      isVisible={modalsStore.isOpen(ModalEnum.Contacts)}>
       <div css={container}>
         <div
           css={css`

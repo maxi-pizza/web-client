@@ -11,17 +11,8 @@ import ProductCard from 'src/components/ProductCard/ProductCard.tsx';
 import Text from 'src/components/Text.tsx';
 import EmptyCartSvg from 'src/assets/icons/emtyCart.svg?react';
 import {WhiteTheme} from 'src/theme.ts';
-
-type Product = {
-  name: string;
-  id: number;
-  slug: string;
-  image: string;
-  description: string;
-  price: string;
-  weight: string;
-  unit: string;
-};
+import {ModalEnum} from 'src/contants.ts';
+import {Product, Category} from 'src/types.ts';
 
 const SearchModal = observer(() => {
   const theme = useTheme() as WhiteTheme;
@@ -29,7 +20,7 @@ const SearchModal = observer(() => {
 
   const [search, setSearch] = useState<string>('');
   const items: Product[] = (productsData || []).flatMap(
-    category => category.products,
+    (category: Category) => category.products,
   );
 
   const searchedItems =
@@ -43,10 +34,8 @@ const SearchModal = observer(() => {
   };
   return (
     <Modal
-      handleModal={() =>
-        modalsStore.handleSearchModal(!modalsStore.searchModal)
-      }
-      isVisible={modalsStore.searchModal}>
+      onClose={() => modalsStore.close(ModalEnum.Search)}
+      isVisible={modalsStore.isOpen(ModalEnum.Search)}>
       <div css={container}>
         <div css={searchWrapper}>
           <Search onSearch={onSearch} value={search} />

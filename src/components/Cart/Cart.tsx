@@ -12,6 +12,7 @@ import EmptyCartSvg from 'src/assets/icons/emtyCart.svg?react';
 import modalsStore from 'src/stores/modalsStore.ts';
 import {useIsMobile, useIsTablet} from 'src/hooks/useMedia.ts';
 import * as styles from './Cart.style.ts';
+import {ModalEnum} from 'src/contants.ts';
 
 const Cart = memo(
   ({
@@ -65,9 +66,9 @@ const Cart = memo(
                   css={styles.orderButton}
                   to={checkoutRoute}
                   onClick={() => {
-                    return isMobile || isTablet
-                      ? modalsStore.handleCartModal(!modalsStore.cartModal)
-                      : null;
+                    if (isMobile || isTablet) {
+                      modalsStore.open(ModalEnum.Cart);
+                    }
                   }}>
                   <Text type={'h5'} color={theme.colors.textWhite}>
                     Замовити

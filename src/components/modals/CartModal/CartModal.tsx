@@ -4,12 +4,15 @@ import Cart from 'src/components/Cart/Cart.tsx';
 import Modal from 'src/components/Modal/Modal.tsx';
 import modalsStore from 'src/stores/modalsStore.ts';
 import {observer} from 'mobx-react-lite';
+import {ModalEnum} from 'src/contants.ts';
 
 const CartModal = observer(() => {
   return (
     <Modal
-      handleModal={() => modalsStore.handleCartModal(!modalsStore.cartModal)}
-      isVisible={modalsStore.cartModal}>
+      onClose={() => {
+        modalsStore.close(ModalEnum.Cart);
+      }}
+      isVisible={modalsStore.isOpen(ModalEnum.Cart)}>
       <div css={container}>
         <Cart modal={true} />
       </div>

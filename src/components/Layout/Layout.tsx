@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Header from 'src/components/Header/Header.tsx';
 import Footer from 'src/components/Footer/Footer.tsx';
 import {css} from '@emotion/react';
 import RestaurantCloseModal from 'src/components/modals/RestaurantClosedModal/RestaurantCloseModal.tsx';
 import {
+  Location,
   Outlet,
   RouterState,
   RouterSubscriber,
@@ -19,22 +20,14 @@ import {productsQuery} from 'src/queries/products.query.ts';
 import {router} from 'src/router.tsx';
 import modalsStore from 'src/stores/modalsStore.ts';
 import Error505 from 'src/pages/505Error/505Error.tsx';
-import {IS_PROD} from 'src/env.ts';
-type Product = {
-  id: number;
-  slug: string;
-  name: string;
-  price: string;
-};
-type Category = {
-  id: number;
-  name: string;
-  slug: string;
-  products: Product[];
-};
+import {ModalEnum} from 'src/contants.ts';
+import {Category, Product} from 'src/types.ts';
+import {reaction} from 'mobx';
+
 const Layout = () => {
   const {data: cart} = useQuery(cartQuery);
   const {data: productsData} = useQuery(productsQuery);
+  const restaurantClosedLastTimeShown = useRef<number | null>(null);
   const queryClient = useQueryClient();
   const {mutate: removeFromCart} = useMutation({
     mutationKey: [CART_QUERY_KEY],
@@ -42,6 +35,16 @@ const Layout = () => {
     onSuccess: () =>
       queryClient.invalidateQueries({queryKey: [CART_QUERY_KEY]}),
   });
+  useEffect(() => {
+    return reaction(
+      () => modalsStore.modals,
+      modals => {
+        if (modals.includes(ModalEnum.RestaurantClosed)) {
+          restaurantClosedLastTimeShown.current = Date.now();
+        }
+      },
+    );
+  }, []);
   useEffect(() => {
     if (!productsData) {
       return;
@@ -82,8 +85,13 @@ const Layout = () => {
         end: [22, 0],
       });
 
-      if (closed && IS_PROD) {
-        modalsStore.handleRestaurantClosedModal(true);
+      const showCloseWarning =
+        restaurantClosedLastTimeShown.current == null ||
+        Date.now() - restaurantClosedLastTimeShown.current >
+          SHOW_RESTAURANT_CLOSE_WARNING_INTERVAL;
+
+      if (closed && showCloseWarning) {
+        modalsStore.open(ModalEnum.RestaurantClosed);
       }
     };
     // run immediately
@@ -93,20 +101,11 @@ const Layout = () => {
     });
 
     return router.subscribe(routerSubscriber);
-  }, []);
+  }, [restaurantClosedLastTimeShown]);
+
   return (
     <div>
-      <ScrollRestoration
-        getKey={location => {
-          if (
-            location.pathname.startsWith(categoryRoute.replace(':slug', '')) ||
-            location.pathname === rootRoute
-          ) {
-            return 'category';
-          }
-          return location.key;
-        }}
-      />
+      <ScrollRestoration getKey={getKey} />
 
       <div css={stickyHeader}>
         <Header />
@@ -121,6 +120,16 @@ const Layout = () => {
       <Footer />
     </div>
   );
+};
+
+const getKey = (location: Location<any>) => {
+  if (
+    location.pathname.startsWith(categoryRoute.replace(':slug', '')) ||
+    location.pathname === rootRoute
+  ) {
+    return 'category';
+  }
+  return location.key;
 };
 
 const isClosed = ({start, end}) => {
@@ -149,6 +158,8 @@ const stickyHeader = theme => css`
     position: unset;
   }
 `;
+
+const SHOW_RESTAURANT_CLOSE_WARNING_INTERVAL = 30_000;
 
 export const Component = Layout;
 export const ErrorBoundary = Error505;

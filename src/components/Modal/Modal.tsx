@@ -1,33 +1,37 @@
-import React, {useRef} from 'react';
+import React, {MouseEventHandler, useRef} from 'react';
 import {css} from '@emotion/react';
 import CloseSvg from 'src/assets/icons/close.svg?react';
 import {FloatingOverlay, FloatingPortal} from '@floating-ui/react';
 
 const Modal = ({
-  handleModal,
   isVisible,
   children,
+  onClose,
 }: {
-  handleModal: (isVisible: boolean) => void;
+  onClose?: () => void;
   isVisible: boolean;
   children: React.ReactNode;
 }) => {
   const overlayRef = useRef(null);
-  const onClose = e => {
+  const handleOverlayClick: MouseEventHandler = e => {
     if (e.target === overlayRef.current) {
-      handleModal(!isVisible);
+      onClose?.();
     }
   };
+  const handleButtonClick: MouseEventHandler = () => {
+    onClose?.();
+  };
+
   return (
     isVisible && (
       <FloatingPortal>
         <FloatingOverlay
-          onClick={e => onClose(e)}
+          onClick={handleOverlayClick}
           ref={overlayRef}
           css={modalContainer}
           lockScroll>
           <div css={contentWrapper}>
-            <div css={close} onClick={() => handleModal(!isVisible)}>
+            <div css={close} onClick={handleButtonClick}>
               <CloseSvg />
             </div>
             <div>{children}</div>

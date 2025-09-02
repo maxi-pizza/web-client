@@ -1,24 +1,26 @@
-import {makeAutoObservable} from 'mobx';
+import {makeObservable, action, observable} from 'mobx';
 
 class ModalsStore {
-  showRestaurantClosedModal = false;
-  cartModal = false;
-  contactInformationModal = false;
-  searchModal = false;
+  modals: string[] = [];
+
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      close: action,
+      open: action,
+      isOpen: false,
+      modals: observable,
+    });
   }
-  handleRestaurantClosedModal(isVisible: boolean) {
-    this.showRestaurantClosedModal = isVisible;
+  open(id: string) {
+    this.modals = [...this.modals.filter(prevId => prevId !== id), id];
   }
-  handleCartModal(isVisible: boolean) {
-    this.cartModal = isVisible;
+
+  close(id: string) {
+    this.modals = this.modals.filter(x => x !== id);
   }
-  handleContactInformationModal(isVisible: boolean) {
-    this.contactInformationModal = isVisible;
-  }
-  handleSearchModal(isVisible: boolean) {
-    this.searchModal = isVisible;
+
+  isOpen(id: string) {
+    return this.modals.some(x => id === x);
   }
 }
 
