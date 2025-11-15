@@ -55,12 +55,13 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4.0.0
         with:
-          name: dist
-          path: dist
+          path: build
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Sync files to hosting
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           server: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
-          local-dir: dist/
+          local-dir: build/
