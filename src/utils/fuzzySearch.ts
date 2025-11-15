@@ -4,15 +4,12 @@ export function fuzzySearch<El extends Record<string, unknown>>(
   array: El[],
   searchArg: string,
   getValue: (el: El) => string,
-  options: {
+  options?: {
     maxAllowedModifications?: number;
     caseSensitive?: boolean;
-  } = {
-    maxAllowedModifications: 1,
-    caseSensitive: false,
   },
 ) {
-  const {caseSensitive, maxAllowedModifications} = options;
+  const {caseSensitive = false, maxAllowedModifications = 1} = options || {};
   const computeBestScore = (
     el: El,
   ): El & {
