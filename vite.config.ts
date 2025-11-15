@@ -13,7 +13,7 @@ export default defineConfig({
     }),
     svgr(),
   ],
-  base: '/',
+  base: './',
   resolve: {
     alias: {
       src: '/src',

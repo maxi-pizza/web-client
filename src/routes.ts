@@ -1,6 +1,4 @@
-import {APP_BASE_PATH} from 'src/env.ts';
-
-const basePath = APP_BASE_PATH || '';
+const basePath = import.meta.env.BASE_URL || '';
 
 export const rootRoute = `${basePath}/`;
 export const categoryRoute = `${basePath}/category/:slug`;
