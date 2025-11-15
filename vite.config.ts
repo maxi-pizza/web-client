@@ -13,7 +13,7 @@ export default defineConfig({
     }),
     svgr(),
   ],
-  base: './',
+  base: process.env.VITE_APP_BASE_PATH || '/v2',
   resolve: {
     alias: {
       src: '/src',
