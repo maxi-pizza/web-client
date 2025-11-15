@@ -33,8 +33,8 @@ jobs:
       - name: Archive stage artifact
         uses: actions/upload-artifact@v4.0.0
         with:
-          name: build
-          path: build
+          name: dist
+          path: dist
 
       - name: Release version
         uses: softprops/action-gh-release@v1
@@ -55,7 +55,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4.0.0
         with:
-          path: build
+          name: dist
+          path: dist
       - name: Display structure of downloaded files
         run: ls -R
       - name: Sync files to hosting
@@ -64,4 +65,4 @@ jobs:
           server: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
-          local-dir: build/
+          local-dir: dist/
