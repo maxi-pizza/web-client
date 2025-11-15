@@ -34,8 +34,8 @@ jobs:
       - name: Archive production artifact
         uses: actions/upload-artifact@v4.0.0
         with:
-          name: build
-          path: build
+          name: dist
+          path: dist
 
       - name: Release version
         uses: softprops/action-gh-release@v1
