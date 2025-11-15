@@ -17,6 +17,7 @@ export function fuzzySearch<El extends Record<string, unknown>>(
     partialMatch: boolean;
   } => {
     let value = getValue(el);
+
     let search = searchArg;
     if (!caseSensitive) {
       value = value.toLowerCase();
